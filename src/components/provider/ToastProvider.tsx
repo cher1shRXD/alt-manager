@@ -59,10 +59,10 @@ const ToastContainer = () => {
         <div
           key={toast.id}
           className={`min-w-[300px] p-4 rounded shadow-lg flex items-center toast
-            white transform transition-all duration-300 ease-in-out bg-white gap-2`}
+            white transform transition-all duration-300 ease-in-out bg-container border border-border gap-2`}
         >
           {getToastIcon(toast.type)}
-          <span>{toast.message}</span>
+          <span className="text-white">{toast.message}</span>
           <div className="flex-1" />
           <button
             onClick={() => removeToast(toast.id)}

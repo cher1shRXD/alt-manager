@@ -29,10 +29,10 @@ const RootLayout = ({
     <html lang="ko">
       <body className={pretendard.variable}>
         <ToastContainer />
-        <LoadingProvider color="#000" />
+        <LoadingProvider color="var(--color-primary)" />
         <QueryProvider>
           <CookiesProvider>
-            <div className="w-full min-h-screen bg-bg">{children}</div>
+            <div className="w-full min-h-screen bg-bg text-white">{children}</div>
           </CookiesProvider>
         </QueryProvider>
       </body>
