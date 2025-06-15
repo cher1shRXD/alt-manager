@@ -1,10 +1,13 @@
 import { toast } from "@/components/provider/ToastProvider"
 import { EMAIL_REGEX } from "@/constants/regex"
 import { SignupData } from "@/types/auth/SignupData"
+import { signIn } from "next-auth/react"
 import { useState } from "react"
+import { useCustomRouter } from "../useCustomRouter"
 
 export const useSignup = () => {
-  const [signupData, setSignupData] = useState<SignupData>({ email: "", name: "", password: "", passwordCheck: "" })
+  const [signupData, setSignupData] = useState<SignupData>({ email: "", name: "", password: "", passwordCheck: "" });
+  const router = useCustomRouter();
 
   const submit = async () => {
     if(
@@ -22,7 +25,7 @@ export const useSignup = () => {
       return;
     }
 
-    if(EMAIL_REGEX.test(signupData.email)) {
+    if(!EMAIL_REGEX.test(signupData.email)) {
       toast.error("올바르지 않은 이메일 형식입니다.");
       return;
     }
@@ -31,6 +34,21 @@ export const useSignup = () => {
       method: "POST",
       body: JSON.stringify(signupData)
     });
+
+    if(res.ok) {
+      const loginRes = await signIn("credentials", {
+        email: signupData.email,
+        password: signupData.password,
+        redirect: false,
+      });
+  
+      if (loginRes?.ok) {
+        toast.success("회원가입 성공!");
+        router.replace("/");
+      }
+    } else {
+      toast.error("회원가입 실패");
+    }
 
   }
 
