@@ -1,20 +1,80 @@
 "use client";
 
+import CustomLink from "@/components/common/CustomLink";
+import Image from "next/image";
+
 const Signup = () => {
-  const signup = async () => {
-    const res = await fetch("/api/signup", {
-      method: "POST",
-      body: JSON.stringify({ email: "tw080401@naver.com", password: "Tw080401!!**", name: "김태우" })
-    })
-
-    const data = res.json();
-
-    console.log(data);
-  }
-
   return (
-    <button onClick={signup}>Signup</button>
-  )
+    <div className="w-full h-screen flex items-center justify-center px-6">
+      <div className="w-full max-w-210 h-120 bg-container rounded-xl border border-border flex items-center justify-between p-2 gap-2">
+        <Image
+          src="/AuthBanner.png"
+          alt="auth-banner"
+          width={2400}
+          height={2400}
+          priority
+          className="h-full w-116 rounded-lg"
+        />
+        <form
+          className="flex-1 h-full flex flex-col gap-4 items-center p-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            // submit();
+          }}>
+          <p className="text-primary font-anton text-4xl mb-4">SIGN-UP</p>
+          <div className="w-full flex flex-col gap-1">
+            <p className="text-sm">이메일</p>
+            <input
+              type="text"
+              className="w-full p-2 text-sm rounded-lg bg-container border border-border outline-none"
+              placeholder="example@exm.com"
+              // value={email}
+              // onChange={handleEmail}
+            />
+          </div>
+          <div className="w-full flex flex-col gap-1">
+            <p className="text-sm">이름</p>
+            <input
+              type="text"
+              className="w-full p-2 text-sm rounded-lg bg-container border border-border outline-none"
+              placeholder="홍길동"
+              // value={email}
+              // onChange={handleEmail}
+            />
+          </div>
+          <div className="w-full flex flex-col gap-1">
+            <p className="text-sm">비밀번호</p>
+            <input
+              type="password"
+              className="w-full p-2 text-sm rounded-lg bg-container border border-border outline-none"
+              placeholder="*********"
+              // value={password}
+              // onChange={handlePw}
+            />
+            <input
+              type="password"
+              className="w-full p-2 text-sm rounded-lg bg-container border border-border outline-none"
+              placeholder="비밀번호 확인"
+              // value={email}
+              // onChange={handleEmail}
+            />
+          </div>
+          <div className="flex-1" />
+          <button
+            type="submit"
+            className="w-full py-2 text-sm bg-primary rounded-lg cursor-pointer">
+            로그인
+          </button>
+          <div className="w-full text-xs text-end">
+            회원이라면?{" "}
+            <CustomLink href="/login" className="text-primary">
+              로그인
+            </CustomLink>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 }
 
 export default Signup
