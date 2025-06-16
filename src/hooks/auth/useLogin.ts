@@ -21,7 +21,7 @@ export const useLogin = () => {
 
     if (res?.ok) {
       toast.success("로그인 성공!");
-      router.replace("/");
+      router.replace("/choose-workspace");
     } else if (res && res.status < 500 && res.status > 399) {
       toast.error("이메일, 비밀번호를 확인해주세요.");
     } else {

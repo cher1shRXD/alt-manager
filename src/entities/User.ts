@@ -12,15 +12,20 @@ export class User {
   @Column()
   password?: string;
 
-  @Column({ nullable: true })
+  @Column()
   name?: string;
 
   @CreateDateColumn()
   createdAt?: Date;
 
-  @ManyToMany(() => Workspace, (workspace) => workspace.user)
-  workspace?: Workspace[];
+  @ManyToMany("Workspace", "users")
+  workspaces?: Workspace[];
 
-  @OneToMany(() => Workspace, (workspace) => workspace.admin)
+  @OneToMany("Workspace", "admin")
   adminWorkspaces?: Workspace[];
+
+  toJSON() {
+    const { password, ...rest } = this;
+    return rest;
+  }
 }

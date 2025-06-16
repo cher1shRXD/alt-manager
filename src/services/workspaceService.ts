@@ -1,68 +1,87 @@
+import { notfound, unauthorized } from "@/constants/errorEnum";
+import { User } from "@/entities/User";
 import { Workspace } from "@/entities/Workspace";
 import { initializeDataSource } from "@/libs/typeorm/initialize";
+import { CreateWorkspaceDTO } from "@/types/dto/CreateWorkspaceDTO";
+import { getServerSession } from "next-auth"
 
-export const getWorkspaces = async (userId: string) => {
+export const getWorkspace = async (workspaceId: string) => {
+  const session = await getServerSession();
+
+  if(!session || !session.user.email) {
+    throw new Error(unauthorized);
+  }
+
   const db = await initializeDataSource();
-  const workspaceRepo = db.getRepository(Workspace);
-  const workspaces = await workspaceRepo.find({
-    where: { user: { id: userId } },
-    relations: ["admin", "tasks", "reports"],
-  });
+  const user = await db.getRepository(User).findOneBy({ email: session.user.email });
+
+  if(!user) {
+    throw new Error(notfound);
+  }
+
+  const workspace = await db
+    .getRepository(Workspace)
+    .createQueryBuilder("workspace")
+    .leftJoin("workspace.users", "user")
+    .where("workspace.id = :workspaceId", { workspaceId })
+    .andWhere("user.id = :userId", { user: user.id })
+    .getOne();
+
+  if(!workspace) {
+    throw new Error(notfound);
+  }
+
+  return workspace;
+}
+
+export const getMyWorkspaces = async () => {
+  const session = await getServerSession();
+
+  if (!session || !session.user.email) {
+    throw new Error(unauthorized);
+  }
+
+  const db = await initializeDataSource();
+  const user = await db.getRepository(User).findOneBy({ email: session.user.email });
+
+  if(!user) {
+    throw new Error(notfound);
+  }
+
+  const workspaces = await db
+    .getRepository(Workspace)
+    .createQueryBuilder("workspace")
+    .leftJoin("workspace.users", "user")
+    .where("user.id = :userId", { userId: user.id })
+    .leftJoinAndSelect("workspace.admin", "admin")
+    .leftJoinAndSelect("workspace.tasks", "task")
+    .leftJoinAndSelect("workspace.reports", "report")
+    .leftJoinAndSelect("workspace.users", "users")
+    .getMany();
+
   return workspaces;
 };
 
-export const createWorkspace = async (body: any, userId: string) => {
+
+export const createWorkspace = async (data: CreateWorkspaceDTO) => {
+  const session = await getServerSession();
+
+  if(!session || !session.user.email) {
+    throw new Error(unauthorized);
+  }
+
   const db = await initializeDataSource();
   const workspaceRepo = db.getRepository(Workspace);
+  const userRepo = db.getRepository(User);
 
-  if (body.adminId !== userId) {
-    throw new Error("Only admins can create workspaces.");
+  const user = await userRepo.findOneBy({ email: session.user.email });
+  if(!user) {
+    throw new Error(notfound);
   }
 
-  const newWorkspace = workspaceRepo.create(body);
-  const savedWorkspace = await workspaceRepo.save(newWorkspace);
-  return savedWorkspace;
-};
+  const newWorkspace = workspaceRepo.create({ admin: user, name: data.title, users: [user] });
+  await workspaceRepo.save(newWorkspace);
 
-export const updateWorkspace = async (body: any, userId: string) => {
-  const db = await initializeDataSource();
-  const workspaceRepo = db.getRepository(Workspace);
+  return newWorkspace;
+}
 
-  const workspace = await workspaceRepo.findOne({
-    where: { id: body.id },
-    relations: ["admin"],
-  });
-
-  if (!workspace) {
-    throw new Error("Workspace not found.");
-  }
-
-  if (workspace.admin.id !== userId) {
-    throw new Error("Only admins can update this workspace.");
-  }
-
-  workspaceRepo.merge(workspace, body);
-  const updatedWorkspace = await workspaceRepo.save(workspace);
-  return updatedWorkspace;
-};
-
-export const deleteWorkspace = async (id: number, userId: string) => {
-  const db = await initializeDataSource();
-  const workspaceRepo = db.getRepository(Workspace);
-
-  const workspace = await workspaceRepo.findOne({
-    where: { id },
-    relations: ["admin"],
-  });
-
-  if (!workspace) {
-    throw new Error("Workspace not found.");
-  }
-
-  if (workspace.admin.id !== userId) {
-    throw new Error("Only admins can delete this workspace.");
-  }
-
-  await workspaceRepo.remove(workspace);
-  return { message: "Workspace deleted successfully" };
-};

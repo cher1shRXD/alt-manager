@@ -1,4 +1,4 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import { initializeDataSource } from "../typeorm/initialize";
@@ -30,7 +30,7 @@ export const authOptions: NextAuthOptions = {
         return {
           id: user?.id || "",
           email: user?.email || "",
-          name: user?.name || ""
+          name: user?.name || "",
         }
       },
     }),

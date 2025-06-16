@@ -44,7 +44,7 @@ export const useSignup = () => {
   
       if (loginRes?.ok) {
         toast.success("회원가입 성공!");
-        router.replace("/");
+        router.replace("/choose-workspace");
       }
     } else {
       toast.error("회원가입 실패");

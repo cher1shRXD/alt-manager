@@ -1,25 +1,26 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, ManyToOne, JoinTable } from "typeorm";
 import { Task } from "./Task";
 import { Report } from "./Report";
 import { User } from "./User";
 
 @Entity()
 export class Workspace {
-  @PrimaryGeneratedColumn()
-  id?: number;
+  @PrimaryGeneratedColumn("uuid")
+  id?: string;
 
   @Column()
   name?: string;
 
-  @OneToMany(() => Task, (task) => task.workspace)
+  @OneToMany("Task", "workspace")
   tasks?: Task[];
 
-  @OneToMany(() => Report, (report) => report.workspace)
+  @OneToMany("Report", "workspace")
   reports?: Report[];
 
-  @ManyToMany(() => User, (user) => user.workspace)
-  user?: User[];
+  @ManyToMany("User", "workspaces")
+  @JoinTable()
+  users?: User[];
 
-  @ManyToOne(() => User, (user) => user.adminWorkspaces)
-  admin!: User;
+  @ManyToOne("User", "adminWorkspaces")
+  admin?: User;
 }

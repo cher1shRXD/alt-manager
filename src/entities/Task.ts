@@ -12,6 +12,6 @@ export class Task {
   @Column()
   description?: string;
 
-  @ManyToOne(() => Workspace, (workspace) => workspace.tasks)
+  @ManyToOne("Workspace", "tasks")
   workspace?: Workspace;
 }

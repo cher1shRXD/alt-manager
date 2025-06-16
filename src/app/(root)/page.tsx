@@ -4,9 +4,10 @@ import { redirect } from "next/navigation";
 const Home = async ({ searchParams }: SearchParamProps) => {
   const user = await getMe();
   const keyword = await searchParams;
+  console.log(user);
 
   if(!keyword.workspace) {
-    redirect("/choose-club");
+    redirect("/choose-workspace");
   }
 
   return (

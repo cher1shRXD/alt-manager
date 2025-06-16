@@ -21,7 +21,7 @@ const Sidebar = async () => {
       </div>
       <div className="flex-1" />
       <p className="text-xs">현재 워크스페이스: <span className="font-black text-sm">ALT</span></p>
-      <CustomLink href="/" className="w-full bg-border rounded-lg py-1 flex gap-1 items-center justify-center">워크스페이스 변경 <ArrowLeftRight size={16} /></CustomLink>
+      <CustomLink href="/choose-workspace" className="w-full bg-border rounded-lg py-2 flex gap-1 items-center justify-center text-xs">워크스페이스 변경 <ArrowLeftRight size={16} /></CustomLink>
     </div>
   )
 }
