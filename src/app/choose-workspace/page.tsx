@@ -8,7 +8,7 @@ const ChooseWorkspace = async () => {
   return (
     <div className="w-full h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-120 h-100 bg-container border border-border rounded-xl flex flex-col items-center px-4">
-        <p className="w-full py-3 border-b border-border text-center">워크스페이스 선택</p>
+        <p className="w-full py-1 pt-3 text-center">워크스페이스 선택</p>
         <div className="w-full flex-1 overflow-y-scroll">
           <div className="w-full flex flex-col gap-2 py-2">
             {

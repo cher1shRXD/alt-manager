@@ -11,7 +11,7 @@ const MainLayout = ({
     <div className="w-full pl-[calc(var(--sidebar-width)+32px)] pt-3 px-4 flex flex-col gap-4 items-center">
       <Header />
       <Sidebar />
-      <div className="w-full max-w-300 pt-4">{children}</div>
+      <div className="w-full max-w-300 pt-4 px-10">{children}</div>
     </div>
   )
 }

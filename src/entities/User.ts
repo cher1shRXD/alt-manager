@@ -23,9 +23,4 @@ export class User {
 
   @OneToMany("Workspace", "admin")
   adminWorkspaces?: Workspace[];
-
-  toJSON() {
-    const { password, ...rest } = this;
-    return rest;
-  }
 }

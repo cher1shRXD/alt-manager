@@ -22,10 +22,12 @@ export const getWorkspace = async (workspaceId: string) => {
   const workspace = await db
     .getRepository(Workspace)
     .createQueryBuilder("workspace")
-    .leftJoin("workspace.users", "user")
+    .leftJoinAndSelect("workspace.users", "users")
     .where("workspace.id = :workspaceId", { workspaceId })
-    .andWhere("user.id = :userId", { user: user.id })
+    .andWhere("users.id = :userId", { userId: user.id })
+    .leftJoinAndSelect("workspace.admin", "admin")
     .getOne();
+
 
   if(!workspace) {
     throw new Error(notfound);

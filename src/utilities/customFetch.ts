@@ -15,7 +15,7 @@ const request = async <T>(url: string, options = {}) => {
 }
 
 export const customFetch = {
-  get: (url: string) => request(url),
+  get: <T>(url: string) => request<T>(url),
 
   post: <T>(url: string, body: object) =>
     request<T>(url, {

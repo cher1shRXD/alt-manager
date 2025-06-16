@@ -14,10 +14,14 @@ export const useCreateWorkspace = () => {
   }
 
   const submit = async () => {
+    if(title.trim().length <= 0) {
+      toast.warning("워크스페이스 이름을 한글자 이상 입력해주세요.")
+      return;
+    }
     try{
-      const data = await customFetch.post<{ workspace: Workspace }>("/api/workspace", { title });
-      if(data && data.workspace.id) {
-        router.replace(`/?workspace=${data.workspace.id}`);
+      const { workspace } = await customFetch.post<{ workspace: Workspace }>("/api/workspace", { title });
+      if(workspace) {
+        router.replace(`/?workspace=${workspace.id}`);
       }
     }catch(e){
       console.log(e);
