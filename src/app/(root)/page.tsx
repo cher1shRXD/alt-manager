@@ -11,7 +11,7 @@ const Home = async ({ searchParams }: SearchParamProps) => {
   }
 
   return (
-    <div className="w-full max-w-300 grid grid-cols-16 grid-rows-[repeat(10,40px)] gap-4 mx-auto mt-4">
+    <div className="w-full grid grid-cols-16 grid-rows-[repeat(10,40px)] gap-4">
       <div className="col-[1/8] row-[1/6] bg-container border border-border rounded-lg">
         새로운 과제
       </div>
