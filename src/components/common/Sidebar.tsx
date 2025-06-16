@@ -18,7 +18,7 @@ const Sidebar = async () => {
         <NavigationItem title="홈" href="/" icon={<Home size={20} />} />
         <NavigationItem title="과제" href="/task" icon={<ClipboardPenLine size={20} />} />
         <NavigationItem title="성과 보고" href="/report" icon={<Scroll size={20} />} />
-        <NavigationItem title="워크스페이스 관리" href="/workspace" icon={<UsersRound size={20} />} />
+        <NavigationItem title="워크스페이스 정보" href="/workspace" icon={<UsersRound size={20} />} />
       </div>
       <div className="flex-1" />
       <p className="text-xs">현재 워크스페이스: <CurrentWorkspace /></p>

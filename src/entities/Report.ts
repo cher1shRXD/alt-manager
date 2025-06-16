@@ -12,6 +12,6 @@ export class Report {
   @Column()
   content?: string;
 
-  @ManyToOne("Workspace", "reports")
+  @ManyToOne("Workspace", "reports", { cascade: true })
   workspace?: Workspace;
 }

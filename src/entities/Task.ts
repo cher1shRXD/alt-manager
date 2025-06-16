@@ -12,6 +12,6 @@ export class Task {
   @Column()
   description?: string;
 
-  @ManyToOne("Workspace", "tasks")
+  @ManyToOne("Workspace", "tasks", { cascade: true })
   workspace?: Workspace;
 }
