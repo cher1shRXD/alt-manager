@@ -1,23 +1,27 @@
 import { getMe } from "@/services/getMe"
+import { redirect } from "next/navigation";
 
-const Home = async () => {
+const Home = async ({ searchParams }: SearchParamProps) => {
   const user = await getMe();
-  console.log(user);
+  const keyword = await searchParams;
+
+  if(!keyword.workspace) {
+    redirect("/choose-club");
+  }
 
   return (
-    <div className="w-full grid grid-cols-16 grid-rows-[repeat(10,40px)] gap-4">
-      <div className="col-[1/7] row-[1/6] bg-container border border-border rounded-lg">
+    <div className="w-full max-w-300 grid grid-cols-16 grid-rows-[repeat(10,40px)] gap-4 mx-auto mt-4">
+      <div className="col-[1/8] row-[1/6] bg-container border border-border rounded-lg">
         새로운 과제
       </div>
-      <div className="col-[7/12] row-[1/6] bg-container border border-border rounded-lg">
+      <div className="col-[8/13] row-[1/6] bg-container border border-border rounded-lg">
         성과 보고 마감일
       </div>
-      <div className="col-[12/-1] row-[1/7] bg-container border border-border rounded-lg p-4">
+      <div className="col-[13/-1] row-[1/7] bg-container border border-border rounded-lg p-4">
         <p>{user?.name}</p>
         <p>{user?.email}</p>
-        <p>{user?.createdAt?.toISOString()}</p>
       </div>
-      <div className="col-[1/12] row-[6/9] bg-container border border-border rounded-lg">
+      <div className="col-[1/13] row-[6/10] bg-container border border-border rounded-lg">
         총 과제 진척도
       </div>
     </div>

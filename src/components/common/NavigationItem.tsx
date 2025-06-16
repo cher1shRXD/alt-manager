@@ -2,13 +2,16 @@
 
 import { NavigationItemProps } from "@/types/props/NavigationItemProps"
 import CustomLink from "./CustomLink"
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 const NavigationItem = ({ href, icon, title }: NavigationItemProps) => {
   const pathname = usePathname();
 
+  const searchParams = useSearchParams();
+  const currentParams = searchParams.toString();
+
   return (
-    <CustomLink href={href} className={`w-full flex gap-2 items-center transition-all p-2 rounded-lg ${ pathname === href ? "bg-primary": "hover:bg-container" }`}>
+    <CustomLink href={`${href}/?${currentParams}`} className={`w-full flex gap-2 items-center transition-all p-2 rounded-lg ${ pathname === href ? "bg-primary": "hover:bg-container" }`}>
       {icon}
       <p>{title}</p>
     </CustomLink>

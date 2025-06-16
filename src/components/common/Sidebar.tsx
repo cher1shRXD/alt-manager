@@ -17,11 +17,11 @@ const Sidebar = async () => {
         <NavigationItem title="홈" href="/" icon={<Home size={20} />} />
         <NavigationItem title="과제" href="/task" icon={<ClipboardPenLine size={20} />} />
         <NavigationItem title="성과 보고" href="/report" icon={<Scroll size={20} />} />
-        <NavigationItem title="동아리 관리" href="/club" icon={<UsersRound size={20} />} />
+        <NavigationItem title="워크스페이스 관리" href="/workspace" icon={<UsersRound size={20} />} />
       </div>
       <div className="flex-1" />
-      <p className="text-xs">현재 동아리: <span className="font-black text-sm">ALT</span></p>
-      <CustomLink href="/choose-club" className="w-full bg-border rounded-lg py-1 flex gap-1 items-center justify-center">동아리 변경 <ArrowLeftRight size={16} /></CustomLink>
+      <p className="text-xs">현재 워크스페이스: <span className="font-black text-sm">ALT</span></p>
+      <CustomLink href="/" className="w-full bg-border rounded-lg py-1 flex gap-1 items-center justify-center">워크스페이스 변경 <ArrowLeftRight size={16} /></CustomLink>
     </div>
   )
 }

@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToMany, OneToMany } from "typeorm";
+import { Workspace } from "./Workspace";
 
 @Entity()
 export class User {
@@ -16,4 +17,10 @@ export class User {
 
   @CreateDateColumn()
   createdAt?: Date;
+
+  @ManyToMany(() => Workspace, (workspace) => workspace.user)
+  workspace?: Workspace[];
+
+  @OneToMany(() => Workspace, (workspace) => workspace.admin)
+  adminWorkspaces?: Workspace[];
 }
