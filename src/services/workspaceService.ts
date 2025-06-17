@@ -160,3 +160,45 @@ export const deleteWorkspace = async (workspaceId: string) => {
 
   return workspace;
 };
+
+
+export const joinWorkspace = async (workspaceId: string) => {
+  const session = await getServerSession(authOptions);
+
+  if (!session || !session.user.email) {
+    throw new Error(unauthorized);
+  }
+
+  const db = await initializeDataSource();
+  const userRepo = db.getRepository(User);
+  const workspaceRepo = db.getRepository(Workspace);
+
+  const user = await userRepo.findOne({
+    where: { email: session.user.email },
+    relations: ["workspaces"],
+  });
+
+  if (!user) {
+    throw new Error(notfound);
+  }
+
+  const workspace = await workspaceRepo.findOne({
+    where: { id: workspaceId },
+    relations: ["users", "admin"],
+  });
+
+  if (!workspace) {
+    throw new Error(notfound);
+  }
+
+  const alreadyJoined = workspace.users?.some((u) => u.id === user.id);
+
+  if (alreadyJoined) {
+    return workspace; 
+  }
+
+  workspace.users?.push(user);
+  await workspaceRepo.save(workspace);
+
+  return workspace;
+};

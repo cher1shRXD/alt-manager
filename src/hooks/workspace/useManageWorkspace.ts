@@ -5,8 +5,8 @@ import { useState } from "react"
 import { useCustomRouter } from "../useCustomRouter";
 import { ErrorResponse } from "@/types/ErrorResponse";
 
-export const useManageWorkspace = (workspaceId:string | null, title: string) => {
-  const [newTitle, setNewTitle] = useState(title);
+export const useManageWorkspace = (workspaceId:string | null) => {
+  const [newTitle, setNewTitle] = useState("");
   const router = useCustomRouter();
 
   const handleNewTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,15 +14,13 @@ export const useManageWorkspace = (workspaceId:string | null, title: string) => 
   }
 
   const updateSubmit = async () => {
-    if(title === newTitle.trim()) return;
-
-    if(title.trim().length <= 0) {
+    if(newTitle.trim().length <= 0) {
       toast.warning("워크스페이스 이름을 한글자 이상 입력해주세요.")
       return;
     }
 
     try{
-      const { workspace } = await customFetch.patch<{ workspace: Workspace }>(`/api/workspace/${workspaceId}`, { title });
+      const { workspace } = await customFetch.patch<{ workspace: Workspace }>(`/api/workspace/${workspaceId}`, { title: newTitle });
       if(workspace) {
         router.replace(`/workspace?workspace=${workspace.id}`);
       }

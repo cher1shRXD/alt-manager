@@ -28,7 +28,8 @@ const ChooseWorkspace = async () => {
             }
           </div>
         </div>
-        <CustomLink href="/make-workspace" className="w-full py-2 text-sm bg-primary rounded-lg text-center mb-4">워크스페이스 생성</CustomLink>
+        <CustomLink href="/make-workspace" className="w-full py-2 text-sm bg-primary rounded-lg text-center mb-1">워크스페이스 생성</CustomLink>
+        <CustomLink href="/join-workspace" className="w-full py-2 text-sm bg-container rounded-lg text-white border border-border text-center mb-4">워크스페이스 참가</CustomLink>
       </div>
     </div>
   )

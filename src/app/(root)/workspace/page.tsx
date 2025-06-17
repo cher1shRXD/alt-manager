@@ -1,7 +1,9 @@
+import CopyClipboard from "@/components/common/CopyClipboard";
 import CustomLink from "@/components/common/CustomLink";
 import UserItem from "@/components/UserItem";
 import { getMe } from "@/services/getMe";
 import { getWorkspace } from "@/services/workspaceService";
+import { Clipboard } from "lucide-react";
 import { redirect } from "next/navigation";
 
 const Workspace = async ({ searchParams }: SearchParamProps) => {
@@ -36,6 +38,16 @@ const Workspace = async ({ searchParams }: SearchParamProps) => {
             <p className="text-xs text-gray-500">{workspace.admin?.email}</p>
           </div>
         </div>
+
+        {
+          workspace.id && (
+            <div className="relative">
+              <p className="text-xs">참가코드</p>
+              <input type="text" readOnly className="w-full p-2 text-sm rounded-lg bg-container border border-border outline-none mt-1 text-primary pr-7" value={workspace.id} />
+              <CopyClipboard text={workspace.id} />
+            </div>
+          )
+        }
         
         {
           workspace.admin?.id === user?.id && (
