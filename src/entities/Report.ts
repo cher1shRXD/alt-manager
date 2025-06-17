@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from "typeorm";
 import { Workspace } from "./Workspace";
 import { User } from "./User";
 
@@ -8,10 +8,10 @@ export class Report {
   id?: number;
 
   @Column()
-  title?: string;
-
-  @Column()
   content?: string;
+
+  @CreateDateColumn()
+  createdAt?: Date;
 
   @ManyToOne("Workspace", "reports", { cascade: true })
   workspace?: Workspace;

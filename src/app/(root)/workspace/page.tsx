@@ -14,7 +14,6 @@ const Workspace = async ({ searchParams }: SearchParamProps) => {
   }
 
   const workspace = await getWorkspace(keyword.workspace as string);
-  console.log(workspace);
 
   return (
     <div className="w-full flex items-start gap-4 mb-4">

@@ -1,4 +1,4 @@
-import { forbidden, notfound, unauthorized } from "@/constants/errorEnum";
+import { forbidden, notfound, serverError, unauthorized } from "@/constants/errorEnum";
 import { NextResponse } from "next/server";
 
 export const errorHandler = (e: string) => {
@@ -10,5 +10,5 @@ export const errorHandler = (e: string) => {
     return NextResponse.json({ message: forbidden }, { status: 403 });
   }
 
-  return NextResponse.json({ message: "server error" }, { status: 500 });
+  return NextResponse.json({ message: serverError }, { status: 500 });
 }

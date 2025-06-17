@@ -2,8 +2,8 @@
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { loadingStore } from "@/stores/loadingStore";
 import { LoadingProviderProps } from "@/types/props/LoadingProviderProps";
+import { loadingStore } from "@/stores/loadingStore";
 
 const LoadingProvider = ({ color }: LoadingProviderProps) => {
   const pathname = usePathname();
