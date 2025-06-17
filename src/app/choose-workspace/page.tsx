@@ -4,6 +4,7 @@ import { SquareArrowOutUpRight } from "lucide-react";
 
 const ChooseWorkspace = async () => {
   const workspaces = await getMyWorkspaces();
+  console.log(workspaces);
 
   return (
     <div className="w-full h-screen flex items-center justify-center px-4">

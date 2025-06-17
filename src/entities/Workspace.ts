@@ -17,7 +17,7 @@ export class Workspace {
   @OneToMany("Report", "workspace")
   reports?: Report[];
 
-  @ManyToMany("User", "workspaces")
+  @ManyToMany("User", "workspaces", { cascade: true })
   @JoinTable()
   users?: User[];
 

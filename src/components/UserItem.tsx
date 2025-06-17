@@ -11,10 +11,10 @@ const UserItem = ({ data, adminId, currentUserId }: UserItemProps) => {
       </div>
       <div className="flex items-center gap-2">
         {
-          (adminId !== currentUserId || currentUserId !== data.id) && <button className="p-2 text-xs bg-container border border-border rounded text-red-500 cursor-pointer">퇴출</button>
+          (adminId === currentUserId && currentUserId !== data.id) && <button className="p-2 text-xs bg-container border border-border rounded text-red-500 cursor-pointer">퇴출</button>
         }
         {
-          adminId !== currentUserId && <button className="p-2 text-xs bg-container border border-border rounded text-red-500 cursor-pointer">관리자로 임명</button>
+          (adminId === currentUserId && currentUserId !== data.id) && <button className="p-2 text-xs bg-container border border-border rounded text-red-500 cursor-pointer">관리자로 임명</button>
         }
       </div>
     </div>
