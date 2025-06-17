@@ -29,7 +29,7 @@ const Workspace = async ({ searchParams }: SearchParamProps) => {
         </div>
       </div>
       
-      <div className="w-full max-w-80 bg-container border border-border rounded-xl p-2 flex flex-col gap-4 sticky top-2">
+      <div className="w-full max-w-80 bg-container border border-border rounded-xl p-2 flex flex-col gap-4 sticky top-4">
         <p className="font-anton tracking-[1.6] text-3xl text-center py-2">{workspace.name}</p>
         <div className="flex flex-col gap-1">
           <p className="text-xs">워크스페이스 관리자</p>
@@ -52,7 +52,7 @@ const Workspace = async ({ searchParams }: SearchParamProps) => {
         {
           workspace.admin?.id === user?.id && (
              <div className="flex flex-col gap-1">
-              <CustomLink href={`/edit-workspace?workspace=${workspace.id}`} className="p-2 text-xs bg-primary border border-border rounded-lg text-center">워크스페이스 정보 수정</CustomLink>
+              <CustomLink href={`/edit-workspace?workspace=${workspace.id}`} className="p-2 text-xs bg-primary rounded-lg text-center">워크스페이스 정보 수정</CustomLink>
               <CustomLink href={`/delete-workspace?workspace=${workspace.id}`} className="p-2 text-xs bg-container border border-border rounded-lg text-red-500 text-center">워크스페이스 삭제</CustomLink>
             </div>
           )

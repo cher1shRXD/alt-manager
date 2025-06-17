@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToMany, OneToMany } from "typeorm";
 import { Workspace } from "./Workspace";
+import { Report } from "./Report";
 
 @Entity()
 export class User {
@@ -23,4 +24,7 @@ export class User {
 
   @OneToMany("Workspace", "admin")
   adminWorkspaces?: Workspace[];
+
+  @OneToMany("Report", "author")
+  reports?: Report[];
 }
