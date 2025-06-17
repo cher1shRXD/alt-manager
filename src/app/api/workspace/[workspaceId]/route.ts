@@ -1,7 +1,6 @@
-import { forbidden, notfound } from "@/constants/errorEnum";
 import { deleteWorkspace, getWorkspace, updateWorkspace } from "@/services/workspaceService";
 import { WorkspaceDTO } from "@/types/dto/WorkspaceDTO";
-import { unauthorized } from "next/navigation";
+import { errorHandler } from "@/utilities/errorHandler";
 import { NextRequest, NextResponse } from "next/server"
 
 export const GET = async (req: NextRequest, { params }: { params: Promise<{ workspaceId: string }> }) => {
@@ -11,15 +10,7 @@ export const GET = async (req: NextRequest, { params }: { params: Promise<{ work
 
     return NextResponse.json({ workspace }, { status: 200 });
   }catch(e){
-    if(e === unauthorized) {
-      return NextResponse.json({ message: unauthorized }, { status: 401 });
-    }else if (e === notfound) {
-      return NextResponse.json({ message: notfound }, { status: 404 });
-    }else if (e === forbidden) {
-      return NextResponse.json({ message: forbidden }, { status: 403 });
-    }
-
-    return NextResponse.json({ message: "server error" }, { status: 500 });
+    return errorHandler(e as string);
   }
 }
 
@@ -31,15 +22,7 @@ export const PATCH = async (req: NextRequest, { params }: { params: Promise<{ wo
 
     return NextResponse.json({ workspace }, { status: 200 });
   }catch(e){
-    if(e === unauthorized) {
-      return NextResponse.json({ message: unauthorized }, { status: 401 });
-    }else if (e === notfound) {
-      return NextResponse.json({ message: notfound }, { status: 404 });
-    }else if (e === forbidden) {
-      return NextResponse.json({ message: forbidden }, { status: 403 });
-    }
-
-    return NextResponse.json({ message: "server error" }, { status: 500 });
+    return errorHandler(e as string);
   }
 }
 
@@ -50,14 +33,6 @@ export const DELETE = async (req: NextRequest, { params }: { params: Promise<{ w
 
     return NextResponse.json({ workspace }, { status: 200 });
   }catch(e){
-    if(e === unauthorized) {
-      return NextResponse.json({ message: unauthorized }, { status: 401 });
-    }else if (e === notfound) {
-      return NextResponse.json({ message: notfound }, { status: 404 });
-    }else if (e === forbidden) {
-      return NextResponse.json({ message: forbidden }, { status: 403 });
-    }
-
-    return NextResponse.json({ message: "server error" }, { status: 500 });
+    return errorHandler(e as string);
   }
 }

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export const useGetWorkspace = (workspaceId: string | null) => {
   const [workspaceName, setWorkspaceName] = useState("");
 
-  const submit = async () => {
+  const get = async () => {
     if(!workspaceId) return;
     const { workspace } = await customFetch.get<{ workspace: Workspace }>(`/api/workspace/${workspaceId}`);
     if(workspace) {
@@ -14,7 +14,7 @@ export const useGetWorkspace = (workspaceId: string | null) => {
   }
 
   useEffect(() => {
-    submit();
+    get();
   }, [workspaceId]);
 
   return workspaceName

@@ -3,7 +3,6 @@ import CustomLink from "@/components/common/CustomLink";
 import UserItem from "@/components/UserItem";
 import { getMe } from "@/services/getMe";
 import { getWorkspace } from "@/services/workspaceService";
-import { Clipboard } from "lucide-react";
 import { redirect } from "next/navigation";
 
 const Workspace = async ({ searchParams }: SearchParamProps) => {
@@ -24,7 +23,7 @@ const Workspace = async ({ searchParams }: SearchParamProps) => {
         <div className="w-full flex flex-col gap-2">
           {
             workspace.users?.map((item) => (
-              <UserItem data={{ ...item }} currentUserId={user?.id} adminId={workspace.admin?.id} key={item.id} />
+              <UserItem data={{ ...item }} currentUserId={user?.id} adminId={workspace.admin?.id} key={item.id} workspaceId={workspace.id} />
             ))
           }
         </div>

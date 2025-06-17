@@ -207,7 +207,7 @@ export const joinWorkspace = async (workspaceId: string) => {
 
 export const removeMemberFromWorkspace = async (
   workspaceId: string,
-  memberId: string
+  userId: string
 ) => {
   const session = await getServerSession(authOptions);
   if (!session || !session.user.email) throw new Error(unauthorized);
@@ -226,12 +226,12 @@ export const removeMemberFromWorkspace = async (
   if (!workspace) throw new Error(notfound);
 
   if (workspace.admin && workspace.admin.id !== admin.id) throw new Error(forbidden);
-  if (admin.id === memberId) throw new Error(forbidden);
+  if (admin.id === userId) throw new Error(forbidden);
 
-  const member = workspace.users?.find((u) => u.id === memberId);
+  const member = workspace.users?.find((u) => u.id === userId);
   if (!member) throw new Error(notfound);
 
-  workspace.users = workspace.users?.filter((u) => u.id !== memberId);
+  workspace.users = workspace.users?.filter((u) => u.id !== userId);
   await workspaceRepo.save(workspace);
 
   return workspace;
@@ -239,7 +239,7 @@ export const removeMemberFromWorkspace = async (
 
 export const transferWorkspaceAdmin = async (
   workspaceId: string,
-  newAdminId: string
+  userId: string
 ) => {
   const session = await getServerSession(authOptions);
   if (!session || !session.user.email) throw new Error(unauthorized);
@@ -259,7 +259,7 @@ export const transferWorkspaceAdmin = async (
 
   if (workspace.admin && workspace.admin.id !== currentAdmin.id) throw new Error(forbidden);
 
-  const newAdmin = workspace.users?.find((u) => u.id === newAdminId);
+  const newAdmin = workspace.users?.find((u) => u.id === userId);
   if (!newAdmin) throw new Error(notfound);
 
   workspace.admin = newAdmin;
