@@ -4,6 +4,6 @@ export interface TaskDTO {
   title: string;
   description: string;
   mentees: User[];
-  startDate?: Date;
-  endDate?: Date;
+  startDate?: string;
+  endDate?: string;
 }

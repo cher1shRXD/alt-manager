@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable, CreateDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable, CreateDateColumn, OneToMany } from "typeorm";
 import { Workspace } from "./Workspace";
 import { User } from "./User";
+import { TaskSubmission } from "./TaskSubmission";
 
 @Entity()
 export class Task {
@@ -23,7 +24,10 @@ export class Task {
   @JoinTable()
   mentees?: User[];
 
-  @Column()
+  @OneToMany("TaskSubmission", "task")
+  submissions?: TaskSubmission[];
+
+  @Column({ default: false })
   isDone?: boolean;
 
   @Column()

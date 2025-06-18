@@ -5,6 +5,8 @@ import { User } from "@/entities/User";
 import { Task } from "@/entities/Task";
 import { Workspace } from "@/entities/Workspace";
 import { Report } from "@/entities/Report";
+import { TaskSubmission } from "@/entities/TaskSubmission";
+import { TaskSubmissionFile } from "@/entities/TaskSubmissionFile";
 
 
 const AppDataSource = new DataSource({
@@ -15,7 +17,7 @@ const AppDataSource = new DataSource({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   synchronize: true,
-  entities: [User, Task, Workspace, Report],
+  entities: [User, Task, Workspace, Report, TaskSubmission, TaskSubmissionFile],
   migrations: ["src/migrations/**/*.ts"],
   subscribers: ["src/subscribers/**/*.ts"],
 });

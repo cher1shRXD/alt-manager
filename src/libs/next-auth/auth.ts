@@ -21,10 +21,12 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         const database = await initializeDataSource();
         const userRepo = database.getRepository(User);
+
         const user = await userRepo.findOne({
           where: { email: credentials!.email },
           select: ["id", "email", "password", "name"],
         });
+
         if(!user) return null;
 
         const isValid = await bcrypt.compare(credentials?.password || "no_password", user.password || "password")

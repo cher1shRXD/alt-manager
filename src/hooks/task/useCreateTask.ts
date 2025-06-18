@@ -8,17 +8,13 @@ import { useState } from "react"
 import { useCustomRouter } from "../useCustomRouter";
 
 export const useCreateTask = (workspaceId: string | null) => {
-  const [taskData, setTaskData] = useState<TaskDTO>({ title: "", description: "", endDate: new Date(), startDate: new Date(), mentees: [] });
+  const [taskData, setTaskData] = useState<TaskDTO>({ title: "", description: "", endDate: "", startDate: "", mentees: [] });
   const router = useCustomRouter();
 
   const handleData = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { value, name } = e.target;
 
-    if(name.includes("Date")) {
-      setTaskData(prev => ({ ...prev, [name]: new Date(value) }));
-    }else{
-      setTaskData(prev => ({ ...prev, [name]: value }));
-    }
+    setTaskData(prev => ({ ...prev, [name]: value }));
   }
 
   const handleMentees = (user: User) => {

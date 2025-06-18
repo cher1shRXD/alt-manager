@@ -40,14 +40,14 @@ const Report = async ({ searchParams }: SearchParamProps) => {
                     }
                   </div>
                 </div>
-              )) : <p className="text-gray-500">데이터 없음</p>
+              )) : <p className="text-gray-500 w-full text-center">작성된 성과보고서가 없습니다.</p>
             ) : (
               myReports.length > 0 ? myReports.map((item) => (
                 <div className="wfull flex flex-col gap-1 p-2 bg-container border border-border rounded-lg" key={item.id}>
-                  <p>{item.createdAt?.toISOString()}</p>
-                  <p>{item.content?.trim().length}</p>
+                  <p>{parseDate(item.createdAt)} 성과보고서</p>
+                  <p className="text-xs text-gray-500">글자수: {item.content?.trim().length}자</p>
                 </div>
-              )) : <p className="text-gray-500">데이터 없음</p>
+              )) : <p className="text-gray-500 w-full text-center">작성한 성과보고서가 없습니다.</p>
             )
           }
         </div>

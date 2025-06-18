@@ -7,7 +7,7 @@ const UserItem = ({ data, adminId, currentUserId, workspaceId, isMentor }: UserI
   return (
     <div className="w-full flex items-center bg-container p-2 rounded-lg border border-border">
       <div className="flex-1 flex flex-col gap-1 ">
-        <p className="font-anton tracking-[1.6]">{data.name}</p>
+        <p>{data.name}</p>
         <p className="text-xs text-gray-500">{data.email}</p>
       </div>
       {

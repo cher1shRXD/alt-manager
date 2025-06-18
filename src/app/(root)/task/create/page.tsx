@@ -47,11 +47,11 @@ const CreateTask = () => {
         <div className="flex gap-2">
           <div className="flex flex-col">
             <label className="mb-1">시작일</label>
-            <input type="date" value={taskData.startDate?.toISOString()} onChange={handleData} name="startDate" className="border p-2 rounded" />
+            <input type="date" value={taskData.startDate} onChange={handleData} name="startDate" className="border p-2 rounded" />
           </div>
           <div className="flex flex-col">
             <label className="mb-1">마감일</label>
-            <input type="date" value={taskData.endDate?.toISOString()} onChange={handleData} name="endDate" className="border p-2 rounded" />
+            <input type="date" value={taskData.endDate} onChange={handleData} name="endDate" className="border p-2 rounded" />
           </div>
         </div>
         <button type="submit" className="bg-primary text-white py-2 rounded font-semibold">과제 출제</button>
