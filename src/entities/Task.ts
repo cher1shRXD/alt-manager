@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable, CreateDateColumn } from "typeorm";
 import { Workspace } from "./Workspace";
 import { User } from "./User";
 
@@ -22,5 +22,17 @@ export class Task {
   @ManyToMany("User", "menteeTask", { cascade: true })
   @JoinTable()
   mentees?: User[];
+
+  @Column()
+  isDone?: boolean;
+
+  @Column()
+  startDate?: Date;
+
+  @Column()
+  endDate?: Date;
+
+  @CreateDateColumn()
+  createdAt?: Date;
 
 }

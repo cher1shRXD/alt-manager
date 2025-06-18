@@ -18,3 +18,9 @@
 body, html {
   background-color: var(--color-bg);
 }
+
+@media (min-width: 1560px) {
+  :root {
+    --sidebar-width: 320px;
+  }
+}

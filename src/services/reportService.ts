@@ -90,14 +90,11 @@ export const getReportDetail = async (reportId: number, workspaceId: string) => 
   }
 
   const db = await initializeDataSource();
-  const user = await db.getRepository(User).findOneBy({ email: session.user.email });
   const report = await db.getRepository(Report).findOne({ where: { id: reportId }, relations: ["author", "workspace"] });
 
   if(!report) {
     throw new Error(notfound);
   }
-  
-  console.log(report);
 
   if(report.workspace?.id !== workspaceId) {
     throw new Error(forbidden);

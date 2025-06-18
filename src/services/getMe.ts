@@ -6,17 +6,18 @@ import { getServerSession } from "next-auth";
 export const getMe = async () => {
   const session = await getServerSession(authOptions);
   
-  if(session && session.user.id) {
+  if(session && session.user.email) {
     const db = await initializeDataSource();
     const userRepo = db.getRepository(User);
-    const user = await userRepo.findOneBy({ id: session.user.id });
+    const user = await userRepo
+      .createQueryBuilder("user")
+      .leftJoinAndSelect("user.menteeTask", "menteeTask")
+      .leftJoinAndSelect("user.reports", "reports")
+      .where("user.email = :email", { email: session.user.email })
+      .getOne();
+
     if(user) {
-      return {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        createdAt: user.createdAt,
-      }
+      return user;
     }
     return null;
   }

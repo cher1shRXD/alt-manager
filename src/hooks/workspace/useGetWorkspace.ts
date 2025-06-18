@@ -5,14 +5,14 @@ import { customFetch } from "@/utilities/customFetch"
 import { useEffect, useState } from "react";
 
 export const useGetWorkspace = (workspaceId: string | null) => {
-  const [workspaceName, setWorkspaceName] = useState("");
+  const [workspace, setWorkspace] = useState<Workspace>();
 
   const get = async () => {
     if(!workspaceId) return;
     try{
       const { workspace } = await customFetch.get<{ workspace: Workspace }>(`/api/workspace/${workspaceId}`);
       if(workspace) {
-        setWorkspaceName(workspace.name || "");
+        setWorkspace(workspace);
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);
@@ -23,5 +23,5 @@ export const useGetWorkspace = (workspaceId: string | null) => {
     get();
   }, [workspaceId]);
 
-  return workspaceName
+  return workspace
 }

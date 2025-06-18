@@ -1,5 +1,6 @@
 import CustomLink from "@/components/common/CustomLink";
 import { getReportDetail } from "@/services/reportService";
+import { SearchParamProps } from "@/types/props/SearchParamProps";
 import { ChevronUp } from "lucide-react";
 import { redirect } from "next/navigation";
 

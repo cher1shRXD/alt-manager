@@ -7,13 +7,13 @@ import { useSearchParams } from "next/navigation";
 
 const DeleteWorkspace = () => {
   const searchParams = useSearchParams();
-  const workspaceName = useGetWorkspace(searchParams.get("workspace"));
+  const workspace = useGetWorkspace(searchParams.get("workspace"));
   const { deleteSubmit } = useManageWorkspace(searchParams.get("workspace"));
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <div className="flex flex-col items-center justify-center gap-2 bg-container border border-border p-4 rounded-lg">
-        <p className="text-3xl font-anton tracking-[1.6]">{workspaceName}</p>
+        <p className="text-3xl font-anton tracking-[1.6]">{workspace?.name}</p>
         <p className="text-lg text-semibold text-center">워크스페이스를 삭제하시겠습니까?</p>
         <p className="text-xs text-primary">이 작업은 되돌릴 수 없습니다.</p>
         <div className="w-full flex items-center gap-2 mt-2">

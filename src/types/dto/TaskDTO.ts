@@ -1,0 +1,9 @@
+import { User } from "@/entities/User";
+
+export interface TaskDTO {
+  title: string;
+  description: string;
+  mentees: User[];
+  startDate?: Date;
+  endDate?: Date;
+}

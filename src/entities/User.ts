@@ -35,6 +35,6 @@ export class User {
   @OneToMany("Task", "mentor")
   mentorTask?: Task[];
 
-  @ManyToMany("Task", "memtees")
+  @ManyToMany("Task", "mentees")
   menteeTask?: Task[];
 }

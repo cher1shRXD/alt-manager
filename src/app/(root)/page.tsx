@@ -1,5 +1,6 @@
 import CustomLink from "@/components/common/CustomLink";
 import { getMe } from "@/services/getMe"
+import { SearchParamProps } from "@/types/props/SearchParamProps";
 import { getNextMonday } from "@/utilities/getNextMondy";
 import { redirect } from "next/navigation";
 

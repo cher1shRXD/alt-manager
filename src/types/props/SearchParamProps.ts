@@ -1,3 +1,3 @@
-interface SearchParamProps {
+export interface SearchParamProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }

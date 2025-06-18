@@ -2,6 +2,7 @@ import CustomLink from "@/components/common/CustomLink";
 import { getMe } from "@/services/getMe";
 import { getMyReports, getReportsInWorkspace } from "@/services/reportService";
 import { getWorkspace } from "@/services/workspaceService";
+import { SearchParamProps } from "@/types/props/SearchParamProps";
 import { getNextMonday } from "@/utilities/getNextMondy";
 import { parseDate } from "@/utilities/parseDate";
 import { redirect } from "next/navigation";
@@ -24,26 +25,30 @@ const Report = async ({ searchParams }: SearchParamProps) => {
       <div className="w-full flex items-start gap-4">
         <div className={`flex-1 flex flex-col ${user?.id === workspace.admin?.id ? "gap-8" : "gap-2"} `}>
           {
-            user?.id === workspace.admin?.id ? allReports.map((item) => (
-               <div className="w-full flex flex-col gap-2 bg-container border border-border rounded-xl p-2" key={item.user.id}>
-                <p>{item.user.name}</p>
-                <div className="w-full flex flex-col gap-1">
-                  {
-                    item.reports.map((report) => (
-                      <CustomLink href={`/report/${report.id}?workspace=${keyword.workspace}`} className="w-full p-2 bg-container border border-border rounded-lg" key={report.id}>
-                        <p>{parseDate(report.createdAt)} 성과보고서</p>
-                        <p className="text-xs text-gray-500">글자수: {report.content?.trim().length}자</p>
-                      </CustomLink>
-                    ))
-                  }
+            user?.id === workspace.admin?.id ? (
+              allReports.length > 0 ? allReports.map((item) => (
+                <div className="w-full flex flex-col gap-2 bg-container border border-border rounded-xl p-2" key={item.user.id}>
+                  <p>{item.user.name}</p>
+                  <div className="w-full flex flex-col gap-1">
+                    {
+                      item.reports.map((report) => (
+                        <CustomLink href={`/report/${report.id}?workspace=${keyword.workspace}`} className="w-full p-2 bg-container border border-border rounded-lg" key={report.id}>
+                          <p>{parseDate(report.createdAt)} 성과보고서</p>
+                          <p className="text-xs text-gray-500">글자수: {report.content?.trim().length}자</p>
+                        </CustomLink>
+                      ))
+                    }
+                  </div>
                 </div>
-              </div>
-            )) : myReports.map((item) => (
-              <div className="wfull flex flex-col gap-1 p-2 bg-container border border-border rounded-lg" key={item.id}>
-                <p>{item.createdAt?.toISOString()}</p>
-                <p>{item.content?.trim().length}</p>
-              </div>
-            ))
+              )) : <p className="text-gray-500">데이터 없음</p>
+            ) : (
+              myReports.length > 0 ? myReports.map((item) => (
+                <div className="wfull flex flex-col gap-1 p-2 bg-container border border-border rounded-lg" key={item.id}>
+                  <p>{item.createdAt?.toISOString()}</p>
+                  <p>{item.content?.trim().length}</p>
+                </div>
+              )) : <p className="text-gray-500">데이터 없음</p>
+            )
           }
         </div>
         

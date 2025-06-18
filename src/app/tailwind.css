@@ -6,5 +6,6 @@
   --color-container: rgba(100,100,100,0.1);
   --color-border: #4E4E4E;
   --color-primary: #799DFF;
-  --font-anton: "Anton", sans-serif
+  --font-anton: "Anton", sans-serif;
+  --breakpoint-big: 1560px;
 }

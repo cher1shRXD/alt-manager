@@ -3,6 +3,7 @@ import CustomLink from "@/components/common/CustomLink";
 import UserItem from "@/components/UserItem";
 import { getMe } from "@/services/getMe";
 import { getWorkspace } from "@/services/workspaceService";
+import { SearchParamProps } from "@/types/props/SearchParamProps";
 import { redirect } from "next/navigation";
 
 const Workspace = async ({ searchParams }: SearchParamProps) => {

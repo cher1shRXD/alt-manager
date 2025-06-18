@@ -21,8 +21,8 @@ const Sidebar = async () => {
         <NavigationItem title="워크스페이스 정보" href="/workspace" icon={<UsersRound size={20} />} />
       </div>
       <div className="flex-1" />
-      <p className="text-xs">현재 워크스페이스: <CurrentWorkspace /></p>
-      <CustomLink href="/choose-workspace" className="w-full bg-border rounded-lg py-2 flex gap-1 items-center justify-center text-xs">워크스페이스 변경 <ArrowLeftRight size={16} /></CustomLink>
+      <p className="text-xs big:text-base">현재 워크스페이스: <CurrentWorkspace /></p>
+      <CustomLink href="/choose-workspace" className="w-full bg-border rounded-lg py-2 flex gap-1 items-center justify-center text-xs big:text-lg">워크스페이스 변경 <ArrowLeftRight size={16} /></CustomLink>
     </div>
   )
 }
