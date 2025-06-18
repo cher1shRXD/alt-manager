@@ -5,4 +5,5 @@ export interface UserItemProps {
   currentUserId?: string;
   adminId?: string;
   workspaceId?: string;
+  isMentor: boolean;
 }

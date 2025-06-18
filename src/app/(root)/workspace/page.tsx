@@ -22,7 +22,7 @@ const Workspace = async ({ searchParams }: SearchParamProps) => {
         <div className="w-full flex flex-col gap-2">
           {
             workspace.users?.map((item) => (
-              <UserItem data={{ ...item }} currentUserId={user?.id} adminId={workspace.admin?.id} key={item.id} workspaceId={workspace.id} />
+              <UserItem data={{ ...item }} currentUserId={user?.id} adminId={workspace.admin?.id} key={item.id} workspaceId={workspace.id} isMentor={!!workspace.mentors?.some(u => u.id === item.id)} />
             ))
           }
         </div>

@@ -23,18 +23,19 @@ export const getWorkspace = async (workspaceId: string) => {
   const workspace = await db
     .getRepository(Workspace)
     .createQueryBuilder("workspace")
-    .leftJoin("workspace.users", "user")
-    .where("user.id = :userId", { userId: user.id })
-    .andWhere("workspace.id = :workspaceId", { workspaceId })
+    .leftJoinAndSelect("workspace.users", "users")
     .leftJoinAndSelect("workspace.admin", "admin")
     .leftJoinAndSelect("workspace.tasks", "task")
     .leftJoinAndSelect("workspace.reports", "report")
-    .leftJoinAndSelect("workspace.users", "users")
+    .leftJoinAndSelect("workspace.mentors", "mentors")
+    .where("workspace.id = :workspaceId", { workspaceId })
     .getOne();
 
   if(!workspace) {
     throw new Error(notfound);
   }
+
+  console.log(workspace);
 
   return workspace;
 }
@@ -83,7 +84,7 @@ export const createWorkspace = async (data: WorkspaceDTO) => {
     throw new Error(notfound);
   }
 
-  const newWorkspace = workspaceRepo.create({ admin: user, name: data.title, users: [user] });
+  const newWorkspace = workspaceRepo.create({ admin: user, name: data.title, users: [user], mentors: [user] });
   await workspaceRepo.save(newWorkspace);
 
   return newWorkspace;
@@ -251,10 +252,15 @@ export const transferWorkspaceAdmin = async (
   const currentAdmin = await userRepo.findOneBy({ email: session.user.email });
   if (!currentAdmin) throw new Error(notfound);
 
-  const workspace = await workspaceRepo.findOne({
-    where: { id: workspaceId },
-    relations: ["users", "admin"],
-  });
+  const workspace = await workspaceRepo
+    .createQueryBuilder("workspace")
+    .leftJoinAndSelect("workspace.users", "users")
+    .leftJoinAndSelect("workspace.admin", "admin")
+    .leftJoinAndSelect("workspace.tasks", "task")
+    .leftJoinAndSelect("workspace.reports", "report")
+    .leftJoinAndSelect("workspace.mentors", "mentors")
+    .where("workspace.id = :workspaceId", { workspaceId })
+    .getOne();
   if (!workspace) throw new Error(notfound);
 
   if (workspace.admin && workspace.admin.id !== currentAdmin.id) throw new Error(forbidden);
@@ -263,6 +269,79 @@ export const transferWorkspaceAdmin = async (
   if (!newAdmin) throw new Error(notfound);
 
   workspace.admin = newAdmin;
+  workspace.mentors = [...(workspace.mentors || []), newAdmin];
+  await workspaceRepo.save(workspace);
+
+  return workspace;
+};
+
+export const setAsMentor = async (
+  workspaceId: string,
+  userId: string
+) => {
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user.email) throw new Error(unauthorized);
+
+  const db = await initializeDataSource();
+  const userRepo = db.getRepository(User);
+  const workspaceRepo = db.getRepository(Workspace);
+
+  const admin = await userRepo.findOneBy({ email: session.user.email });
+  if (!admin) throw new Error(notfound);
+
+  const workspace = await workspaceRepo
+    .createQueryBuilder("workspace")
+    .leftJoinAndSelect("workspace.users", "user")
+    .leftJoinAndSelect("workspace.mentors", "mentor")
+    .leftJoinAndSelect("workspace.admin", "admin")
+    .where("workspace.id = :workspaceId", { workspaceId })
+    .getOne();
+
+  if (!workspace) throw new Error(notfound);
+
+  if (workspace.admin?.id !== admin.id) throw new Error(forbidden);
+
+  const targetUser = workspace.users?.find((u) => u.id === userId);
+  if (!targetUser) throw new Error(notfound);
+
+  const alreadyMentor = workspace.mentors?.some((m) => m.id === userId);
+  if (alreadyMentor) return workspace;
+
+  workspace.mentors = [...(workspace.mentors || []), targetUser];
+  await workspaceRepo.save(workspace);
+
+  return workspace;
+};
+
+export const unsetMentor = async (
+  workspaceId: string,
+  userId: string
+) => {
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user.email) throw new Error(unauthorized);
+
+  const db = await initializeDataSource();
+  const userRepo = db.getRepository(User);
+  const workspaceRepo = db.getRepository(Workspace);
+
+  const admin = await userRepo.findOneBy({ email: session.user.email });
+  if (!admin) throw new Error(notfound);
+
+  const workspace = await workspaceRepo
+    .createQueryBuilder("workspace")
+    .leftJoinAndSelect("workspace.users", "user")
+    .leftJoinAndSelect("workspace.mentors", "mentor")
+    .leftJoinAndSelect("workspace.admin", "admin")
+    .where("workspace.id = :workspaceId", { workspaceId })
+    .getOne();
+
+  if (!workspace) throw new Error(notfound);
+  if (workspace.admin?.id !== admin.id) throw new Error(forbidden);
+
+  const isMentor = workspace.mentors?.some((m) => m.id === userId);
+  if (!isMentor) return workspace;
+
+  workspace.mentors = (workspace.mentors || []).filter((m) => m.id !== userId);
   await workspaceRepo.save(workspace);
 
   return workspace;

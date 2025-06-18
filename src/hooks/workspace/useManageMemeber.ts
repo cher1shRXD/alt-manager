@@ -19,6 +19,30 @@ export const useManageMember = (workspaceId: string | null, userId: string | nul
     } 
   }
 
+  const setMentorSubmit = async () => {
+    try{
+      const { workspace } = await customFetch.patch<{ workspace: Workspace }>(`/api/workspace/${workspaceId}/${userId}/mentor`, {});
+      if(workspace) {
+        router.replace(`/workspace?workspace=${workspace.id}`);
+      }
+    }catch(e){
+      toast.error((e as ErrorResponse).message);
+      router.replace(`/workspace?workspace=${workspaceId}`);
+    } 
+  }
+
+  const unsetMentorSubmit = async () => {
+    try{
+      const { workspace } = await customFetch.delete<{ workspace: Workspace }>(`/api/workspace/${workspaceId}/${userId}/mentor`);
+      if(workspace) {
+        router.replace(`/workspace?workspace=${workspace.id}`);
+      }
+    }catch(e){
+      toast.error((e as ErrorResponse).message);
+      router.replace(`/workspace?workspace=${workspaceId}`);
+    } 
+  }
+
   const deleteSubmit = async () => {
     try{
       const { workspace } = await customFetch.delete<{ workspace: Workspace }>(`/api/workspace/${workspaceId}/${userId}`);
@@ -33,6 +57,8 @@ export const useManageMember = (workspaceId: string | null, userId: string | nul
 
   return {
     deleteSubmit,
-    updateSubmit
+    updateSubmit,
+    setMentorSubmit,
+    unsetMentorSubmit
   }
 }

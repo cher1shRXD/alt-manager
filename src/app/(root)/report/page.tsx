@@ -19,7 +19,7 @@ const Report = async ({ searchParams }: SearchParamProps) => {
   const myReports = await getMyReports(keyword.workspace as string);
 
   return (
-    <div className="w-full flex flex-col gap-8">
+    <div className="w-full flex flex-col gap-4">
       <p className="text-xl">성과보고서 목록</p>
       <div className="w-full flex items-start gap-4">
         <div className={`flex-1 flex flex-col ${user?.id === workspace.admin?.id ? "gap-8" : "gap-2"} `}>

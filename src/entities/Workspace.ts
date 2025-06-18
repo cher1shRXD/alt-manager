@@ -23,4 +23,8 @@ export class Workspace {
 
   @ManyToOne("User", "adminWorkspaces")
   admin?: User;
+
+  @ManyToMany("User", "mentorWorkspaces", { cascade: true })
+  @JoinTable()
+  mentors?: User[];
 }
