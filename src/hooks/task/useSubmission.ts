@@ -10,6 +10,7 @@ export const useSubmission = (workspaceId: string | null, taskId: number, submit
   const [isSubmitted, setIsSubmitted] = useState(submitted);
   const inputRef = useRef<HTMLInputElement>(null);
   const [submissionId, setSubmissionId] = useState(submittedId);
+  const [loading, setLoading] = useState(false);
 
   const handleFiles = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileArr = e.target.files;
@@ -47,6 +48,7 @@ export const useSubmission = (workspaceId: string | null, taskId: number, submit
       return;
     }
     try{
+      setLoading(true);
       if(!isSubmitted) {
         const { taskSubmission } = await customFetch.post<{ taskSubmission: TaskSubmission }>(`/api/task/${workspaceId}/${taskId}`, files);
         if(taskSubmission) {
@@ -64,6 +66,8 @@ export const useSubmission = (workspaceId: string | null, taskId: number, submit
       
     }catch(e){
       toast.error((e as ErrorResponse).message)
+    }finally{
+      setLoading(false);
     }
   }
 
@@ -74,6 +78,7 @@ export const useSubmission = (workspaceId: string | null, taskId: number, submit
     openFileSelector,
     inputRef,
     submit,
-    isSubmitted
+    isSubmitted,
+    loading
   }
 }

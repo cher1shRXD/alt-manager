@@ -21,6 +21,7 @@ const Submission = ({ taskId, submissions }: SubmissionProps) => {
     openFileSelector,
     submit,
     isSubmitted,
+    loading
   } = useSubmission(searchParams.get("workspace"), taskId, submitted, submittedFiles, submissionId);
 
   return (
@@ -47,12 +48,16 @@ const Submission = ({ taskId, submissions }: SubmissionProps) => {
                 )}
                 <p className="text-xs">{item.filename}</p>
                 <div className="flex-1" />
-                <X
-                  onClick={() => handleRemoveFile(item.url)}
-                  strokeWidth={2}
-                  className="text-red-500 cursor-pointer"
-                  size={20}
-                />
+                {
+                  !isSubmitted && (
+                    <X
+                      onClick={() => handleRemoveFile(item.url)}
+                      strokeWidth={2}
+                      className="text-red-500 cursor-pointer"
+                      size={20}
+                    />
+                  )
+                }
               </div>
             );
           })
@@ -76,12 +81,17 @@ const Submission = ({ taskId, submissions }: SubmissionProps) => {
           ref={inputRef}
           onChange={handleFiles}
         />
-        <button
-          className={`p-2 text-xs rounded-lg text-center cursor-pointer ${ isSubmitted ? "border border-primary bg-container text-primary" : "bg-primary" }`}
-          disabled={files.length <= 0}
-          onClick={submit}>
-          {isSubmitted ? "제출 취소" : "제출하기"}
-        </button>
+        {
+          files.length > 0 && (
+            <button
+              className={`p-2 text-xs rounded-lg text-center cursor-pointer ${ isSubmitted ? "border border-primary bg-container text-primary" : "bg-primary" } disabled:bg-container`}
+              disabled={loading}
+              onClick={submit}>
+              {isSubmitted ? loading ? "취소중..." : "제출 취소" : loading ? "제출중..." : "제출하기"}
+            </button>
+          )
+        }
+        
       </div>
     </div>
   );
