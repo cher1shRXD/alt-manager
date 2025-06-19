@@ -20,7 +20,7 @@ export class Task {
   @ManyToOne("User", "mentorTask", { cascade: true })
   mentor?: User;
 
-  @ManyToMany("User", "menteeTask", { cascade: true })
+  @ManyToMany("User", "menteeTask")
   @JoinTable()
   mentees?: User[];
 

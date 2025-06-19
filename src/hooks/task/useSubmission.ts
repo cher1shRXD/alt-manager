@@ -5,10 +5,11 @@ import { SubmittedFile } from "@/types/SubmittedFile";
 import { customFetch } from "@/utilities/customFetch";
 import { useRef, useState } from "react"
 
-export const useSubmission = (workspaceId: string | null, taskId: number, submitted: boolean, submittedFiles: SubmittedFile[], submissionid: number) => {
+export const useSubmission = (workspaceId: string | null, taskId: number, submitted: boolean, submittedFiles: SubmittedFile[], submittedId: number) => {
   const [files, setFiles] = useState<SubmittedFile[]>(submittedFiles);
   const [isSubmitted, setIsSubmitted] = useState(submitted);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [submissionId, setSubmissionId] = useState(submittedId);
 
   const handleFiles = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileArr = e.target.files;
@@ -46,14 +47,15 @@ export const useSubmission = (workspaceId: string | null, taskId: number, submit
       return;
     }
     try{
-      if(isSubmitted) {
+      if(!isSubmitted) {
         const { taskSubmission } = await customFetch.post<{ taskSubmission: TaskSubmission }>(`/api/task/${workspaceId}/${taskId}`, files);
         if(taskSubmission) {
           toast.success("제출 완료");
+          setSubmissionId(taskSubmission.id || 0);
           setIsSubmitted(true);
         }
       }else{
-        const { taskSubmission } = await customFetch.delete<{ taskSubmission: TaskSubmission }>(`/api/task/${workspaceId}/${taskId}/${submissionid}`);
+        const { taskSubmission } = await customFetch.delete<{ taskSubmission: TaskSubmission }>(`/api/task/${workspaceId}/${taskId}/${submissionId}`);
         if(taskSubmission) {
           toast.success("제출 취소 완료");
           setIsSubmitted(false);

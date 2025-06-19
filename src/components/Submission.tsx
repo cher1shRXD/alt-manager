@@ -10,9 +10,9 @@ import { IMAGE_EXT } from "@/constants/imageExt";
 
 const Submission = ({ taskId, submissions }: SubmissionProps) => {
   const searchParams = useSearchParams();
-  const submitted = !!submissions[submissions.length - 1].isSubmitted;
-  const submittedFiles: SubmittedFile[] = submissions[submissions.length - 1].files?.map(item => ({ url: item.url || "", filename: item.originalName || "" })) || [];
-  const submissionId = submissions[submissions.length - 1].id || 0;
+  const submitted = submissions.length > 0 ? !!submissions[submissions.length - 1].isSubmitted : false;
+  const submittedFiles: SubmittedFile[] = submissions.length > 0 ? submissions[submissions.length - 1].files?.map(item => ({ url: item.url || "", filename: item.originalName || "" })) || [] : [];
+  const submissionId = submissions.length > 0 ? submissions[submissions.length - 1].id || 0 : 0;
   const {
     files,
     handleFiles,

@@ -154,12 +154,17 @@ const task = await db
   .leftJoinAndSelect("submissions.files", "submissionFiles")
   .where("task.id = :taskId", { taskId })
   .andWhere("workspace.id = :workspaceId", { workspaceId })
-  .andWhere("submissionUser.id = :userId", { userId: user.id })
+  // .andWhere("submissionUser.id = :userId", { userId: user.id })
   .getOne();
 
-  const isMentee = task?.mentees?.some(u => u.id === user.id);
+  console.log(task?.mentees);
+
+  const isMentee = !!task?.mentees?.some(u => u.id === user.id);
   const isMentor = workspace.mentors?.some(u => u.id === user.id);
   const isAdmin = workspace.admin?.id === user.id;
+
+  console.log(isMentee, isMentor, isAdmin);
+
   if(!isMentee && !isMentor && !isAdmin) throw new Error(forbidden);
 
   if (!task) throw new Error(notfound);
