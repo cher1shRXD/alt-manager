@@ -1,8 +1,14 @@
 import { ErrorResponse } from "@/types/ErrorResponse";
 
-const request = async <T>(url: string, options = {}) => {
+const request = async <T>(url: string, options: any = {}) => {
   try {
-    const response = await fetch(`${url}`, options);
+    let fetchOptions = { ...options };
+    if (fetchOptions.body instanceof FormData) {
+      fetchOptions.headers = fetchOptions.headers ? { ...fetchOptions.headers } : {};
+    } else {
+      fetchOptions.headers = fetchOptions.headers ? { ...fetchOptions.headers, "Content-Type": "application/json" } : { "Content-Type": "application/json" };
+    }
+    const response = await fetch(`${url}`, fetchOptions);
     if (!response.ok) {
       const error = await response.json() as ErrorResponse;
       throw new Error(error.message);
