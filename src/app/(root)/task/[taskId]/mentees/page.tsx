@@ -19,7 +19,7 @@ const TaskMentee = async ({ params, searchParams }: { params: Promise<{ taskId: 
   return (
     <div className="w-full flex items-start gap-4 mb-4">
       <div className="flex-1 p-2 bg-container rounded-xl border border-border flex flex-col gap-4 items-start">
-        <p className="p-2 min-w-40 bg-container border border-border rounded-lg text-xl">{task.title}</p>
+        <p className="p-2 w-full bg-container border border-border rounded-lg text-xl">{task.title}</p>
         <textarea value={task.description} readOnly className="w-full outline-none min-h-80 p-2 resize-none bg-container border border-border rounded-lg" />
         <div className="w-full flex flex-col gap-1">
           <p>과제 대상</p>

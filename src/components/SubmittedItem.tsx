@@ -17,23 +17,31 @@ const SubmittedItem = ({ file }: SubmittedItemProps) => {
   return (
     <div
       key={file.id}
-      className="flex items-center gap-2 p-2 bg-container border border-border rounded-lg cursor-pointer"
+      className="flex flex-col items-start gap-2 p-2 bg-container border border-border rounded-lg cursor-pointer"
       onClick={() => (file && file.url && file.originalName) && setFile({ url: file.url, name: file.originalName })}
     >
+      <div className="flex-1" />
       {isImage ? (
         <img
           src={file.url}
           alt={file.originalName}
-          className="w-8 h-8 object-cover rounded"
+          className="w-full rounded"
         />
       ) : isVideo ? (
-        <Video className="w-8 h-8 text-gray-400" />
+        <div className="w-full h-32 flex items-center justify-center">
+          <Video className="w-8 h-8 text-gray-400" />
+        </div>
       ) : isCode ? (
-        <Code2 className="w-8 h-8 text-gray-400" />
+        <div className="w-full h-32 flex items-center justify-center">
+          <Code2 className="w-8 h-8 text-gray-400" />
+        </div>
       ) : (
-        <File className="w-8 h-8 text-gray-400" />
+        <div className="w-full h-32 flex items-center justify-center">
+          <File className="w-8 h-8 text-gray-400" />
+        </div>
       )}
-      <div className="flex-1 flex flex-col gap-1">
+      <div className="flex-1" />
+      <div className="flex flex-col gap-1">
         <p className="text-xs">{file.originalName}</p>
         <p className="text-xs text-gray-500">{parseDate(new Date(file.uploadedAt || "00-00-00"))}</p>
       </div>

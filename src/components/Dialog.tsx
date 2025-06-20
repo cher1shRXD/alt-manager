@@ -36,7 +36,7 @@ const Dialog = () => {
   return (
     <dialog
       ref={dialogRef}
-      className="backdrop:bg-black/50 rounded h-[700px] m-auto outline-none bg-bg"
+      className="backdrop:bg-black/50 rounded-xl h-[700px] m-auto outline-none bg-white"
       onClick={(e) => {
         const dialog = dialogRef.current;
         if (dialog && e.target === dialog) {

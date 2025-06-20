@@ -4,9 +4,10 @@ import { useSubmission } from "@/hooks/task/useSubmission";
 import { SubmissionProps } from "@/types/props/SubmissionProps";
 import { SubmittedFile } from "@/types/SubmittedFile";
 import { getFileExtension } from "@/utilities/getFileExtension";
-import { File, X } from "lucide-react";
+import { Code2, File, Video, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { IMAGE_EXT } from "@/constants/exts";
+import { CODE_EXT, IMAGE_EXT, VIDEO_EXT } from "@/constants/exts";
+import { useDialogStore } from "@/stores/dialogStore";
 
 const Submission = ({ taskId, submissions }: SubmissionProps) => {
   const searchParams = useSearchParams();
@@ -23,6 +24,8 @@ const Submission = ({ taskId, submissions }: SubmissionProps) => {
     isSubmitted,
     loading
   } = useSubmission(searchParams.get("workspace"), taskId, submitted, submittedFiles, submissionId);
+  const { setFile } = useDialogStore();
+  
 
   return (
     <div className="w-full max-w-80 bg-container border border-border rounded-xl p-2 flex flex-col gap-4 sticky top-4">
@@ -32,18 +35,26 @@ const Submission = ({ taskId, submissions }: SubmissionProps) => {
           files.map((item, idx) => {
             const extension = getFileExtension(item.url);
             const isImage = IMAGE_EXT.includes(extension);
-
+            const isVideo = VIDEO_EXT.includes(extension);
+            const isCode = CODE_EXT.includes(extension);
+            
             return (
               <div
                 key={idx}
-                className="flex items-center gap-2 p-2 bg-container border border-border rounded-lg">
+                className="flex items-center gap-2 p-2 bg-container border border-border rounded-lg cursor-pointer"
+                onClick={() => setFile({ url: item.url, name: item.filename })}
+              >
                 {isImage ? (
                   <img
                     src={item.url}
                     alt={item.filename}
                     className="w-8 h-8 object-cover rounded"
                   />
-                ) : (
+                ) : isVideo ? (
+                  <Video className="w-8 h-8 text-gray-400" />
+                ) : isCode ? (
+                  <Code2 className="w-8 h-8 text-gray-400" />
+                ) :(
                   <File className="w-8 h-8 text-gray-400" />
                 )}
                 <p className="text-xs">{item.filename}</p>

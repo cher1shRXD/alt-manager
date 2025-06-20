@@ -11,11 +11,11 @@ const FilePreview = ({ url, name }: FilePreviewProps) => {
   const extension = name.split('.').pop()?.toLowerCase();
 
   if (IMAGE_EXT.includes(extension || "")) {
-    return <img src={url} alt={name} className="max-w-full h-[700px] m-auto" />;
+    return <img src={url} alt={name} className="max-w-full h-[700px] m-auto outline-none" />;
   }
 
   if (VIDEO_EXT.includes(extension || "")) {
-    return <video controls src={url} className="max-w-full h-[700px] m-auto" />;
+    return <video controls src={url} className="max-w-full h-[700px] m-auto outline-none" />;
   }
 
   if (extension === PDF_EXT) {
@@ -42,7 +42,7 @@ const FilePreview = ({ url, name }: FilePreviewProps) => {
         <MonacoEditor
           height="100%"
           language={getLanguage(extension || "")}
-          theme="vs-dark"
+          theme="vs-dark" 
           options={{ readOnly: true }}
           path={name}
           value={""}

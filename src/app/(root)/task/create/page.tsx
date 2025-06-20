@@ -1,5 +1,6 @@
 "use client";
 
+import CustomLink from "@/components/common/CustomLink";
 import { useCreateTask } from "@/hooks/task/useCreateTask";
 import { useGetWorkspace } from "@/hooks/workspace/useGetWorkspace";
 import { useSearchParams } from "next/navigation";
@@ -54,7 +55,10 @@ const CreateTask = () => {
             <input type="date" value={taskData.endDate} onChange={handleData} name="endDate" className="border p-2 rounded" />
           </div>
         </div>
-        <button type="submit" className="bg-primary text-white py-2 rounded font-semibold">과제 출제</button>
+        <div className="w-full flex flex-col gap-1">
+          <button type="submit" className="bg-primary text-white py-2 rounded font-semibold">과제 출제</button>
+          <CustomLink className="w-full text-center py-2 rounded font-semibold border border-border bg-container text-red-500" href={`/task?workspace=${searchParams.get("workspace")}`}>과제 목록으로</CustomLink>
+        </div>
       </form>
     </div>
   );
