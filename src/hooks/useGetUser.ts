@@ -15,7 +15,7 @@ export const useGetUser = (userId: string | null) => {
 
   useEffect(() => {
     get();
-  }, []);
+  }, [userId]);
 
   return username;
 }

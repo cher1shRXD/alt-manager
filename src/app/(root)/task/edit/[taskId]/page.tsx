@@ -2,13 +2,17 @@
 
 import CustomLink from "@/components/common/CustomLink";
 import { useCreateTask } from "@/hooks/task/useCreateTask";
+import { useEditTask } from "@/hooks/task/useEditTask";
 import { useGetWorkspace } from "@/hooks/workspace/useGetWorkspace";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
-const CreateTask = () => {
+const EditTask = () => {
   const searchParams = useSearchParams();
-  const { taskData, handleData, submit, handleMentees } = useCreateTask(
-    searchParams.get("workspace")
+  const pathname = usePathname();
+  const taskId = pathname.split('/').pop();
+  const { taskData, handleData, submit, handleMentees } = useEditTask(
+    searchParams.get("workspace"),
+    parseInt(taskId || "0")
   );
 
   const workspace = useGetWorkspace(searchParams.get("workspace"));
@@ -93,4 +97,4 @@ const CreateTask = () => {
   );
 };
 
-export default CreateTask;
+export default EditTask;

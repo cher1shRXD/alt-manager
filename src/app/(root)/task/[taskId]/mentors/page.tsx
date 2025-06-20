@@ -1,3 +1,4 @@
+import CustomLink from "@/components/common/CustomLink";
 import SubmittedItem from "@/components/SubmittedItem";
 import { CODE_EXT, IMAGE_EXT, VIDEO_EXT } from "@/constants/exts";
 import { getTaskDetailMentors } from "@/services/taskService";
@@ -59,8 +60,9 @@ const TaskMentor = async ({
             {parseDate(task.createdAt)} / {task.mentor?.name}
           </p>
         </div>
-        <div className="w-full flex items-center justify-end">
-          
+        <div className="w-full flex items-center gap-2">
+          <CustomLink href={`/delete-task?workspace=${keyword.workspace}&taskId=${taskId}`} className="text-center p-2 px-4 rounded-lg font-semibold border border-border bg-container text-red-500 text-sm">과제 삭제</CustomLink>
+          <CustomLink href={`/task/edit/${taskId}?workspace=${keyword.workspace}`} className="text-center p-2 px-4 rounded-lg font-semibold border border-primary bg-container text-primary text-sm">과제 수정</CustomLink>
         </div>
       </div>
       <p className="text-xl">과제 제출 현황</p>

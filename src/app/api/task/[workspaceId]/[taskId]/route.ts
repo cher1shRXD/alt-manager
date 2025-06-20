@@ -1,4 +1,5 @@
-import { submitTask } from "@/services/taskService";
+import { deleteTask, getIsMentee, getTaskDetailMentees, getTaskDetailMentors, submitTask, updateTask } from "@/services/taskService";
+import { TaskDTO } from "@/types/dto/TaskDTO";
 import { SubmittedFile } from "@/types/SubmittedFile";
 import { errorHandler } from "@/utilities/errorHandler";
 import { NextRequest, NextResponse } from "next/server";
@@ -16,3 +17,41 @@ export const POST = async (req: NextRequest, { params }: { params: Promise<{ tas
   }
 }
 
+export const GET = async (req: NextRequest, { params }: { params: Promise<{ workspaceId: string, taskId: string }> }) => {
+  try{
+    const { workspaceId, taskId } = await params;
+
+    const isMentee = await getIsMentee(parseInt(taskId));
+    const task = isMentee ? await getTaskDetailMentees(workspaceId, parseInt(taskId)) : await getTaskDetailMentors(workspaceId, parseInt(taskId));
+
+    return NextResponse.json({ task }, { status: 201 });
+  }catch(e){
+    return errorHandler(e as string);
+  }
+}
+
+export const PATCH = async (req: NextRequest, { params }: { params: Promise<{ workspaceId: string, taskId: string }> }) => {
+  try{
+    const data: TaskDTO = await req.json();
+    const { workspaceId, taskId } = await params;
+
+    const task = await updateTask(workspaceId, parseInt(taskId), data);
+
+    return NextResponse.json({ task }, { status: 201 });
+  }catch(e){
+    return errorHandler(e as string);
+  }
+}
+
+export const DELETE = async (req: NextRequest, { params }: { params: Promise<{ workspaceId: string, taskId: string }> }) => {
+  try{
+    const { workspaceId, taskId } = await params;
+
+    const task = await deleteTask(workspaceId, parseInt(taskId));
+
+    return NextResponse.json({ task }, { status: 201 });
+  }catch(e){
+    console.log(e)
+    return errorHandler(e as string);
+  }
+}

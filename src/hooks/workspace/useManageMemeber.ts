@@ -11,11 +11,11 @@ export const useManageMember = (workspaceId: string | null, userId: string | nul
     try{
       const { workspace } = await customFetch.patch<{ workspace: Workspace }>(`/api/workspace/${workspaceId}/${userId}`, {});
       if(workspace) {
-        router.replace(`/workspace?workspace=${workspace.id}`);
+        router.back();
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);
-      router.replace(`/workspace?workspace=${workspaceId}`);
+      router.back();
     } 
   }
 
@@ -23,11 +23,11 @@ export const useManageMember = (workspaceId: string | null, userId: string | nul
     try{
       const { workspace } = await customFetch.patch<{ workspace: Workspace }>(`/api/workspace/${workspaceId}/${userId}/mentor`, {});
       if(workspace) {
-        router.replace(`/workspace?workspace=${workspace.id}`);
+        router.back();
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);
-      router.replace(`/workspace?workspace=${workspaceId}`);
+      router.back();
     } 
   }
 
@@ -35,11 +35,11 @@ export const useManageMember = (workspaceId: string | null, userId: string | nul
     try{
       const { workspace } = await customFetch.delete<{ workspace: Workspace }>(`/api/workspace/${workspaceId}/${userId}/mentor`);
       if(workspace) {
-        router.replace(`/workspace?workspace=${workspace.id}`);
+        router.back();
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);
-      router.replace(`/workspace?workspace=${workspaceId}`);
+      router.back();
     } 
   }
 
@@ -47,11 +47,11 @@ export const useManageMember = (workspaceId: string | null, userId: string | nul
     try{
       const { workspace } = await customFetch.delete<{ workspace: Workspace }>(`/api/workspace/${workspaceId}/${userId}`);
       if(workspace) {
-        router.replace(`/workspace?workspace=${workspace.id}`);
+        router.back();
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);
-      router.replace(`/workspace?workspace=${workspaceId}`);
+      router.back();
     } 
   }
 

@@ -3,9 +3,11 @@ import { Workspace } from "@/entities/Workspace";
 import { ErrorResponse } from "@/types/ErrorResponse";
 import { customFetch } from "@/utilities/customFetch"
 import { useEffect, useState } from "react";
+import { useCustomRouter } from "../useCustomRouter";
 
 export const useGetWorkspace = (workspaceId: string | null) => {
   const [workspace, setWorkspace] = useState<Workspace>();
+  const router = useCustomRouter();
 
   const get = async () => {
     if(!workspaceId) return;
@@ -16,6 +18,7 @@ export const useGetWorkspace = (workspaceId: string | null) => {
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);
+      router.replace(`/choose-workspace`);
     }
   }
 

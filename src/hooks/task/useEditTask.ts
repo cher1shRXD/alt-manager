@@ -1,13 +1,13 @@
-import { toast } from "@/components/provider/ToastProvider";
-import { Task } from "@/entities/Task";
-import { User } from "@/entities/User";
 import { TaskDTO } from "@/types/dto/TaskDTO";
-import { ErrorResponse } from "@/types/ErrorResponse";
-import { customFetch } from "@/utilities/customFetch";
-import { useState } from "react"
+import { useEffect, useState } from "react";
 import { useCustomRouter } from "../useCustomRouter";
+import { User } from "@/entities/User";
+import { toast } from "@/components/provider/ToastProvider";
+import { customFetch } from "@/utilities/customFetch";
+import { Task } from "@/entities/Task";
+import { ErrorResponse } from "@/types/ErrorResponse";
 
-export const useCreateTask = (workspaceId: string | null) => {
+export const useEditTask = (workspaceId: string | null, taskId: number) => {
   const [taskData, setTaskData] = useState<TaskDTO>({ title: "", description: "", endDate: "", startDate: "", mentees: [] });
   const router = useCustomRouter();
 
@@ -29,6 +29,25 @@ export const useCreateTask = (workspaceId: string | null) => {
     });
   };
 
+  const getTask = async () => {
+    try{
+      const { task } = await customFetch.get<{ task: Task }>(`/api/task/${workspaceId}/${taskId}`);
+      console.log(task);
+      if(task) {
+        setTaskData({ description: task.description || "", mentees: task.mentees || [], title: task.title || "", endDate: `${task.endDate}`.split("T")[0], startDate: `${task.startDate}`.split("T")[0]})
+      }
+    }catch(e){
+      toast.error((e as ErrorResponse).message);
+      router.back();
+    }
+  }
+
+  useEffect(() => {
+    if(workspaceId && taskId) {
+      getTask();
+    }
+  }, [workspaceId, taskId]);
+
   const submit = async () => {
     if(!workspaceId) return;
     const { title, description, mentees, startDate, endDate } = taskData;
@@ -47,9 +66,9 @@ export const useCreateTask = (workspaceId: string | null) => {
     }
     
     try{
-      const { task } = await customFetch.post<{ task: Task }>(`/api/task/${workspaceId}`, taskData);
+      const { task } = await customFetch.patch<{ task: Task }>(`/api/task/${workspaceId}/${taskId}`, taskData);
       if(task) {
-        toast.success("과제가 생성되었습니다.");
+        toast.success("과제가 수정되었습니다.");
         router.back();
       }
     }catch(e){

@@ -5,7 +5,7 @@ import { useState } from "react"
 import { useCustomRouter } from "../useCustomRouter";
 import { ErrorResponse } from "@/types/ErrorResponse";
 
-export const useManageWorkspace = (workspaceId:string | null) => {
+export const useManageWorkspace = (workspaceId: string | null) => {
   const [newTitle, setNewTitle] = useState("");
   const router = useCustomRouter();
 
@@ -22,11 +22,11 @@ export const useManageWorkspace = (workspaceId:string | null) => {
     try{
       const { workspace } = await customFetch.patch<{ workspace: Workspace }>(`/api/workspace/${workspaceId}`, { title: newTitle });
       if(workspace) {
-        router.replace(`/workspace?workspace=${workspace.id}`);
+        router.back();
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);
-      router.replace(`/workspace?workspace=${workspaceId}`);
+      router.back();
     } 
   }
 
@@ -38,7 +38,7 @@ export const useManageWorkspace = (workspaceId:string | null) => {
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);
-      router.replace(`/workspace?workspace=${workspaceId}`);
+      router.back();
     } 
   }
 
