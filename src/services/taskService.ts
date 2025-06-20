@@ -41,6 +41,9 @@ export const getTasks = async (workspaceId: string) => {
     .leftJoinAndSelect("task.workspace", "workspace")
     .leftJoinAndSelect("task.mentor", "mentor")
     .leftJoinAndSelect("task.mentees", "mentees")
+    .leftJoinAndSelect("task.submissions", "submissions")
+    .leftJoinAndSelect("submissions.user", "submissionUser")
+    .leftJoinAndSelect("submissions.files", "submissionFiles")
     .where("workspace.id = :workspaceId", { workspaceId })
     .getMany();
 
@@ -66,11 +69,20 @@ export const getMyTasks = async (workspaceId: string) => {
     .leftJoinAndSelect("user.menteeTask", "task")
     .leftJoinAndSelect("task.workspace", "workspace")
     .leftJoinAndSelect("task.mentor", "mentor")
+    .leftJoinAndSelect("task.mentees", "mentees")
+    .leftJoinAndSelect("task.submissions", "submissions")
+    .leftJoinAndSelect("submissions.user", "submissionUser")
+    .leftJoinAndSelect("submissions.files", "submissionFiles")
     .where("user.id = :userId", { userId: user.id })
     .andWhere("task.workspace = :workspaceId", { workspaceId })
     .getOne();
 
-  return userWithTasks?.menteeTask || [];
+  const tasks = userWithTasks?.menteeTask || [];
+
+  return tasks.map((task: any) => {
+    const mySubmissions = task.submissions?.filter((item: any) => item.user?.id === user.id) || [];
+    return { ...task, mySubmissions, submissions: undefined };
+  });
 };
 
 export const getTaskDetailMentors = async (
