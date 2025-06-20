@@ -13,8 +13,6 @@ const TaskMentee = async ({ params, searchParams }: { params: Promise<{ taskId: 
   }
 
   const task = await getTaskDetailMentees(keyword.workspace as string, parseInt(taskId));
-
-  console.log(task);
   
   return (
     <div className="w-full flex items-start gap-4 mb-16">
@@ -42,7 +40,7 @@ const TaskMentee = async ({ params, searchParams }: { params: Promise<{ taskId: 
           <p className="p-2 bg-container border border-border rounded-lg text-xs text-gray-500">{parseDate(task.createdAt)} / {task.mentor?.name}</p>
         </div>
       </div>
-      <Submission taskId={parseInt(taskId)} submissions={JSON.parse(JSON.stringify(task.mySubmissions))} />
+      <Submission taskId={parseInt(taskId)} submissions={JSON.parse(JSON.stringify(task.mySubmissions))} isInDeadline={new Date <= new Date(`${task.endDate}`) && new Date >= new Date(`${task.startDate}`)} />
     </div>
     
   )

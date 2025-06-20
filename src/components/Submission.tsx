@@ -9,7 +9,7 @@ import { useSearchParams } from "next/navigation";
 import { CODE_EXT, IMAGE_EXT, VIDEO_EXT } from "@/constants/exts";
 import { useDialogStore } from "@/stores/dialogStore";
 
-const Submission = ({ taskId, submissions }: SubmissionProps) => {
+const Submission = ({ taskId, submissions, isInDeadline }: SubmissionProps) => {
   const searchParams = useSearchParams();
   const submitted = submissions.length > 0 ? !!submissions[submissions.length - 1].isSubmitted : false;
   const submittedFiles: SubmittedFile[] = submissions.length > 0 ? submissions[submissions.length - 1].files?.map(item => ({ url: item.url || "", filename: item.originalName || "" })) || [] : [];
@@ -82,13 +82,13 @@ const Submission = ({ taskId, submissions }: SubmissionProps) => {
       </div>
       <div className="w-full flex flex-col gap-2">
         {
-          !isSubmitted && (
+          isInDeadline ? !isSubmitted && (
             <button
               className="p-2 text-xs border border-primary bg-container rounded-lg text-center text-primary cursor-pointer"
               onClick={openFileSelector}>
               파일선택
             </button>
-          )
+          ) : <p className="p-2 text-xs border border-border bg-container rounded-lg text-center text-border cursor-pointer">제출 할 수 없는 기간입니다.</p>
         }
         <input
           type="file"
