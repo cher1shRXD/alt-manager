@@ -2,10 +2,10 @@ import { CODE_EXT, IMAGE_EXT, OFFICE_EXT, PDF_EXT, VIDEO_EXT } from "@/constants
 import { FilePreviewProps } from "@/types/props/FilePreviewProps";
 import { getLanguage } from "@/utilities/getLanguage";
 import dynamic from "next/dynamic";
-import { Document, Page } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 
 const MonacoEditor = dynamic(() => import("@monaco-editor/react"), { ssr: false });
+const PDFViewer = dynamic(() => import("pdf-viewer-reactjs"), { ssr: false });
 
 const FilePreview = ({ url, name }: FilePreviewProps) => {
   const extension = name.split('.').pop()?.toLowerCase();
@@ -20,9 +20,12 @@ const FilePreview = ({ url, name }: FilePreviewProps) => {
 
   if (extension === PDF_EXT) {
     return (
-      <Document file={url}>
-        <Page pageNumber={1} />
-      </Document>
+      <iframe
+        src={url}
+        width="700px"
+        height="100%"
+
+      />
     );
   }
 
@@ -30,7 +33,7 @@ const FilePreview = ({ url, name }: FilePreviewProps) => {
     return (
       <iframe
         src={`https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}`}
-        width="100%"
+        width="700px"
         height="100%"
       />
     );

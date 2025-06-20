@@ -14,12 +14,18 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.67.3
         version: 5.67.3(react@19.0.0)
+      '@types/pdf-viewer-reactjs':
+        specifier: ^2.2.5
+        version: 2.2.5
       axios:
         specifier: ^1.7.9
         version: 1.8.2
       bcrypt:
         specifier: ^6.0.0
         version: 6.0.0
+      canvas:
+        specifier: ^3.1.1
+        version: 3.1.1
       cookies-next:
         specifier: ^5.0.2
         version: 5.1.0(next@15.2.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
@@ -41,6 +47,9 @@ importers:
       next-client-cookies:
         specifier: ^2.0.1
         version: 2.0.1(next@15.2.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
+      pdf-viewer-reactjs:
+        specifier: ^2.2.3
+        version: 2.2.3(bulma-helpers@0.4.3)(bulma@1.0.4)(material-design-icons@3.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -472,6 +481,9 @@ packages:
   '@types/node@20.17.24':
     resolution: {integrity: sha512-d7fGCyB96w9BnWQrOsJtpyiSaBcAYYr75bnK6ZRjDbql2cGLj/3GsL5OYmLPNq76l7Gf2q4Rv9J2o6h5CrD9sA==}
 
+  '@types/pdf-viewer-reactjs@2.2.5':
+    resolution: {integrity: sha512-vKdAEls+/pORUFKe0Cgg7e+CzFDmx3g6AjLAaUiloBtqN1j/f6pqbGOBhzR9IM9pSG2mRSHSqJLGjjNERUq+CQ==}
+
   '@types/react-dom@19.0.4':
     resolution: {integrity: sha512-4fSQ8vWFkg+TGhePfUzVmat3eC14TXYSsiiDSLI0dVLsrm9gZFABjPy/Qu6TKgl1tq1Bu1yDsuQgY3A3DOjCcg==}
     peerDependencies:
@@ -661,6 +673,12 @@ packages:
   buffer@6.0.3:
     resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
 
+  bulma-helpers@0.4.3:
+    resolution: {integrity: sha512-g6Ocz9dazzPHBM7+yHEvNJ4NsUkhEriFEV7pL0U47MoVBmgT6MwS0v+w3bSAVsM1iX70cnjQIFAqj2/isnp1gA==}
+
+  bulma@1.0.4:
+    resolution: {integrity: sha512-Ffb6YGXDiZYX3cqvSbHWqQ8+LkX6tVoTcZuVB3lm93sbAVXlO0D6QlOTMnV6g18gILpAXqkG2z9hf9z4hCjz2g==}
+
   busboy@1.6.0:
     resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
     engines: {node: '>=10.16.0'}
@@ -829,6 +847,10 @@ packages:
   doctrine@2.1.0:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}
     engines: {node: '>=0.10.0'}
+
+  dommatrix@1.0.3:
+    resolution: {integrity: sha512-l32Xp/TLgWb8ReqbVJAFIvXmY7go4nTxxlWiAFyhoQw9RKEOHBZNnyGvJWqDVSPmq3Y9HlM4npqF/T6VMOXhww==}
+    deprecated: dommatrix is no longer maintained. Please use @thednp/dommatrix.
 
   dotenv@16.5.0:
     resolution: {integrity: sha512-m/C+AwOAr9/W1UOIZUo232ejMNnJAJtYQjUbHoNTBNTJSvqzzDh7vnrei3o3r3m9blf6ZoDkvcw0VmozNRFJxg==}
@@ -1481,6 +1503,9 @@ packages:
   make-event-props@1.6.2:
     resolution: {integrity: sha512-iDwf7mA03WPiR8QxvcVHmVWEPfMY1RZXerDVNCRYW7dUr2ppH3J58Rwb39/WG39yTZdRSxr3x+2v22tvI0VEvA==}
 
+  material-design-icons@3.0.1:
+    resolution: {integrity: sha512-t19Z+QZBwSZulxptEu05kIm+UyfIdJY1JDwI+nx02j269m6W414whiQz9qfvQIiLrdx71RQv+T48nHhuQXOCIQ==}
+
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
@@ -1701,6 +1726,23 @@ packages:
   path2d@0.2.2:
     resolution: {integrity: sha512-+vnG6S4dYcYxZd+CZxzXCNKdELYZSKfohrk98yajCo1PtRoDgCTrrwOvK1GT0UoAdVszagDVllQc0U1vaX4NUQ==}
     engines: {node: '>=6'}
+
+  pdf-viewer-reactjs@2.2.3:
+    resolution: {integrity: sha512-HM6ngxxnbztd/N/3dB+of3jSZtzS8CjcAoIfSWe7OY9Aqwb6cXLHbluCWc//cySXDdj3hhe8Wj5Wjg7T1ktxUA==}
+    peerDependencies:
+      bulma: '>=0.8.1'
+      bulma-helpers: '>=0.3.10'
+      material-design-icons: '>=3.0.1'
+      react: '>=16.8.6'
+      react-dom: '>=16.8.6'
+
+  pdfjs-dist@2.16.105:
+    resolution: {integrity: sha512-J4dn41spsAwUxCpEoVf6GVoz908IAA3mYiLmNxg8J9kfRXc2jxpbUepcP0ocp0alVNLFthTAM8DZ1RaHh8sU0A==}
+    peerDependencies:
+      worker-loader: ^3.0.8
+    peerDependenciesMeta:
+      worker-loader:
+        optional: true
 
   pdfjs-dist@4.8.69:
     resolution: {integrity: sha512-IHZsA4T7YElCKNNXtiLgqScw4zPd3pG9do8UrznC757gMd7UPeHSL2qwNNMJo4r79fl8oj1Xx+1nh2YkzdMpLQ==}
@@ -2168,6 +2210,10 @@ packages:
   warning@4.0.3:
     resolution: {integrity: sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==}
 
+  web-streams-polyfill@3.3.3:
+    resolution: {integrity: sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw==}
+    engines: {node: '>= 8'}
+
   which-boxed-primitive@1.1.1:
     resolution: {integrity: sha512-TbX3mj8n0odCBFVlY8AxkqcHASw3L60jIuF8jFP78az3C2YhmGvqbHBpAjTRH2/xqYunrJ9g1jSyjCjpoWzIAA==}
     engines: {node: '>= 0.4'}
@@ -2548,6 +2594,10 @@ snapshots:
     dependencies:
       undici-types: 6.19.8
 
+  '@types/pdf-viewer-reactjs@2.2.5':
+    dependencies:
+      '@types/react': 19.0.10
+
   '@types/react-dom@19.0.4(@types/react@19.0.10)':
     dependencies:
       '@types/react': 19.0.10
@@ -2766,7 +2816,6 @@ snapshots:
       buffer: 5.7.1
       inherits: 2.0.4
       readable-stream: 3.6.2
-    optional: true
 
   brace-expansion@1.1.11:
     dependencies:
@@ -2785,12 +2834,15 @@ snapshots:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
-    optional: true
 
   buffer@6.0.3:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
+
+  bulma-helpers@0.4.3: {}
+
+  bulma@1.0.4: {}
 
   busboy@1.6.0:
     dependencies:
@@ -2821,15 +2873,13 @@ snapshots:
     dependencies:
       node-addon-api: 7.1.1
       prebuild-install: 7.1.3
-    optional: true
 
   chalk@4.1.2:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
 
-  chownr@1.1.4:
-    optional: true
+  chownr@1.1.4: {}
 
   client-only@0.0.1: {}
 
@@ -2916,12 +2966,10 @@ snapshots:
   decompress-response@6.0.0:
     dependencies:
       mimic-response: 3.1.0
-    optional: true
 
   dedent@1.6.0: {}
 
-  deep-extend@0.6.0:
-    optional: true
+  deep-extend@0.6.0: {}
 
   deep-is@0.1.4: {}
 
@@ -2949,6 +2997,8 @@ snapshots:
     dependencies:
       esutils: 2.0.3
 
+  dommatrix@1.0.3: {}
+
   dotenv@16.5.0: {}
 
   dunder-proto@1.0.1:
@@ -2966,7 +3016,6 @@ snapshots:
   end-of-stream@1.4.5:
     dependencies:
       once: 1.4.0
-    optional: true
 
   enhanced-resolve@5.18.1:
     dependencies:
@@ -3272,8 +3321,7 @@ snapshots:
 
   esutils@2.0.3: {}
 
-  expand-template@2.0.3:
-    optional: true
+  expand-template@2.0.3: {}
 
   fast-deep-equal@3.1.3: {}
 
@@ -3343,8 +3391,7 @@ snapshots:
       es-set-tostringtag: 2.1.0
       mime-types: 2.1.35
 
-  fs-constants@1.0.0:
-    optional: true
+  fs-constants@1.0.0: {}
 
   function-bind@1.1.2: {}
 
@@ -3393,8 +3440,7 @@ snapshots:
     dependencies:
       resolve-pkg-maps: 1.0.0
 
-  github-from-package@0.0.0:
-    optional: true
+  github-from-package@0.0.0: {}
 
   glob-parent@5.1.2:
     dependencies:
@@ -3465,8 +3511,7 @@ snapshots:
 
   inherits@2.0.4: {}
 
-  ini@1.3.8:
-    optional: true
+  ini@1.3.8: {}
 
   internal-slot@1.1.0:
     dependencies:
@@ -3728,6 +3773,8 @@ snapshots:
 
   make-event-props@1.6.2: {}
 
+  material-design-icons@3.0.1: {}
+
   math-intrinsics@1.1.0: {}
 
   merge-refs@1.3.0(@types/react@19.0.10):
@@ -3747,8 +3794,7 @@ snapshots:
     dependencies:
       mime-db: 1.52.0
 
-  mimic-response@3.1.0:
-    optional: true
+  mimic-response@3.1.0: {}
 
   minimatch@3.1.2:
     dependencies:
@@ -3762,8 +3808,7 @@ snapshots:
 
   minipass@7.1.2: {}
 
-  mkdirp-classic@0.5.3:
-    optional: true
+  mkdirp-classic@0.5.3: {}
 
   monaco-editor@0.52.2: {}
 
@@ -3787,8 +3832,7 @@ snapshots:
 
   nanoid@3.3.9: {}
 
-  napi-build-utils@2.0.0:
-    optional: true
+  napi-build-utils@2.0.0: {}
 
   natural-compare@1.4.0: {}
 
@@ -3841,10 +3885,8 @@ snapshots:
   node-abi@3.75.0:
     dependencies:
       semver: 7.7.1
-    optional: true
 
-  node-addon-api@7.1.1:
-    optional: true
+  node-addon-api@7.1.1: {}
 
   node-addon-api@8.4.0: {}
 
@@ -3900,7 +3942,6 @@ snapshots:
   once@1.4.0:
     dependencies:
       wrappy: 1.0.2
-    optional: true
 
   openid-client@5.7.1:
     dependencies:
@@ -3952,6 +3993,23 @@ snapshots:
   path2d@0.2.2:
     optional: true
 
+  pdf-viewer-reactjs@2.2.3(bulma-helpers@0.4.3)(bulma@1.0.4)(material-design-icons@3.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+    dependencies:
+      bulma: 1.0.4
+      bulma-helpers: 0.4.3
+      material-design-icons: 3.0.1
+      pdfjs-dist: 2.16.105
+      prop-types: 15.8.1
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+    transitivePeerDependencies:
+      - worker-loader
+
+  pdfjs-dist@2.16.105:
+    dependencies:
+      dommatrix: 1.0.3
+      web-streams-polyfill: 3.3.3
+
   pdfjs-dist@4.8.69:
     optionalDependencies:
       canvas: 3.1.1
@@ -3998,7 +4056,6 @@ snapshots:
       simple-get: 4.0.1
       tar-fs: 2.1.3
       tunnel-agent: 0.6.0
-    optional: true
 
   prelude-ls@1.2.1: {}
 
@@ -4016,7 +4073,6 @@ snapshots:
     dependencies:
       end-of-stream: 1.4.5
       once: 1.4.0
-    optional: true
 
   punycode@2.3.1: {}
 
@@ -4028,7 +4084,6 @@ snapshots:
       ini: 1.3.8
       minimist: 1.2.8
       strip-json-comments: 2.0.1
-    optional: true
 
   react-dom@19.0.0(react@19.0.0):
     dependencies:
@@ -4059,7 +4114,6 @@ snapshots:
       inherits: 2.0.4
       string_decoder: 1.3.0
       util-deprecate: 1.0.2
-    optional: true
 
   reflect-metadata@0.2.2: {}
 
@@ -4228,15 +4282,13 @@ snapshots:
 
   signal-exit@4.1.0: {}
 
-  simple-concat@1.0.1:
-    optional: true
+  simple-concat@1.0.1: {}
 
   simple-get@4.0.1:
     dependencies:
       decompress-response: 6.0.0
       once: 1.4.0
       simple-concat: 1.0.1
-    optional: true
 
   simple-swizzle@0.2.2:
     dependencies:
@@ -4320,7 +4372,6 @@ snapshots:
   string_decoder@1.3.0:
     dependencies:
       safe-buffer: 5.2.1
-    optional: true
 
   strip-ansi@6.0.1:
     dependencies:
@@ -4332,8 +4383,7 @@ snapshots:
 
   strip-bom@3.0.0: {}
 
-  strip-json-comments@2.0.1:
-    optional: true
+  strip-json-comments@2.0.1: {}
 
   strip-json-comments@3.1.1: {}
 
@@ -4358,7 +4408,6 @@ snapshots:
       mkdirp-classic: 0.5.3
       pump: 3.0.3
       tar-stream: 2.2.0
-    optional: true
 
   tar-stream@2.2.0:
     dependencies:
@@ -4367,7 +4416,6 @@ snapshots:
       fs-constants: 1.0.0
       inherits: 2.0.4
       readable-stream: 3.6.2
-    optional: true
 
   tiny-invariant@1.3.3: {}
 
@@ -4396,7 +4444,6 @@ snapshots:
   tunnel-agent@0.6.0:
     dependencies:
       safe-buffer: 5.2.1
-    optional: true
 
   type-check@0.4.0:
     dependencies:
@@ -4473,8 +4520,7 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  util-deprecate@1.0.2:
-    optional: true
+  util-deprecate@1.0.2: {}
 
   uuid@11.1.0: {}
 
@@ -4483,6 +4529,8 @@ snapshots:
   warning@4.0.3:
     dependencies:
       loose-envify: 1.4.0
+
+  web-streams-polyfill@3.3.3: {}
 
   which-boxed-primitive@1.1.1:
     dependencies:
@@ -4543,8 +4591,7 @@ snapshots:
       string-width: 5.1.2
       strip-ansi: 7.1.0
 
-  wrappy@1.0.2:
-    optional: true
+  wrappy@1.0.2: {}
 
   y18n@5.0.8: {}
 

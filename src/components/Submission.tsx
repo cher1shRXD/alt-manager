@@ -4,7 +4,7 @@ import { useSubmission } from "@/hooks/task/useSubmission";
 import { SubmissionProps } from "@/types/props/SubmissionProps";
 import { SubmittedFile } from "@/types/SubmittedFile";
 import { getFileExtension } from "@/utilities/getFileExtension";
-import { Code2, File, Video, X } from "lucide-react";
+import { Code2, File, Image, Video, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { CODE_EXT, IMAGE_EXT, VIDEO_EXT } from "@/constants/exts";
 import { useDialogStore } from "@/stores/dialogStore";
@@ -45,17 +45,21 @@ const Submission = ({ taskId, submissions }: SubmissionProps) => {
                 onClick={() => setFile({ url: item.url, name: item.filename })}
               >
                 {isImage ? (
-                  <img
-                    src={item.url}
-                    alt={item.filename}
-                    className="w-8 h-8 object-cover rounded"
-                  />
+                  <div className="w-full h-32 flex items-center justify-center">
+                    <Image className="text-gray-400" size={52} />
+                  </div>
                 ) : isVideo ? (
-                  <Video className="w-8 h-8 text-gray-400" />
+                  <div className="w-full h-32 flex items-center justify-center">
+                    <Video className="text-gray-400" size={52} />
+                  </div>
                 ) : isCode ? (
-                  <Code2 className="w-8 h-8 text-gray-400" />
-                ) :(
-                  <File className="w-8 h-8 text-gray-400" />
+                  <div className="w-full h-32 flex items-center justify-center">
+                    <Code2 className="text-gray-400" size={52} />
+                  </div>
+                ) : (
+                  <div className="w-full h-32 flex items-center justify-center">
+                    <File className="text-gray-400" size={52} />
+                  </div>
                 )}
                 <p className="text-xs">{item.filename}</p>
                 <div className="flex-1" />

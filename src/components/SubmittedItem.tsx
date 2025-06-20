@@ -5,7 +5,7 @@ import { useDialogStore } from "@/stores/dialogStore";
 import { SubmittedItemProps } from "@/types/props/SubmittedItemProps";
 import { getFileExtension } from "@/utilities/getFileExtension";
 import { parseDate } from "@/utilities/parseDate";
-import { Code2, File, Video } from "lucide-react";
+import { Code2, File, Image, Video } from "lucide-react";
 
 const SubmittedItem = ({ file }: SubmittedItemProps) => {
   const { setFile } = useDialogStore();
@@ -22,22 +22,20 @@ const SubmittedItem = ({ file }: SubmittedItemProps) => {
     >
       <div className="flex-1" />
       {isImage ? (
-        <img
-          src={file.url}
-          alt={file.originalName}
-          className="w-full rounded"
-        />
+        <div className="w-full h-32 flex items-center justify-center">
+          <Image className="text-gray-400" size={52} />
+        </div>
       ) : isVideo ? (
         <div className="w-full h-32 flex items-center justify-center">
-          <Video className="w-8 h-8 text-gray-400" />
+          <Video className="text-gray-400" size={52} />
         </div>
       ) : isCode ? (
         <div className="w-full h-32 flex items-center justify-center">
-          <Code2 className="w-8 h-8 text-gray-400" />
+          <Code2 className="text-gray-400" size={52} />
         </div>
       ) : (
         <div className="w-full h-32 flex items-center justify-center">
-          <File className="w-8 h-8 text-gray-400" />
+          <File className="text-gray-400" size={52} />
         </div>
       )}
       <div className="flex-1" />

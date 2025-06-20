@@ -21,7 +21,7 @@ const Task = async ({ searchParams }: SearchParamProps) => {
   const isMentor = !!workspace.mentors?.some(m => m.id === user?.id);
 
   return (
-    <div className="w-full flex items-start gap-4 mb-4">
+    <div className="w-full flex items-start gap-4 mb-16">
       <div className="flex-1 p-2 bg-container rounded-xl border border-border flex flex-col gap-2">
         <p className="w-full text-center">과제 목록</p>
         <div className="w-full flex flex-col gap-1">

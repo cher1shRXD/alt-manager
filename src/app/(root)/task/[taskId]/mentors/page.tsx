@@ -27,7 +27,7 @@ const TaskMentor = async ({
   console.log(task);
 
   return (
-    <div className="w-full flex flex-col gap-4 mb-4">
+    <div className="w-full flex flex-col gap-4 mb-16">
       <p className="text-xl">과제 내용</p>
       <div className="w-full p-2 bg-container rounded-xl border border-border flex flex-col gap-4 items-start mb-8">
         <p className="p-2 w-full bg-container border border-border rounded-lg text-xl">
