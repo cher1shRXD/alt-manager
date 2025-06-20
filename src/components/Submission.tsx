@@ -6,7 +6,7 @@ import { SubmittedFile } from "@/types/SubmittedFile";
 import { getFileExtension } from "@/utilities/getFileExtension";
 import { File, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { IMAGE_EXT } from "@/constants/imageExt";
+import { IMAGE_EXT } from "@/constants/exts";
 
 const Submission = ({ taskId, submissions }: SubmissionProps) => {
   const searchParams = useSearchParams();

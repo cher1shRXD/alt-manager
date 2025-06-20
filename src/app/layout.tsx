@@ -7,6 +7,7 @@ import {CookiesProvider} from "next-client-cookies/server";
 import QueryProvider from "@/components/provider/QueryProvider";
 import ToastContainer from "@/components/provider/ToastProvider";
 import LoadingProvider from "@/components/provider/LoadingProvider";
+import Dialog from "@/components/Dialog";
 
 export const metadata: Metadata = {
   title: "cher1sh-next-app",
@@ -33,6 +34,7 @@ const RootLayout = ({
         <QueryProvider>
           <CookiesProvider>
             <div className="w-full min-h-screen bg-bg text-white">{children}</div>
+            <Dialog />
           </CookiesProvider>
         </QueryProvider>
       </body>
