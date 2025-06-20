@@ -1,11 +1,8 @@
 import CustomLink from "@/components/common/CustomLink";
 import SubmittedItem from "@/components/SubmittedItem";
-import { CODE_EXT, IMAGE_EXT, VIDEO_EXT } from "@/constants/exts";
 import { getTaskDetailMentors } from "@/services/taskService";
 import { SearchParamProps } from "@/types/props/SearchParamProps";
-import { getFileExtension } from "@/utilities/getFileExtension";
 import { parseDate } from "@/utilities/parseDate";
-import { Code2, File, Video } from "lucide-react";
 import { redirect } from "next/navigation";
 
 const TaskMentor = async ({

@@ -79,8 +79,8 @@ export const getMyTasks = async (workspaceId: string) => {
 
   const tasks = userWithTasks?.menteeTask || [];
 
-  return tasks.map((task: any) => {
-    const mySubmissions = task.submissions?.filter((item: any) => item.user?.id === user.id) || [];
+  return tasks.map((task) => {
+    const mySubmissions = task.submissions?.filter((item) => item.user?.id === user.id) || [];
     return { ...task, mySubmissions, submissions: undefined };
   });
 };

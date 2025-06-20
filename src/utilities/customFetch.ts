@@ -1,8 +1,8 @@
 import { ErrorResponse } from "@/types/ErrorResponse";
 
-const request = async <T>(url: string, options: any = {}) => {
+const request = async <T>(url: string, options: RequestInit = {}) => {
   try {
-    let fetchOptions = { ...options };
+    const fetchOptions: RequestInit = { ...options };
     if (fetchOptions.body instanceof FormData) {
       fetchOptions.headers = fetchOptions.headers ? { ...fetchOptions.headers } : {};
     } else {

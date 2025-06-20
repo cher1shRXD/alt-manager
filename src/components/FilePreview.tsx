@@ -5,7 +5,6 @@ import dynamic from "next/dynamic";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 
 const MonacoEditor = dynamic(() => import("@monaco-editor/react"), { ssr: false });
-const PDFViewer = dynamic(() => import("pdf-viewer-reactjs"), { ssr: false });
 
 const FilePreview = ({ url, name }: FilePreviewProps) => {
   const extension = name.split('.').pop()?.toLowerCase();

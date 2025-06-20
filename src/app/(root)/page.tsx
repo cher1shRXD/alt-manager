@@ -1,5 +1,7 @@
 import CustomLink from "@/components/common/CustomLink";
 import Logout from "@/components/common/Logout";
+import { Task } from "@/entities/Task";
+import { TaskSubmission } from "@/entities/TaskSubmission";
 import { User } from "@/entities/User";
 import { getMe } from "@/services/getMe";
 import { getTasks, getMyTasks } from "@/services/taskService";
@@ -52,7 +54,7 @@ const Home = async ({ searchParams }: SearchParamProps) => {
         </p>
         {(isMentee ? myTasks : allTasks).slice(0, 3).map((task) => {
           const mySubmissions = isMentee
-            ? (task.mySubmissions as { isSubmitted: boolean }[] | undefined) ||
+            ? ((task as Task & { mySubmissions: TaskSubmission[] }).mySubmissions as { isSubmitted: boolean }[] | undefined) ||
               []
             : [];
           let completedCount = 0;
@@ -61,7 +63,7 @@ const Home = async ({ searchParams }: SearchParamProps) => {
             menteeCount = task.mentees?.length || 0;
             completedCount = (task.mentees || []).filter((mentee: User) =>
               task.submissions?.some(
-                (s: any) => s.user?.id === mentee.id && s.isSubmitted
+                (s: TaskSubmission) => s.user?.id === mentee.id && s.isSubmitted
               )
             ).length;
           }
