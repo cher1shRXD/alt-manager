@@ -1,6 +1,6 @@
 # 1단계: 빌드
 FROM node:21-slim AS builder
-WORKDIR /git-task
+WORKDIR /alt-manager
 
 # 의존성 설치용 파일 복사 및 설치
 COPY package.json package-lock.json* pnpm-lock.yaml* ./
@@ -15,20 +15,20 @@ RUN pnpm build
 
 # 2단계: 실행
 FROM node:21-slim AS runner
-WORKDIR /git-task
+WORKDIR /alt-manager
 
 # 프로덕션 의존성만 설치
 COPY package.json pnpm-lock.yaml* ./
 RUN npm install -g pnpm && pnpm install --prod
 
 # 빌드된 파일들 복사
-COPY --from=builder /git-task/.next .next
-COPY --from=builder /git-task/public public
-COPY --from=builder /git-task/next.config.ts ./
-COPY --from=builder /git-task/node_modules ./node_modules
+COPY --from=builder /alt-manager/.next .next
+COPY --from=builder /alt-manager/public public
+COPY --from=builder /alt-manager/next.config.ts ./
+COPY --from=builder /alt-manager/node_modules ./node_modules
 
 # 필요 시 환경파일 복사 (optional, 런타임에서도 필요하면)
-COPY --from=builder /git-task/.env.production .env.production
+COPY --from=builder /alt-manager/.env.production .env.production
 
 EXPOSE 3000
 
