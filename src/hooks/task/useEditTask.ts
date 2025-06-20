@@ -69,7 +69,7 @@ export const useEditTask = (workspaceId: string | null, taskId: number) => {
       const { task } = await customFetch.patch<{ task: Task }>(`/api/task/${workspaceId}/${taskId}`, taskData);
       if(task) {
         toast.success("과제가 수정되었습니다.");
-        router.back();
+        router.replace(`/task/${task.id}/mentors?workspace=${workspaceId}`);
       }
     }catch(e){
       toast.error((e as ErrorResponse).message)

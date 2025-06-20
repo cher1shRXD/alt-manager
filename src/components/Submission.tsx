@@ -41,25 +41,17 @@ const Submission = ({ taskId, submissions, isInDeadline }: SubmissionProps) => {
             return (
               <div
                 key={idx}
-                className="flex items-center gap-2 p-2 bg-container border border-border rounded-lg cursor-pointer"
+                className="flex items-center gap-3 p-2 bg-container border border-border rounded-lg cursor-pointer"
                 onClick={() => setFile({ url: item.url, name: item.filename })}
               >
                 {isImage ? (
-                  <div className="w-full h-32 flex items-center justify-center">
-                    <Image className="text-gray-400" size={52} />
-                  </div>
+                  <Image className="text-gray-400" size={36} />
                 ) : isVideo ? (
-                  <div className="w-full h-32 flex items-center justify-center">
-                    <Video className="text-gray-400" size={52} />
-                  </div>
+                  <Video className="text-gray-400" size={36} />
                 ) : isCode ? (
-                  <div className="w-full h-32 flex items-center justify-center">
-                    <Code2 className="text-gray-400" size={52} />
-                  </div>
+                  <Code2 className="text-gray-400" size={36} />
                 ) : (
-                  <div className="w-full h-32 flex items-center justify-center">
-                    <File className="text-gray-400" size={52} />
-                  </div>
+                  <File className="text-gray-400" size={36} />
                 )}
                 <p className="text-xs">{item.filename}</p>
                 <div className="flex-1" />

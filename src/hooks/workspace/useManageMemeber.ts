@@ -11,7 +11,7 @@ export const useManageMember = (workspaceId: string | null, userId: string | nul
     try{
       const { workspace } = await customFetch.patch<{ workspace: Workspace }>(`/api/workspace/${workspaceId}/${userId}`, {});
       if(workspace) {
-        router.back();
+        router.replace(`/workspace?workspace=${workspace.id}`);
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);
@@ -23,7 +23,7 @@ export const useManageMember = (workspaceId: string | null, userId: string | nul
     try{
       const { workspace } = await customFetch.patch<{ workspace: Workspace }>(`/api/workspace/${workspaceId}/${userId}/mentor`, {});
       if(workspace) {
-        router.back();
+        router.replace(`/workspace?workspace=${workspace.id}`);
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);
@@ -35,7 +35,7 @@ export const useManageMember = (workspaceId: string | null, userId: string | nul
     try{
       const { workspace } = await customFetch.delete<{ workspace: Workspace }>(`/api/workspace/${workspaceId}/${userId}/mentor`);
       if(workspace) {
-        router.back();
+        router.replace(`/workspace?workspace=${workspace.id}`);
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);
@@ -47,7 +47,7 @@ export const useManageMember = (workspaceId: string | null, userId: string | nul
     try{
       const { workspace } = await customFetch.delete<{ workspace: Workspace }>(`/api/workspace/${workspaceId}/${userId}`);
       if(workspace) {
-        router.back();
+        router.replace(`/workspace?workspace=${workspace.id}`);
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);

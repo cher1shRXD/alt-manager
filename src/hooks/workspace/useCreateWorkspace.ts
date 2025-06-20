@@ -24,7 +24,6 @@ export const useCreateWorkspace = () => {
         router.replace(`/?workspace=${workspace.id}`);
       }
     }catch(e){
-      console.log(e);
       toast.error((e as ErrorResponse).message);
     } 
   }

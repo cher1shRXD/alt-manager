@@ -50,7 +50,7 @@ export const useCreateTask = (workspaceId: string | null) => {
       const { task } = await customFetch.post<{ task: Task }>(`/api/task/${workspaceId}`, taskData);
       if(task) {
         toast.success("과제가 생성되었습니다.");
-        router.back();
+        router.replace(`/task?workspace=${workspaceId}`);
       }
     }catch(e){
       toast.error((e as ErrorResponse).message)

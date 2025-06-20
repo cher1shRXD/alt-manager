@@ -22,7 +22,7 @@ export const useManageWorkspace = (workspaceId: string | null) => {
     try{
       const { workspace } = await customFetch.patch<{ workspace: Workspace }>(`/api/workspace/${workspaceId}`, { title: newTitle });
       if(workspace) {
-        router.back();
+        router.replace(`/workspace?workspace=${workspace.id}`);
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);
