@@ -18,7 +18,7 @@ const Task = async ({ searchParams }: SearchParamProps) => {
   const myTasks = await getMyTasks(keyword.workspace as string)
   const user = await getMe();
 
-  const isMentor = !!workspace.mentors?.some(m => m.id === user?.id);
+  const isMentor = !!workspace.mentors?.some(m => m.id === user?.id) || workspace.admin?.id === user?.id;
 
   return (
     <div className="w-full flex items-start gap-4 mb-16">
@@ -76,7 +76,7 @@ const Task = async ({ searchParams }: SearchParamProps) => {
           </div>
         </div>
         {
-          workspace.admin?.id === user?.id && <CustomLink href={`/task/create?workspace=${keyword.workspace}`} className="p-2 text-xs bg-primary rounded-lg text-center">과제 생성하기</CustomLink>
+          isMentor && <CustomLink href={`/task/create?workspace=${keyword.workspace}`} className="p-2 text-xs bg-primary rounded-lg text-center">과제 생성하기</CustomLink>
         }
       </div>
     </div>

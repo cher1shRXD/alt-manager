@@ -119,11 +119,15 @@ const Home = async ({ searchParams }: SearchParamProps) => {
             {getNextMonday().nextMonday}
           </span>
         </p>
-        <CustomLink
-          href={`/report/write?workspace=${keyword.workspace}`}
-          className="p-2 text-xs bg-primary rounded-sm text-center">
-          성과보고서 작성하기
-        </CustomLink>
+        {
+          !isAdmin && (
+            <CustomLink
+              href={`/report/write?workspace=${keyword.workspace}`}
+              className="p-2 text-xs bg-primary rounded-sm text-center">
+              성과보고서 작성하기
+            </CustomLink>
+          )
+        }
       </div>
       <div className="col-[13/-1] row-[1/7] bg-container border border-border rounded-lg p-4 flex flex-col gap-2 text-sm">
         <p className="font-bold mb-2 text-lg">내 정보</p>

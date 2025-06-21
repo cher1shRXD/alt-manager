@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable, CreateDateColumn, OneToMany } from "typeorm";
-import { Workspace } from "./Workspace";
-import { User } from "./User";
-import { TaskSubmission } from "./TaskSubmission";
+import type { Workspace } from "./Workspace";
+import type { User } from "./User";
+import type { TaskSubmission } from "./TaskSubmission";
 
 @Entity()
 export class Task {
@@ -14,17 +14,17 @@ export class Task {
   @Column()
   description?: string;
 
-  @ManyToOne("Workspace", "tasks", { cascade: true })
+  @ManyToOne(() => require("./Workspace").Workspace, (workspace: Workspace) => workspace.tasks, { cascade: true })
   workspace?: Workspace;
 
-  @ManyToOne("User", "mentorTask", { cascade: true })
+  @ManyToOne(() => require("./User").User, (user: User) => user.mentorTask, { cascade: true })
   mentor?: User;
 
-  @ManyToMany("User", "menteeTask")
+  @ManyToMany(() => require("./User").User, (user: User) => user.menteeTask)
   @JoinTable()
   mentees?: User[];
 
-  @OneToMany("TaskSubmission", "task")
+  @OneToMany(() => require("./TaskSubmission").TaskSubmission, (submission: TaskSubmission) => submission.task)
   submissions?: TaskSubmission[];
 
   @Column({ default: false })

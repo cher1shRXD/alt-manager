@@ -1,12 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from "typeorm";
-import { TaskSubmission } from "./TaskSubmission";
+import type { TaskSubmission } from "./TaskSubmission";
 
 @Entity()
 export class TaskSubmissionFile {
   @PrimaryGeneratedColumn()
   id?: number;
 
-  @ManyToOne("TaskSubmission", "files", { cascade: true })
+  @ManyToOne(() => require("./TaskSubmission").TaskSubmission, (submission: TaskSubmission) => submission.files, { cascade: true, eager: true })
   submission?: TaskSubmission;
 
   @Column()

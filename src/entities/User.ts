@@ -1,7 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToMany, OneToMany } from "typeorm";
-import { Workspace } from "./Workspace";
-import { Report } from "./Report";
-import { Task } from "./Task";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, OneToMany, ManyToMany } from "typeorm";
+import type { Workspace } from "./Workspace";
+import type { Report } from "./Report";
+import type { Task } from "./Task";
 
 @Entity()
 export class User {
@@ -20,21 +20,21 @@ export class User {
   @CreateDateColumn()
   createdAt?: Date;
 
-  @ManyToMany("Workspace", "users")
+  @ManyToMany(() => require("./Workspace").Workspace, (workspace: Workspace) => workspace.users)
   workspaces?: Workspace[];
 
-  @OneToMany("Workspace", "admin")
+  @OneToMany(() => require("./Workspace").Workspace, (workspace: Workspace) => workspace.admin)
   adminWorkspaces?: Workspace[];
 
-  @ManyToMany("Workspace", "mentors")
+  @ManyToMany(() => require("./Workspace").Workspace, (workspace: Workspace) => workspace.mentors)
   mentorWorkspaces?: Workspace[];
 
-  @OneToMany("Report", "author")
+  @OneToMany(() => require("./Report").Report, (report: Report) => report.author)
   reports?: Report[];
 
-  @OneToMany("Task", "mentor")
+  @OneToMany(() => require("./Task").Task, (task: Task) => task.mentor)
   mentorTask?: Task[];
 
-  @ManyToMany("Task", "mentees")
+  @ManyToMany(() => require("./Task").Task, (task: Task) => task.mentees)
   menteeTask?: Task[];
 }
