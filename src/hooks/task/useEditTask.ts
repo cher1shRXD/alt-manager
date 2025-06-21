@@ -29,6 +29,14 @@ export const useEditTask = (workspaceId: string | null, taskId: number) => {
     });
   };
 
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    if(value !== "placeholder") {
+      handleMentees(JSON.parse(value));
+    }
+    e.target.value = "placeholder"
+  };
+
   const getTask = async () => {
     try{
       const { task } = await customFetch.get<{ task: Task }>(`/api/task/${workspaceId}/${taskId}`);
@@ -80,6 +88,7 @@ export const useEditTask = (workspaceId: string | null, taskId: number) => {
     taskData,
     handleData,
     submit,
-    handleMentees
+    handleMentees,
+    handleSelect
   }
 }

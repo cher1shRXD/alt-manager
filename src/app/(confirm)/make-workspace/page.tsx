@@ -13,7 +13,7 @@ const MakeWorkspace = () => {
           <p className="text-xs">워크스페이스 이름</p>
           <input type="text" className="w-full p-2 text-sm rounded-lg bg-container border border-border outline-none mt-1" onChange={handleTitle} value={title} />
         </div>
-        <button type="submit" className="w-full py-2 text-sm bg-primary rounded-lg text-center mb-4 cursor-pointer">
+        <button type="submit" className="w-full py-2 text-sm bg-primary rounded-lg text-center mb-4">
           워크스페이스 생성
         </button>
       </form>

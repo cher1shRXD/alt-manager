@@ -41,7 +41,7 @@ const Submission = ({ taskId, submissions, isInDeadline }: SubmissionProps) => {
             return (
               <div
                 key={idx}
-                className="flex items-center gap-3 p-2 bg-container border border-border rounded-lg cursor-pointer"
+                className="flex items-center gap-3 p-2 bg-container border border-border rounded-lg"
                 onClick={() => setFile({ url: item.url, name: item.filename })}
               >
                 {isImage ? (
@@ -60,7 +60,7 @@ const Submission = ({ taskId, submissions, isInDeadline }: SubmissionProps) => {
                     <X
                       onClick={() => handleRemoveFile(item.url)}
                       strokeWidth={2}
-                      className="text-red-500 cursor-pointer"
+                      className="text-red-500 curosr-pointer"
                       size={20}
                     />
                   )
@@ -76,11 +76,11 @@ const Submission = ({ taskId, submissions, isInDeadline }: SubmissionProps) => {
         {
           isInDeadline ? !isSubmitted && (
             <button
-              className="p-2 text-xs border border-primary bg-container rounded-lg text-center text-primary cursor-pointer"
+              className="p-2 text-xs border border-primary bg-container rounded-lg text-center text-primary"
               onClick={openFileSelector}>
               파일선택
             </button>
-          ) : <p className="p-2 text-xs border border-border bg-container rounded-lg text-center text-border cursor-pointer">제출 할 수 없는 기간입니다.</p>
+          ) : <p className="p-2 text-xs border border-border bg-container rounded-lg text-center text-border">제출 할 수 없는 기간입니다.</p>
         }
         <input
           type="file"
@@ -91,7 +91,7 @@ const Submission = ({ taskId, submissions, isInDeadline }: SubmissionProps) => {
         {
           files.length > 0 && (
             <button
-              className={`p-2 text-xs rounded-lg text-center cursor-pointer ${ isSubmitted ? "border border-primary bg-container text-primary" : "bg-primary" } disabled:bg-container`}
+              className={`p-2 text-xs rounded-lg text-center ${ isSubmitted ? "border border-primary bg-container text-primary" : "bg-primary" } disabled:bg-container`}
               disabled={loading}
               onClick={submit}>
               {isSubmitted ? loading ? "취소중..." : "제출 취소" : loading ? "제출중..." : "제출하기"}

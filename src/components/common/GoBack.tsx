@@ -6,7 +6,7 @@ const GoBack = () => {
   const router = useCustomRouter();
 
   return (
-    <button className="px-3 py-2 border border-border bg-container rounded-lg cursor-pointer text-sm" onClick={router.back}>이전으로</button>
+    <button className="px-3 py-2 border border-border bg-container rounded-lg text-sm" onClick={router.back}>이전으로</button>
   )
 }
 

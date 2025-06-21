@@ -13,9 +13,9 @@ const UserItem = ({ data, adminId, currentUserId, workspaceId, isMentor }: UserI
       {
         (adminId === currentUserId && currentUserId !== data.id) && (
           <div className="flex items-center gap-2">
-            <CustomLink href={`/remove-member?workspace=${workspaceId}&userId=${data.id}`} className="p-2 text-xs bg-container border border-border rounded text-red-500 cursor-pointer">퇴출</CustomLink>
-            <CustomLink href={`/${isMentor ? "unset" : "set"}-mentor?workspace=${workspaceId}&userId=${data.id}`} className="p-2 text-xs bg-container border border-border rounded text-red-500 cursor-pointer">{isMentor ? "멘토 박탈" : "멘토로 등록"}</CustomLink>
-            <CustomLink href={`/transfer-admin?workspace=${workspaceId}&userId=${data.id}`} className="p-2 text-xs bg-container border border-border rounded text-red-500 cursor-pointer">관리자 위임</CustomLink>
+            <CustomLink href={`/remove-member?workspace=${workspaceId}&userId=${data.id}`} className="p-2 text-xs bg-container border border-border rounded text-red-500">퇴출</CustomLink>
+            <CustomLink href={`/${isMentor ? "unset" : "set"}-mentor?workspace=${workspaceId}&userId=${data.id}`} className="p-2 text-xs bg-container border border-border rounded text-red-500">{isMentor ? "멘토 박탈" : "멘토로 등록"}</CustomLink>
+            <CustomLink href={`/transfer-admin?workspace=${workspaceId}&userId=${data.id}`} className="p-2 text-xs bg-container border border-border rounded text-red-500">관리자 위임</CustomLink>
           </div>
         )
       }

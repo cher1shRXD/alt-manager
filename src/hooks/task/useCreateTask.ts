@@ -29,6 +29,14 @@ export const useCreateTask = (workspaceId: string | null) => {
     });
   };
 
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    if(value !== "placeholder") {
+      handleMentees(JSON.parse(value));
+    }
+    e.target.value = "placeholder"
+  }
+
   const submit = async () => {
     if(!workspaceId) return;
     const { title, description, mentees, startDate, endDate } = taskData;
@@ -61,6 +69,7 @@ export const useCreateTask = (workspaceId: string | null) => {
     taskData,
     handleData,
     submit,
-    handleMentees
+    handleMentees,
+    handleSelect
   }
 }

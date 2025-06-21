@@ -69,7 +69,7 @@ const Signup = () => {
           <div className="flex-1" />
           <button
             type="submit"
-            className="w-full py-2 text-sm bg-primary rounded-lg cursor-pointer">
+            className="w-full py-2 text-sm bg-primary rounded-lg">
             회원가입
           </button>
           <div className="w-full text-xs text-end">
