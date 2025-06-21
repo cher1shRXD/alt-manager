@@ -11,5 +11,7 @@ export const initializeDataSource = async () => {
     dataSourceInstance = AppDataSource;
   }
 
+  console.log(AppDataSource.entityMetadatas.map(e => e.name)); // 👈 배열이 비어있다면 문제 있음
+
   return dataSourceInstance;
 };

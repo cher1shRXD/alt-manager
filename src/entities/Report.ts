@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from "typeorm";
-import type { Workspace } from "./Workspace";
-import type { User } from "./User";
+import { Workspace } from "./Workspace";
+import { User } from "./User";
 
 @Entity()
 export class Report {
@@ -13,9 +13,9 @@ export class Report {
   @CreateDateColumn()
   createdAt?: Date;
 
-  @ManyToOne(() => require("./Workspace").Workspace, (workspace: Workspace) => workspace.reports, { cascade: true })
+  @ManyToOne("Workspace", "reports", { cascade: true })
   workspace?: Workspace;
 
-  @ManyToOne(() => require("./User").User, (user: User) => user.reports, { cascade: true })
+  @ManyToOne("User", "reports", { cascade: true })
   author?: User;
 }
