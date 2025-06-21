@@ -20,6 +20,7 @@ const AppDataSource = new DataSource({
   entities: [User, Task, Workspace, Report, TaskSubmission, TaskSubmissionFile],
   migrations: ["src/migrations/**/*.ts"],
   subscribers: ["src/subscribers/**/*.ts"],
+  logging: true
 });
 
 export default AppDataSource
