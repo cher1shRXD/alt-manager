@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 
 const CreateTask = () => {
   const searchParams = useSearchParams();
-  const { taskData, handleData, submit, handleMentees, handleSelect } = useCreateTask(
+  const { taskData, handleData, submit, handleMentees, handleSelect, loading } = useCreateTask(
     searchParams.get("workspace")
   );
 
@@ -93,8 +93,10 @@ const CreateTask = () => {
         <div className="w-full flex flex-col gap-1">
           <button
             type="submit"
-            className="bg-primary text-white py-2 rounded-lg font-semibold">
-            과제 출제
+            className="bg-primary text-white py-2 rounded-lg font-semibold disabled:bg-gray-300"
+            disabled={loading}
+          >
+            {loading ? "출제 중..." : "과제 출제"}
           </button>
           <CustomLink
             className="w-full text-center py-2 rounded-lg font-semibold border border-border bg-container text-red-500"

@@ -9,6 +9,7 @@ import { ErrorResponse } from "@/types/ErrorResponse";
 
 export const useEditTask = (workspaceId: string | null, taskId: number) => {
   const [taskData, setTaskData] = useState<TaskDTO>({ title: "", description: "", endDate: "", startDate: "", mentees: [] });
+  const [loading, setLoading] = useState(false);
   const router = useCustomRouter();
 
   const handleData = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -57,7 +58,7 @@ export const useEditTask = (workspaceId: string | null, taskId: number) => {
   }, [workspaceId, taskId]);
 
   const submit = async () => {
-    if(!workspaceId) return;
+    if(!workspaceId || loading) return;
     const { title, description, mentees, startDate, endDate } = taskData;
     if (
       !title || title.length < 1 ||
@@ -74,6 +75,7 @@ export const useEditTask = (workspaceId: string | null, taskId: number) => {
     }
     
     try{
+      setLoading(true);
       const { task } = await customFetch.patch<{ task: Task }>(`/api/task/${workspaceId}/${taskId}`, taskData);
       if(task) {
         toast.success("과제가 수정되었습니다.");
@@ -81,6 +83,8 @@ export const useEditTask = (workspaceId: string | null, taskId: number) => {
       }
     }catch(e){
       toast.error((e as ErrorResponse).message)
+    } finally {
+      setLoading(false);
     }
   } 
 
@@ -89,6 +93,7 @@ export const useEditTask = (workspaceId: string | null, taskId: number) => {
     handleData,
     submit,
     handleMentees,
-    handleSelect
+    handleSelect,
+    loading
   }
 }

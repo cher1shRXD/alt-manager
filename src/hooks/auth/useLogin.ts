@@ -6,11 +6,15 @@ import { useCustomRouter } from "../useCustomRouter";
 export const useLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useCustomRouter();
 
   const submit = async () => {
+    if(loading) return;
+    setLoading(true);
     if(email.trim().length <= 0 || password.trim().length <= 0) {
       toast.warning("모든 필드를 채워주세요.");
+      setLoading(false);
       return;
     }
     const res = await signIn("credentials", {
@@ -19,13 +23,17 @@ export const useLogin = () => {
       redirect: false,
     });
 
-    if (res?.ok) {
-      toast.success("로그인 성공!");
-      router.replace("/choose-workspace");
-    } else if (res && res.status < 500 && res.status > 399) {
-      toast.error("이메일, 비밀번호를 확인해주세요.");
-    } else {
-      toast.error("로그인 실패");
+    try {
+      if (res?.ok) {
+        toast.success("로그인 성공!");
+        router.replace("/choose-workspace");
+      } else if (res && res.status < 500 && res.status > 399) {
+        toast.error("이메일, 비밀번호를 확인해주세요.");
+      } else {
+        toast.error("로그인 실패");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -40,8 +48,9 @@ export const useLogin = () => {
   return {
     email,
     password,
-    submit,
     handleEmail,
-    handlePw
+    handlePw,
+    submit,
+    loading
   }
 }

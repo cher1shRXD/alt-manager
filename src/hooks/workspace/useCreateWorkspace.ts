@@ -7,6 +7,7 @@ import { ErrorResponse } from "@/types/ErrorResponse";
 
 export const useCreateWorkspace = () => {
   const [title, setTitle] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useCustomRouter();
 
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,8 +15,11 @@ export const useCreateWorkspace = () => {
   }
 
   const submit = async () => {
+    if(loading) return;
+    setLoading(true);
     if(title.trim().length <= 0) {
       toast.warning("워크스페이스 이름을 한글자 이상 입력해주세요.")
+      setLoading(false);
       return;
     }
     try{
@@ -25,12 +29,15 @@ export const useCreateWorkspace = () => {
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);
-    } 
+    } finally {
+      setLoading(false);
+    }
   }
 
   return {
     title,
     handleTitle,
-    submit
+    submit,
+    loading
   }
 }

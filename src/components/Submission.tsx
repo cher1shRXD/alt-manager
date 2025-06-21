@@ -94,7 +94,7 @@ const Submission = ({ taskId, submissions, isInDeadline }: SubmissionProps) => {
               className={`p-2 text-xs rounded-lg text-center ${ isSubmitted ? "border border-primary bg-container text-primary" : "bg-primary" } disabled:bg-container`}
               disabled={loading}
               onClick={submit}>
-              {isSubmitted ? loading ? "취소중..." : "제출 취소" : loading ? "제출중..." : "제출하기"}
+              {isSubmitted ? loading ? "취소 중..." : "제출 취소" : loading ? "제출 중..." : "제출하기"}
             </button>
           )
         }

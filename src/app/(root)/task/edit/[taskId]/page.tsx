@@ -10,7 +10,7 @@ const EditTask = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const taskId = pathname.split('/').pop();
-  const { taskData, handleData, submit, handleMentees, handleSelect } = useEditTask(
+  const { taskData, handleData, submit, handleMentees, handleSelect, loading } = useEditTask(
     searchParams.get("workspace"),
     parseInt(taskId || "0")
   );
@@ -96,8 +96,10 @@ const EditTask = () => {
         <div className="w-full flex flex-col gap-1">
           <button
             type="submit"
-            className="bg-primary text-white py-2 rounded-lg font-semibold">
-            과제 출제
+            className="bg-primary text-white py-2 rounded-lg font-semibold disabled:bg-gray-300"
+            disabled={loading}
+          >
+            {loading ? "수정 중..." : "과제 수정"}
           </button>
           <CustomLink
             className="w-full text-center py-2 rounded-lg font-semibold border border-border bg-container text-red-500"

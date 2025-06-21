@@ -5,7 +5,7 @@ import { useSignup } from "@/hooks/auth/useSignup";
 import Image from "next/image";
 
 const Signup = () => {
-  const { handleData, signupData, submit } = useSignup();
+  const { handleData, signupData, submit, loading } = useSignup();
 
   return (
     <div className="w-full h-screen flex items-center justify-center px-6">
@@ -69,8 +69,10 @@ const Signup = () => {
           <div className="flex-1" />
           <button
             type="submit"
-            className="w-full py-2 text-sm bg-primary rounded-lg">
-            회원가입
+            className="w-full py-2 text-sm bg-primary rounded-lg disabled:bg-gray-300"
+            disabled={loading}
+          >
+            {loading ? "회원가입 중..." : "회원가입"}
           </button>
           <div className="w-full text-xs text-end">
             회원이라면?{" "}

@@ -5,7 +5,7 @@ import { useLogin } from "@/hooks/auth/useLogin";
 import Image from "next/image";
 
 const Login = () => {
-  const { handleEmail, handlePw, email, password, submit } = useLogin();
+  const { handleEmail, handlePw, email, password, submit, loading } = useLogin();
 
   return (
     <div className="w-full h-screen flex items-center justify-center px-6">
@@ -48,8 +48,10 @@ const Login = () => {
           <div className="flex-1" />
           <button
             type="submit"
-            className="w-full py-2 text-sm bg-primary rounded-lg">
-            로그인
+            className="w-full py-2 text-sm bg-primary rounded-lg disabled:bg-gray-300"
+            disabled={loading}
+          >
+            {loading ? "로그인 중..." : "로그인"}
           </button>
           <div className="w-full text-xs text-end">
             회원이 아니라면?{" "}

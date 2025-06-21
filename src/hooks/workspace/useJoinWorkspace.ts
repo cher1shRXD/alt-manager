@@ -7,6 +7,7 @@ import { useCustomRouter } from "../useCustomRouter";
 
 export const useJoinWorkspace = () => {
   const [code, setCode] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useCustomRouter();
 
   const handleCode = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,8 +15,11 @@ export const useJoinWorkspace = () => {
   }
 
   const join = async () => {
+    if(loading) return;
+    setLoading(true);
     if(code.trim().length <= 0) {
       toast.warning("참가코드를 입력해주세요.");
+      setLoading(false);
       return;
     }
     try{
@@ -26,12 +30,15 @@ export const useJoinWorkspace = () => {
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);
+    } finally {
+      setLoading(false);
     }
   } 
 
   return {
     code,
     handleCode,
-    join
+    join,
+    loading
   }
 }

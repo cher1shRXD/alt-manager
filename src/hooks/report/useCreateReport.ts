@@ -8,13 +8,16 @@ import { ErrorResponse } from "@/types/ErrorResponse";
 export const useCreateReport = (workspaceId: string | null) => {
   const [content, setContent] = useState("");
   const router = useCustomRouter();
+  const [loading, setLoading] = useState(false);
 
   const handleContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   }
 
   const submit = async () => {
+    if(loading) return;
     try{
+      setLoading(true);
       const { report } = await customFetch.post<{ report: Report }>(`/api/workspace/${workspaceId}/report`, { content });
       if(report) {
         toast.success("보고서 저정완료")
@@ -22,12 +25,15 @@ export const useCreateReport = (workspaceId: string | null) => {
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);
+    }finally{
+      setLoading(false);
     }
   }
 
   return {
     content,
     handleContent,
-    submit
+    submit,
+    loading
   }
 }

@@ -3,7 +3,7 @@
 import { useCreateWorkspace } from "@/hooks/workspace/useCreateWorkspace";
 
 const MakeWorkspace = () => {
-  const { title, handleTitle, submit } = useCreateWorkspace();
+  const { title, handleTitle, submit, loading } = useCreateWorkspace();
 
   return (
     <div className="w-full h-screen flex items-center justify-center px-4">
@@ -13,8 +13,8 @@ const MakeWorkspace = () => {
           <p className="text-xs">워크스페이스 이름</p>
           <input type="text" className="w-full p-2 text-sm rounded-lg bg-container border border-border outline-none mt-1" onChange={handleTitle} value={title} />
         </div>
-        <button type="submit" className="w-full py-2 text-sm bg-primary rounded-lg text-center mb-4">
-          워크스페이스 생성
+        <button type="submit" className="w-full py-2 text-sm bg-primary rounded-lg text-center mb-4 disabled:bg-gray-300" disabled={loading}>
+          {loading ? "생성 중..." : "워크스페이스 생성"}
         </button>
       </form>
     </div>

@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 const UnsetMentor = () => {
   const searchParams = useSearchParams();
   const username = useGetUser(searchParams.get("userId"));
-  const { unsetMentorSubmit } = useManageMember(searchParams.get("workspace"), searchParams.get("userId"));
+  const { unsetMentorSubmit, loading } = useManageMember(searchParams.get("workspace"), searchParams.get("userId"));
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
@@ -18,7 +18,7 @@ const UnsetMentor = () => {
         <p className="text-xs text-primary">멘토 권한은 관리자만이 관리할 수 있습니다.</p>
         <div className="w-full flex items-center gap-2 mt-2">
           <CustomLink href={`/workspace?workspace=${searchParams.get("workspace")}`} className="flex-1 text-center p-2 text-xs bg-container border border-border rounded text-red-500">취소</CustomLink>
-          <button onClick={unsetMentorSubmit} className="flex-1 p-2 text-xs bg-container border border-border rounded text-red-500">확인</button>
+          <button onClick={unsetMentorSubmit} className="flex-1 p-2 text-xs bg-container border border-border rounded text-red-500 disabled:bg-gray-300" disabled={loading}>{loading ? "권한 변경 중..." : "확인"}</button>
         </div>
       </div>
     </div>
