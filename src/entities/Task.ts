@@ -1,9 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable, CreateDateColumn, OneToMany } from "typeorm";
+import type { Relation } from "typeorm";
 import { Workspace } from "./Workspace";
 import { User } from "./User";
 import { TaskSubmission } from "./TaskSubmission";
 
-@Entity()
+@Entity("task")
 export class Task {
   @PrimaryGeneratedColumn()
   id?: number;
@@ -14,18 +15,18 @@ export class Task {
   @Column()
   description?: string;
 
-  @ManyToOne("Workspace", "tasks", { cascade: true })
-  workspace?: Workspace;
+  @ManyToOne(() => Workspace, (workspace) => workspace.tasks, { cascade: true })
+  workspace?: Relation<Workspace>;
 
-  @ManyToOne("User", "mentorTask", { cascade: true })
-  mentor?: User;
+  @ManyToOne(() => User, (user) => user.mentorTask, { cascade: true })
+  mentor?: Relation<User>;
 
-  @ManyToMany("User", "menteeTask")
+  @ManyToMany(() => User, (user) => user.menteeTask)
   @JoinTable()
-  mentees?: User[];
+  mentees?: Relation<User[]>;
 
-  @OneToMany("TaskSubmission", "task")
-  submissions?: TaskSubmission[];
+  @OneToMany(() => TaskSubmission, (submission) => submission.task)
+  submissions?: Relation<TaskSubmission[]>;
 
   @Column({ default: false })
   isDone?: boolean;
@@ -40,3 +41,4 @@ export class Task {
   createdAt?: Date;
 
 }
+

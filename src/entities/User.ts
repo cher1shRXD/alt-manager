@@ -1,9 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToMany, OneToMany } from "typeorm";
+import type { Relation } from "typeorm";
 import { Workspace } from "./Workspace";
+import { TaskSubmission } from "./TaskSubmission";
 import { Report } from "./Report";
 import { Task } from "./Task";
 
-@Entity()
+@Entity("user")
 export class User {
   @PrimaryGeneratedColumn("uuid")
   id?: string;
@@ -20,21 +22,24 @@ export class User {
   @CreateDateColumn()
   createdAt?: Date;
 
-  @ManyToMany("Workspace", "users")
-  workspaces?: Workspace[];
+  @ManyToMany(() => Workspace, (workspace) => workspace.users)
+  workspaces?: Relation<Workspace[]>;
 
-  @OneToMany("Workspace", "admin")
-  adminWorkspaces?: Workspace[];
+  @OneToMany(() => Workspace, (workspace) => workspace.admin)
+  adminWorkspaces?: Relation<Workspace[]>;
 
-  @ManyToMany("Workspace", "mentors")
-  mentorWorkspaces?: Workspace[];
+  @ManyToMany(() => Workspace, (workspace) => workspace.mentors)
+  mentorWorkspaces?: Relation<Workspace[]>;
 
-  @OneToMany("Report", "author")
-  reports?: Report[];
+  @OneToMany(() => Report, (report) => report.author)
+  reports?: Relation<Report[]>;
 
-  @OneToMany("Task", "mentor")
-  mentorTask?: Task[];
+  @OneToMany(() => Task, (task) => task.mentor)
+  mentorTask?: Relation<Task[]>;
 
-  @ManyToMany("Task", "mentees")
-  menteeTask?: Task[];
+  @ManyToMany(() => Task, (task) => task.mentees)
+  menteeTask?: Relation<Task[]>;
+
+  @OneToMany(() => TaskSubmission, (taskSubmission) => taskSubmission.user)
+  submissions?: Relation<TaskSubmission[]>;
 }

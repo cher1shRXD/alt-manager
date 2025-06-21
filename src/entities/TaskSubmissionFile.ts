@@ -1,13 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, JoinTable } from "typeorm";
+import type { Relation } from "typeorm";
 import { TaskSubmission } from "./TaskSubmission";
 
-@Entity()
+@Entity("task_submission_file")
 export class TaskSubmissionFile {
   @PrimaryGeneratedColumn()
   id?: number;
 
-  @ManyToOne("TaskSubmission", "files", { cascade: true })
-  submission?: TaskSubmission;
+  @ManyToOne(() => TaskSubmission, (submission) => submission.files, { cascade: true })
+  @JoinTable()
+  submission?: Relation<TaskSubmission>;
 
   @Column()
   url?: string;

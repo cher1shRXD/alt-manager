@@ -8,7 +8,6 @@ import { Report } from "@/entities/Report";
 import { TaskSubmission } from "@/entities/TaskSubmission";
 import { TaskSubmissionFile } from "@/entities/TaskSubmissionFile";
 
-
 const AppDataSource = new DataSource({
   type: "mariadb",
   host: process.env.DB_HOST,

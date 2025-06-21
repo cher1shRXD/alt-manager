@@ -339,7 +339,10 @@ export const submitTask = async (
 
   const newTaskSubmission = await db
     .getRepository(TaskSubmission)
-    .save(taskSubmission);
+    .createQueryBuilder("task_submission")
+    .insert()
+    .values(taskSubmission)
+    .execute();
   return newTaskSubmission;
 };
 
@@ -352,12 +355,18 @@ export const cancelSubmit = async (submissionId: number) => {
   const user = await userRepo.findOneBy({ email: session.user.email });
   if (!user) throw new Error(notfound);
 
-  const taskSubmissionRepo = db.getRepository(TaskSubmission);
   await db
     .getRepository(TaskSubmissionFile)
-    .delete({ submission: { id: submissionId } });
+    .createQueryBuilder("task_submission_file")
+    .delete()
+    .where("task_submission_file.submissionId = :submissionId", { submissionId })
+    .execute();
 
-  return await taskSubmissionRepo.delete(submissionId);
+  return await db.getRepository(TaskSubmission)
+    .createQueryBuilder("task_submission")
+    .delete()
+    .where("task_submission.id = :submissionId", { submissionId })
+    .execute();
 };
 
 export const getIsMentee = async (taskId: number) => {

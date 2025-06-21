@@ -5,8 +5,10 @@ import { initializeDataSource } from "@/libs/typeorm/initialize";
 
 export async function POST(req: NextRequest) {
   const { email, password, name } = await req.json();
+  console.log(email, password, name);
 
   const db = await initializeDataSource();
+  console.log("이니셜라이즈 실행됨");
   const userRepo = db.getRepository(User);
 
   const existing = await userRepo.findOneBy({ email });

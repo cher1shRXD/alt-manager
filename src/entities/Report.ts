@@ -1,8 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from "typeorm";
+import type { Relation } from "typeorm";
 import { Workspace } from "./Workspace";
 import { User } from "./User";
 
-@Entity()
+@Entity("report")
 export class Report {
   @PrimaryGeneratedColumn()
   id?: number;
@@ -13,9 +14,9 @@ export class Report {
   @CreateDateColumn()
   createdAt?: Date;
 
-  @ManyToOne("Workspace", "reports", { cascade: true })
-  workspace?: Workspace;
+  @ManyToOne(() => Workspace, (workspace) => workspace.reports , { cascade: true })
+  workspace?: Relation<Workspace>;
 
-  @ManyToOne("User", "reports", { cascade: true })
-  author?: User;
+  @ManyToOne(() => User, (user) => user.reports, { cascade: true })
+  author?: Relation<User>;
 }

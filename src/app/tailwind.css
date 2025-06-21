@@ -1,5 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 @import 'tailwindcss';
+
+@font-face {
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../assets/fonts/anton.woff') format('woff');
+}
 
 @theme {
   --color-bg: #24222C;

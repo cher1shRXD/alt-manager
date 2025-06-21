@@ -1,9 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, ManyToOne, JoinTable } from "typeorm";
+import type { Relation } from "typeorm";
 import { Task } from "./Task";
 import { Report } from "./Report";
 import { User } from "./User";
 
-@Entity()
+@Entity("workspace")
 export class Workspace {
   @PrimaryGeneratedColumn("uuid")
   id?: string;
@@ -11,20 +12,20 @@ export class Workspace {
   @Column()
   name?: string;
 
-  @OneToMany("Task", "workspace")
-  tasks?: Task[];
+  @OneToMany(() => Task, (task) => task.workspace)
+  tasks?: Relation<Task[]>;
 
-  @OneToMany("Report", "workspace")
-  reports?: Report[];
+  @OneToMany(() => Report, (report) => report.workspace)
+  reports?: Relation<Report[]>;
 
-  @ManyToMany("User", "workspaces", { cascade: true })
+  @ManyToMany(() => User, (user) => user.workspaces, { cascade: true })
   @JoinTable()
-  users?: User[];
+  users?: Relation<User[]>;
 
-  @ManyToOne("User", "adminWorkspaces")
-  admin?: User;
+  @ManyToOne(() => User, (user) => user.adminWorkspaces)
+  admin?: Relation<User>;
 
-  @ManyToMany("User", "mentorWorkspaces", { cascade: true })
+  @ManyToMany(() => User, (user) => user.mentorWorkspaces, { cascade: true })
   @JoinTable()
-  mentors?: User[];
+  mentors?: Relation<User[]>;
 }
