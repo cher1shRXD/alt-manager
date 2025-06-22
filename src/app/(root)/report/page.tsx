@@ -26,7 +26,7 @@ const Report = async ({ searchParams }: SearchParamProps) => {
         <div className={`w-full lg:w-min lg:flex-1 flex flex-col ${user?.id === workspace.admin?.id ? "gap-8" : "gap-2"} `}>
           {
             user?.id === workspace.admin?.id ? (
-              allReports.length > 0 ? allReports.map((item) => (
+              allReports.length > 0 ? allReports.reverse().map((item) => (
                 <div className="w-full flex flex-col gap-2 bg-container border border-border rounded-xl p-2" key={item.user.id}>
                   <p>{item.user.name}</p>
                   <div className="w-full flex flex-col gap-1">
@@ -42,7 +42,7 @@ const Report = async ({ searchParams }: SearchParamProps) => {
                 </div>
               )) : <p className="text-gray-500 w-full text-center">작성된 성과보고서가 없습니다.</p>
             ) : (
-              myReports.length > 0 ? myReports.map((item) => (
+              myReports.length > 0 ? myReports.reverse().map((item) => (
                 <div className="wfull flex flex-col gap-1 p-2 bg-container border border-border rounded-lg" key={item.id}>
                   <p>{parseDate(item.createdAt)} 성과보고서</p>
                   <p className="text-xs text-gray-500">글자수: {item.content?.trim().length}자</p>

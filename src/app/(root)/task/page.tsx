@@ -26,7 +26,7 @@ const Task = async ({ searchParams }: SearchParamProps) => {
         <p className="w-full text-center">과제 목록</p>
         <div className="w-full flex flex-col gap-1">
           {
-            isMentor ? allTasks.length > 0 ? allTasks.map(item => (
+            isMentor ? allTasks.length > 0 ? allTasks.reverse().map(item => (
               <CustomLink href={`/task/${item.id}/mentors?workspace=${workspace.id}`} className="w-full bg-container border border-border rounded-lg p-2 flex flex-col gap-1" key={item.id}>
                 <p className="text-sm lg:text-base text-nowrap overflow-hidden whitespace-nowrap text-ellipsis">{item.title}</p>
                 <p className="text-xs lg:text-sm text-nowrap overflow-hidden whitespace-nowrap text-ellipsis">{parseDate(item.startDate)} ~ {parseDate(item.endDate)}</p>
@@ -45,7 +45,7 @@ const Task = async ({ searchParams }: SearchParamProps) => {
                 </div>
               </CustomLink>
             )) : <p className="text-gray-500 w-full text-center">과제가 없습니다.</p> 
-            : myTasks.length > 0 ? myTasks.map(item => (
+            : myTasks.length > 0 ? myTasks.reverse().map(item => (
               <CustomLink href={`/task/${item.id}/mentees?workspace=${workspace.id}`} className="w-full bg-container border border-border rounded-lg p-2 flex flex-col gap-1" key={item.id}>
                 <p>{item.title}</p>
                 <p className="text-sm">{parseDate(item.startDate)} ~ {parseDate(item.endDate)}</p>

@@ -50,7 +50,7 @@ const Home = async ({ searchParams }: SearchParamProps) => {
         <p className="font-bold mb-2 text-lg">
           {isMentee ? "내 과제 현황" : "최근 출제된 과제"}
         </p>
-        {(isMentee ? myTasks : allTasks).slice(0, 3).map((task) => (
+        {(isMentee ? myTasks : allTasks).reverse().slice(0, 3).map((task) => (
           <TaskListItem
             key={task.id}
             task={task}
