@@ -1,5 +1,6 @@
 import CustomLink from "@/components/common/CustomLink";
 import SubmittedItem from "@/components/SubmittedItem";
+import { TaskMentee } from "@/entities/TaskMentee";
 import { getTaskDetailMentors } from "@/services/taskService";
 import { SearchParamProps } from "@/types/props/SearchParamProps";
 import { parseDate } from "@/utilities/parseDate";
@@ -38,9 +39,9 @@ const TaskMentor = async ({
         <div className="w-full flex flex-col gap-1">
           <p>과제 대상</p>
           <div className="w-full flex items-start gap-1 flex-wrap">
-            {task.mentees?.map((item) => (
-              <div className="px-2 py-0.5 bg-primary rounded" key={item.id}>
-                <p className="text-sm">{item.name}</p>
+            {(task.mentees || []).map((tm: TaskMentee) => (
+              <div className="px-2 py-0.5 bg-primary rounded" key={tm.mentee?.id}>
+                <p className="text-sm">{tm.mentee?.name}</p>
               </div>
             ))}
           </div>

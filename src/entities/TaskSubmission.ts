@@ -9,10 +9,10 @@ export class TaskSubmission {
   @PrimaryGeneratedColumn()
   id?: number;
 
-  @ManyToOne(() => Task, (task) => task.submissions, { cascade: true })
+  @ManyToOne(() => Task, (task) => task.submissions)
   task?: Relation<Task>;
 
-  @ManyToOne(() => User, (user) => user.submissions, { cascade: true })
+  @ManyToOne(() => User, (user) => user.submissions)
   user?: Relation<User>;
 
   @Column({ default: false })

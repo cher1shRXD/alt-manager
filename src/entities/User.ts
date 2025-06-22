@@ -4,6 +4,7 @@ import { Workspace } from "./Workspace";
 import { TaskSubmission } from "./TaskSubmission";
 import { Report } from "./Report";
 import { Task } from "./Task";
+import { TaskMentee } from "./TaskMentee";
 
 @Entity("user")
 export class User {
@@ -37,8 +38,8 @@ export class User {
   @OneToMany(() => Task, (task) => task.mentor)
   mentorTask?: Relation<Task[]>;
 
-  @ManyToMany(() => Task, (task) => task.mentees)
-  menteeTask?: Relation<Task[]>;
+  @OneToMany(() => TaskMentee, (taskMentee) => taskMentee.mentee)
+  menteeTask?: Relation<TaskMentee[]>;
 
   @OneToMany(() => TaskSubmission, (taskSubmission) => taskSubmission.user)
   submissions?: Relation<TaskSubmission[]>;

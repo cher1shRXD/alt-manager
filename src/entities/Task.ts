@@ -1,8 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable, CreateDateColumn, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn } from "typeorm";
 import type { Relation } from "typeorm";
 import { Workspace } from "./Workspace";
 import { User } from "./User";
 import { TaskSubmission } from "./TaskSubmission";
+import { TaskMentee } from "./TaskMentee";
 
 @Entity("task")
 export class Task {
@@ -15,15 +16,14 @@ export class Task {
   @Column()
   description?: string;
 
-  @ManyToOne(() => Workspace, (workspace) => workspace.tasks, { cascade: true })
+  @ManyToOne(() => Workspace, (workspace) => workspace.tasks)
   workspace?: Relation<Workspace>;
 
-  @ManyToOne(() => User, (user) => user.mentorTask, { cascade: true })
+  @ManyToOne(() => User, (user) => user.mentorTask)
   mentor?: Relation<User>;
 
-  @ManyToMany(() => User, (user) => user.menteeTask)
-  @JoinTable()
-  mentees?: Relation<User[]>;
+  @OneToMany(() => TaskMentee, (taskMentee) => taskMentee.task, { cascade: true })
+  mentees?: Relation<TaskMentee[]>;
 
   @OneToMany(() => TaskSubmission, (submission) => submission.task)
   submissions?: Relation<TaskSubmission[]>;

@@ -12,6 +12,7 @@ export const POST = async (req: NextRequest, { params }: { params: Promise<{ wor
 
     return NextResponse.json({ task }, { status: 201 });
   }catch(e){
+    console.log(e);
     return errorHandler(e as string)
   }
 }

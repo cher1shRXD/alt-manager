@@ -1,5 +1,6 @@
 import CustomLink from "@/components/common/CustomLink";
 import { Task } from "@/entities/Task";
+import { TaskMentee } from "@/entities/TaskMentee";
 import { TaskSubmission } from "@/entities/TaskSubmission";
 import { User } from "@/entities/User";
 import { TaskListItemProps } from "@/types/props/TaskListItemProps";
@@ -11,12 +12,15 @@ const TaskListItem = ({ task, workspaceId, isMentee }: TaskListItemProps) => {
   let completedCount = 0;
   let menteeCount = 0;
   if (!isMentee) {
-    menteeCount = task.mentees?.length || 0;
-    completedCount = (task.mentees || []).filter((mentee: User) =>
-      task.submissions?.some(
+    const mentees = (task.mentees || []) as TaskMentee[];
+    menteeCount = mentees.length;
+    completedCount = mentees.filter((tm) => {
+      const mentee = tm.mentee as User | undefined;
+      if (!mentee) return false;
+      return task.submissions?.some(
         (s: TaskSubmission) => s.user?.id === mentee.id && s.isSubmitted
-      )
-    ).length;
+      );
+    }).length;
   }
   return (
     <CustomLink

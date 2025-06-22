@@ -9,6 +9,7 @@ import { Task } from "@/entities/Task";
 import { TaskSubmission } from "@/entities/TaskSubmission";
 import { TaskSubmissionFile } from "@/entities/TaskSubmissionFile";
 import { SubmittedFile } from "@/types/SubmittedFile";
+import { TaskMentee } from "@/entities/TaskMentee";
 
 export const getTasks = async (workspaceId: string) => {
   const session = await getServerSession(authOptions);
@@ -40,7 +41,8 @@ export const getTasks = async (workspaceId: string) => {
     .createQueryBuilder("task")
     .leftJoinAndSelect("task.workspace", "workspace")
     .leftJoinAndSelect("task.mentor", "mentor")
-    .leftJoinAndSelect("task.mentees", "mentees")
+    .leftJoinAndSelect("task.mentees", "taskMentees")
+    .leftJoinAndSelect("taskMentees.mentee", "menteeUser")
     .leftJoinAndSelect("task.submissions", "submissions")
     .leftJoinAndSelect("submissions.user", "submissionUser")
     .leftJoinAndSelect("submissions.files", "submissionFiles")
@@ -66,10 +68,12 @@ export const getMyTasks = async (workspaceId: string) => {
 
   const userWithTasks = await userRepo
     .createQueryBuilder("user")
-    .leftJoinAndSelect("user.menteeTask", "task")
+    .leftJoinAndSelect("user.menteeTask", "taskMentee")
+    .leftJoinAndSelect("taskMentee.task", "task")
     .leftJoinAndSelect("task.workspace", "workspace")
     .leftJoinAndSelect("task.mentor", "mentor")
-    .leftJoinAndSelect("task.mentees", "mentees")
+    .leftJoinAndSelect("task.mentees", "taskMentees")
+    .leftJoinAndSelect("taskMentees.mentee", "menteeUser")
     .leftJoinAndSelect("task.submissions", "submissions")
     .leftJoinAndSelect("submissions.user", "submissionUser")
     .leftJoinAndSelect("submissions.files", "submissionFiles")
@@ -77,10 +81,10 @@ export const getMyTasks = async (workspaceId: string) => {
     .andWhere("task.workspace = :workspaceId", { workspaceId })
     .getOne();
 
-  const tasks = userWithTasks?.menteeTask || [];
+  const tasks = userWithTasks?.menteeTask?.map((tm) => tm.task) || [];
 
   return tasks.map((task) => {
-    const mySubmissions = task.submissions?.filter((item) => item.user?.id === user.id) || [];
+    const mySubmissions = task?.submissions?.filter((item) => item.user?.id === user.id) || [];
     return { ...task, mySubmissions, submissions: undefined };
   });
 };
@@ -115,7 +119,8 @@ export const getTaskDetailMentors = async (
     .createQueryBuilder("task")
     .leftJoinAndSelect("task.workspace", "workspace")
     .leftJoinAndSelect("task.mentor", "mentor")
-    .leftJoinAndSelect("task.mentees", "mentees")
+    .leftJoinAndSelect("task.mentees", "taskMentees")
+    .leftJoinAndSelect("taskMentees.mentee", "menteeUser")
     .leftJoinAndSelect("task.submissions", "submissions")
     .leftJoinAndSelect("submissions.user", "submissionUser")
     .leftJoinAndSelect("submissions.files", "submissionFiles")
@@ -162,7 +167,8 @@ export const getTaskDetailMentees = async (
     .createQueryBuilder("task")
     .leftJoinAndSelect("task.workspace", "workspace")
     .leftJoinAndSelect("task.mentor", "mentor")
-    .leftJoinAndSelect("task.mentees", "mentees")
+    .leftJoinAndSelect("task.mentees", "taskMentees")
+    .leftJoinAndSelect("taskMentees.mentee", "menteeUser")
     .leftJoinAndSelect("task.submissions", "submissions")
     .leftJoinAndSelect("submissions.user", "submissionUser")
     .leftJoinAndSelect("submissions.files", "submissionFiles")
@@ -170,7 +176,7 @@ export const getTaskDetailMentees = async (
     .andWhere("workspace.id = :workspaceId", { workspaceId })
     .getOne();
 
-  const isMentee = !!task?.mentees?.some((u) => u.id === user.id);
+  const isMentee = !!task?.mentees?.some((tm: TaskMentee) => tm.mentee?.id === user.id);
   const isMentor = workspace.mentors?.some((u) => u.id === user.id);
   const isAdmin = workspace.admin?.id === user.id;
 
@@ -197,7 +203,6 @@ export const updateTask = async (workspaceId: string, taskId: number, content: T
   if(!user) throw new Error(unauthorized);
 
   const workspaceRepo = db.getRepository(Workspace);
-  const taskRepo = db.getRepository("Task");
 
   const mentor = await userRepo.findOneBy({ email: session.user.email });
   if (!mentor) throw new Error(notfound);
@@ -220,7 +225,8 @@ export const updateTask = async (workspaceId: string, taskId: number, content: T
     .createQueryBuilder("task")
     .leftJoinAndSelect("task.workspace", "workspace")
     .leftJoinAndSelect("task.mentor", "mentor")
-    .leftJoinAndSelect("task.mentees", "mentees")
+    .leftJoinAndSelect("task.mentees", "taskMentees")
+    .leftJoinAndSelect("taskMentees.mentee", "menteeUser")
     .leftJoinAndSelect("task.submissions", "submissions")
     .leftJoinAndSelect("submissions.user", "submissionUser")
     .leftJoinAndSelect("submissions.files", "submissionFiles")
@@ -235,11 +241,19 @@ export const updateTask = async (workspaceId: string, taskId: number, content: T
 
   task.title = content.title;
   task.description = content.description;
-  task.mentees = content.mentees;
-  task.startDate = new Date(content.startDate);
-  task.endDate = new Date(content.endDate);
+  task.startDate = new Date(content.startDate!);
+  task.endDate = new Date(content.endDate!);
 
-  await taskRepo.save(task);
+  const taskMenteeRepo = db.getRepository(TaskMentee);
+  await taskMenteeRepo.delete({ task: { id: taskId } });
+
+  if (content.mentees && content.mentees.length > 0) {
+    const menteeEntities = content.mentees.map((mentee) => {
+      return taskMenteeRepo.create({ task, mentee });
+    });
+    await taskMenteeRepo.save(menteeEntities);
+  }
+
   return task;
 };
 
@@ -250,15 +264,16 @@ export const createTask = async (workspaceId: string, content: TaskDTO) => {
   const db = await initializeDataSource();
   const userRepo = db.getRepository(User);
   const workspaceRepo = db.getRepository(Workspace);
-  const taskRepo = db.getRepository("Task");
+  const taskRepo = db.getRepository(Task);
 
   const mentor = await userRepo.findOneBy({ email: session.user.email });
   if (!mentor) throw new Error(notfound);
 
   const workspace = await workspaceRepo.findOne({
     where: { id: workspaceId },
-    relations: ["mentors", "users"],
+    relations: ["mentors"],
   });
+
   if (!workspace) throw new Error(notfound);
 
   const isMentor = workspace.mentors?.some((u) => u.id === mentor.id);
@@ -268,20 +283,30 @@ export const createTask = async (workspaceId: string, content: TaskDTO) => {
     throw new Error(forbidden);
   }
 
+  const baseWorkspace = await workspaceRepo.findOneBy({ id: workspaceId });
+  if (!baseWorkspace) throw new Error(notfound);
+
+
   const task = taskRepo.create({
     title: content.title,
     description: content.description,
     mentor,
-    workspace,
-    mentees: content.mentees,
+    workspace: baseWorkspace,
     isDone: false,
-    startDate: new Date(content.startDate),
-    endDate: new Date(content.endDate),
+    startDate: new Date(content.startDate!),
+    endDate: new Date(content.endDate!),
   });
+  const savedTask = await taskRepo.save(task);
 
-  const saved = await taskRepo.save(task);
-  console.log(saved);
-  return task;
+  if (content.mentees && content.mentees.length > 0) {
+    const taskMenteeRepo = db.getRepository(TaskMentee);
+    const menteeEntities = content.mentees.map((mentee) => {
+      return taskMenteeRepo.create({ task: savedTask, mentee });
+    });
+    await taskMenteeRepo.save(menteeEntities);
+  }
+
+  return savedTask;
 };
 
 export const submitTask = async (
@@ -301,7 +326,8 @@ export const submitTask = async (
     .createQueryBuilder("task")
     .leftJoinAndSelect("task.workspace", "workspace")
     .leftJoinAndSelect("task.mentor", "mentor")
-    .leftJoinAndSelect("task.mentees", "mentees")
+    .leftJoinAndSelect("task.mentees", "taskMentees")
+    .leftJoinAndSelect("taskMentees.mentee", "menteeUser")
     .leftJoinAndSelect("task.submissions", "submissions")
     .leftJoinAndSelect("submissions.user", "submissionUser")
     .leftJoinAndSelect("submissions.files", "submissionFiles")
@@ -380,7 +406,8 @@ export const getIsMentee = async (taskId: number) => {
     .createQueryBuilder("task")
     .leftJoinAndSelect("task.workspace", "workspace")
     .leftJoinAndSelect("task.mentor", "mentor")
-    .leftJoinAndSelect("task.mentees", "mentees")
+    .leftJoinAndSelect("task.mentees", "taskMentees")
+    .leftJoinAndSelect("taskMentees.mentee", "menteeUser")
     .leftJoinAndSelect("task.submissions", "submissions")
     .leftJoinAndSelect("submissions.user", "submissionUser")
     .leftJoinAndSelect("submissions.files", "submissionFiles")
@@ -435,7 +462,6 @@ export const editTask = async (
   task.description = content.description;
   task.mentor = mentor;
   task.workspace = workspace;
-  task.mentees = content.mentees;
   task.isDone = false;
   task.startDate = new Date(content.startDate);
   task.endDate = new Date(content.endDate);

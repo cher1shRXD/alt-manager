@@ -7,6 +7,7 @@ import { Workspace } from "@/entities/Workspace";
 import { Report } from "@/entities/Report";
 import { TaskSubmission } from "@/entities/TaskSubmission";
 import { TaskSubmissionFile } from "@/entities/TaskSubmissionFile";
+import { TaskMentee } from "@/entities/TaskMentee";
 
 const AppDataSource = new DataSource({
   type: "mariadb",
@@ -16,10 +17,11 @@ const AppDataSource = new DataSource({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   synchronize: true,
-  entities: [User, Task, Workspace, Report, TaskSubmission, TaskSubmissionFile],
+  entities: [User, Workspace, Report, Task, TaskSubmission, TaskSubmissionFile, TaskMentee],
   migrations: ["src/migrations/**/*.ts"],
   subscribers: ["src/subscribers/**/*.ts"],
-  logging: true
+  logging: ["error", "warn", "info", "log"],
+  logger: "advanced-console",
 });
 
 export default AppDataSource

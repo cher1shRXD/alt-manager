@@ -6,6 +6,7 @@ import { toast } from "@/components/provider/ToastProvider";
 import { customFetch } from "@/utilities/customFetch";
 import { Task } from "@/entities/Task";
 import { ErrorResponse } from "@/types/ErrorResponse";
+import { TaskMentee } from "@/entities/TaskMentee";
 
 export const useEditTask = (workspaceId: string | null, taskId: number) => {
   const [taskData, setTaskData] = useState<TaskDTO>({ title: "", description: "", endDate: "", startDate: "", mentees: [] });
@@ -40,10 +41,18 @@ export const useEditTask = (workspaceId: string | null, taskId: number) => {
 
   const getTask = async () => {
     try{
-      const { task } = await customFetch.get<{ task: Task }>(`/api/task/${workspaceId}/${taskId}`);
+      const { task } = await customFetch.get<{ task: Task & { mentees?: TaskMentee[] } }>(`/api/task/${workspaceId}/${taskId}`);
       console.log(task);
       if(task) {
-        setTaskData({ description: task.description || "", mentees: task.mentees || [], title: task.title || "", endDate: `${task.endDate}`.split("T")[0], startDate: `${task.startDate}`.split("T")[0]})
+        const mentees = (task.mentees || []).map((tm: TaskMentee) => tm.mentee);
+        if(!mentees.every(item => !!item)) return;
+        setTaskData({
+          description: task.description || "",
+          mentees,
+          title: task.title || "",
+          endDate: `${task.endDate}`.split("T")[0],
+          startDate: `${task.startDate}`.split("T")[0]
+        })
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);

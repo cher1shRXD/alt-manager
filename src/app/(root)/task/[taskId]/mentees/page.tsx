@@ -25,7 +25,7 @@ const TaskMentee = async ({ params, searchParams }: { params: Promise<{ taskId: 
             {
               task.mentees?.map((item) => (
                 <div className="px-2 py-0.5 bg-primary rounded" key={item.id}>
-                  <p className="text-sm">{item.name}</p>
+                  <p className="text-sm">{item.mentee?.name}</p>
                 </div>
               ))
             }

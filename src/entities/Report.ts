@@ -14,9 +14,9 @@ export class Report {
   @CreateDateColumn()
   createdAt?: Date;
 
-  @ManyToOne(() => Workspace, (workspace) => workspace.reports , { cascade: true })
+  @ManyToOne(() => Workspace, (workspace) => workspace.reports)
   workspace?: Relation<Workspace>;
 
-  @ManyToOne(() => User, (user) => user.reports, { cascade: true })
+  @ManyToOne(() => User, (user) => user.reports)
   author?: Relation<User>;
 }

@@ -1,7 +1,7 @@
-import { Task } from "@/entities";
+import { Task } from "@/entities/Task";
 
 export interface TaskListItemProps {
-  task: Task;
+  task: Task
   workspaceId: string;
   isMentee: boolean;
 }

@@ -7,7 +7,7 @@ export class TaskSubmissionFile {
   @PrimaryGeneratedColumn()
   id?: number;
 
-  @ManyToOne(() => TaskSubmission, (submission) => submission.files, { cascade: true })
+  @ManyToOne(() => TaskSubmission, (submission) => submission.files)
   @JoinTable()
   submission?: Relation<TaskSubmission>;
 

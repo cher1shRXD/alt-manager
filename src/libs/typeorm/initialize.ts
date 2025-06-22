@@ -10,6 +10,8 @@ export const initializeDataSource = async () => {
         await AppDataSource.initialize();
         console.log("✅ DB 초기화 완료");
       } catch (err) {
+        console.log(AppDataSource.options.entities);
+
         console.error("❌ DB 초기화 실패:", err);
         throw err;
       }

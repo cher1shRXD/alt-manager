@@ -1,4 +1,5 @@
 import CustomLink from "@/components/common/CustomLink";
+import { TaskMentee } from "@/entities/TaskMentee";
 import { getMe } from "@/services/getMe";
 import { getMyTasks, getTasks } from "@/services/taskService";
 import { getWorkspace } from "@/services/workspaceService";
@@ -32,9 +33,9 @@ const Task = async ({ searchParams }: SearchParamProps) => {
                 <p className="text-xs lg:text-sm text-nowrap overflow-hidden whitespace-nowrap text-ellipsis">{parseDate(item.startDate)} ~ {parseDate(item.endDate)}</p>
                 <div className="w-full flex items-start flex-wrap gap-1">
                   {
-                    item.mentees?.map(mentee => (
-                      <div className="px-2 py-0.5 bg-primary rounded" key={mentee.id}>
-                        <p className="text-[10px]">{mentee.name}</p>
+                    (item.mentees || []).map((tm: TaskMentee) => (
+                      <div className="px-2 py-0.5 bg-primary rounded" key={tm.mentee?.id}>
+                        <p className="text-[10px]">{tm.mentee?.name}</p>
                       </div>
                     ))
                   }
