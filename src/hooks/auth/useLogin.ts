@@ -23,16 +23,14 @@ export const useLogin = () => {
       redirect: false,
     });
 
-    try {
-      if (res?.ok) {
-        toast.success("로그인 성공!");
-        router.replace("/choose-workspace");
-      } else if (res && res.status < 500 && res.status > 399) {
-        toast.error("이메일, 비밀번호를 확인해주세요.");
-      } else {
-        toast.error("로그인 실패");
-      }
-    } finally {
+    if (res?.ok) {
+      toast.success("로그인 성공!");
+      router.replace("/choose-workspace");
+    } else if (res && res.status < 500 && res.status > 399) {
+      toast.error("이메일, 비밀번호를 확인해주세요.");
+      setLoading(false);
+    } else {
+      toast.error("로그인 실패");
       setLoading(false);
     }
   };

@@ -29,7 +29,6 @@ export const useCreateWorkspace = () => {
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);
-    } finally {
       setLoading(false);
     }
   }

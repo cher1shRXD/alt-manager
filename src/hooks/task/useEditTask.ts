@@ -83,7 +83,6 @@ export const useEditTask = (workspaceId: string | null, taskId: number) => {
       }
     }catch(e){
       toast.error((e as ErrorResponse).message)
-    } finally {
       setLoading(false);
     }
   } 

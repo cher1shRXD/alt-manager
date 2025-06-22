@@ -19,7 +19,6 @@ export const useManageMember = (workspaceId: string | null, userId: string | nul
     }catch(e){
       toast.error((e as ErrorResponse).message);
       router.back();
-    }finally{
       setLoading(false);
     }
   }
@@ -34,7 +33,6 @@ export const useManageMember = (workspaceId: string | null, userId: string | nul
     }catch(e){
       toast.error((e as ErrorResponse).message);
       router.back();
-    } finally{
       setLoading(false);
     }
   }
@@ -49,7 +47,6 @@ export const useManageMember = (workspaceId: string | null, userId: string | nul
     }catch(e){
       toast.error((e as ErrorResponse).message);
       router.back();
-    }finally{
       setLoading(false);
     }
   }
@@ -64,7 +61,6 @@ export const useManageMember = (workspaceId: string | null, userId: string | nul
     }catch(e){
       toast.error((e as ErrorResponse).message);
       router.back();
-    }finally{
       setLoading(false);
     }
   }

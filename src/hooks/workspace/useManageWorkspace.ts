@@ -32,7 +32,6 @@ export const useManageWorkspace = (workspaceId: string | null) => {
     }catch(e){
       toast.error((e as ErrorResponse).message);
       router.back();
-    } finally {
       setLoading(false);
     }
   }
@@ -49,7 +48,6 @@ export const useManageWorkspace = (workspaceId: string | null) => {
     }catch(e){
       toast.error((e as ErrorResponse).message);
       router.back();
-    } finally {
       setLoading(false);
     }
   }

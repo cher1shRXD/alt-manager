@@ -30,7 +30,6 @@ export const useJoinWorkspace = () => {
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);
-    } finally {
       setLoading(false);
     }
   } 

@@ -4,6 +4,7 @@ import { SignupData } from "@/types/auth/SignupData"
 import { signIn } from "next-auth/react"
 import { useState } from "react"
 import { useCustomRouter } from "../useCustomRouter"
+import { ErrorResponse } from "@/types/ErrorResponse"
 
 export const useSignup = () => {
   const [signupData, setSignupData] = useState<SignupData>({ email: "", name: "", password: "", passwordCheck: "" });
@@ -53,8 +54,10 @@ export const useSignup = () => {
         }
       } else {
         toast.error("회원가입 실패");
+        setLoading(false);
       }
-    } finally {
+    }catch(e){
+      toast.error((e as ErrorResponse).message);
       setLoading(false);
     }
   }

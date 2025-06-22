@@ -25,7 +25,6 @@ export const useCreateReport = (workspaceId: string | null) => {
       }
     }catch(e){
       toast.error((e as ErrorResponse).message);
-    }finally{
       setLoading(false);
     }
   }

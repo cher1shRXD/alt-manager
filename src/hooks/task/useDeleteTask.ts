@@ -21,7 +21,6 @@ export const useDeleteTask = (workspaceId: string | null, taskId: number) => {
     }catch(e){
       toast.error((e as ErrorResponse).message);
       router.back();
-    } finally {
       setLoading(false);
     }
   }

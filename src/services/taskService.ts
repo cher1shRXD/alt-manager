@@ -279,7 +279,8 @@ export const createTask = async (workspaceId: string, content: TaskDTO) => {
     endDate: new Date(content.endDate),
   });
 
-  await taskRepo.save(task);
+  const saved = await taskRepo.save(task);
+  console.log(saved);
   return task;
 };
 

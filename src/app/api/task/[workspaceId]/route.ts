@@ -8,7 +8,7 @@ export const POST = async (req: NextRequest, { params }: { params: Promise<{ wor
     const data: TaskDTO = await req.json();
     const { workspaceId } = await params;
 
-    const task = createTask(workspaceId, data);
+    const task = await createTask(workspaceId, data);
 
     return NextResponse.json({ task }, { status: 201 });
   }catch(e){

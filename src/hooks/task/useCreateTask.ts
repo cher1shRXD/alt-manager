@@ -64,7 +64,6 @@ export const useCreateTask = (workspaceId: string | null) => {
       }
     }catch(e){
       toast.error((e as ErrorResponse).message)
-    } finally {
       setLoading(false);
     }
   } 
