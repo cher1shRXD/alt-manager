@@ -309,41 +309,37 @@ export const submitTask = async (
 
   if (!task) throw new Error(notfound);
 
-  console.log(task);
-
   const isMentee = task.mentees?.some((u) => u.id === user.id);
   if (!isMentee) throw new Error(forbidden);
 
-  const taskSubmission = db.getRepository(TaskSubmission).create({
+  const taskSubmissionRepo = db.getRepository(TaskSubmission);
+  const taskEntity = await db.getRepository(Task).findOneBy({ id: taskId });
+  if (!taskEntity) throw new Error(notfound);
+
+  const taskSubmission = taskSubmissionRepo.create({
     files: [],
     isSubmitted: true,
-    task,
+    task: taskEntity,
     user,
   });
-
-  const submissions: TaskSubmissionFile[] = [];
+  const savedSubmission = await taskSubmissionRepo.save(taskSubmission);
 
   const taskSubmissionFileRepo = db.getRepository(TaskSubmissionFile);
-
+  const submissions: TaskSubmissionFile[] = [];
   for (const submit of submitData) {
     const taskSubmissionFile = taskSubmissionFileRepo.create({
       originalName: submit.filename,
-      submission: taskSubmission,
+      submission: savedSubmission,
       url: submit.url,
     });
-
     const saved = await taskSubmissionFileRepo.save(taskSubmissionFile);
     submissions.push(saved);
   }
-  taskSubmission.files = submissions;
+  
+  savedSubmission.files = submissions;
+  await taskSubmissionRepo.save(savedSubmission);
 
-  const newTaskSubmission = await db
-    .getRepository(TaskSubmission)
-    .createQueryBuilder("task_submission")
-    .insert()
-    .values(taskSubmission)
-    .execute();
-  return newTaskSubmission;
+  return savedSubmission;
 };
 
 export const cancelSubmit = async (submissionId: number) => {

@@ -18,7 +18,7 @@ const EditTask = () => {
   const workspace = useGetWorkspace(searchParams.get("workspace"));
 
   return (
-    <div className="w-full mx-auto p-4">
+    <div className="w-full mx-auto xl:p-4">
       <h2 className="text-2xl font-bold mb-4">과제 출제</h2>
       <form
         onSubmit={(e) => {
@@ -27,21 +27,21 @@ const EditTask = () => {
         }}
         className="flex flex-col gap-4">
         <input
-          className="border border-border  p-2 rounded-lg bg-container outline-none"
+          className="border border-border  p-2 rounded-lg bg-container outline-none text-sm xl:text-base"
           placeholder="제목"
           value={taskData.title}
           onChange={handleData}
           name="title"
         />
         <textarea
-          className="border border-border  p-2 rounded-lg bg-container resize-none h-40 outline-none"
+          className="border border-border  p-2 rounded-lg bg-container resize-none h-40 outline-none text-sm xl:text-base"
           placeholder="설명"
           value={taskData.description}
           onChange={handleData}
           name="description"
         />
         <div className="flex flex-col gap-2">
-          <div className="w-full flex gap-2 items-center relative">
+          <div className="w-full flex xl:gap-2 xl:items-center flex-col xl:flex-row relative">
             <p className="block mb-1 font-semibold text-lg">과제 대상 멤버</p>
             <div className="relative w-fit">
               <select className="border border-border p-2 pr-8 rounded-lg bg-container outline-none text-sm appearance-none relative text-gray-500" onChange={handleSelect}>
@@ -71,7 +71,7 @@ const EditTask = () => {
             
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-col xl:flex-row">
           <div className="flex flex-col">
             <label className="mb-1">시작일</label>
             <input

@@ -102,14 +102,12 @@ const Home = async ({ searchParams }: SearchParamProps) => {
           <ProgressBar
             value={myCompleted}
             max={myTasks.length}
-            label="완료한 과제"
             completedLabel="완료한 과제: "
           />
         ) : (
           <ProgressBar
             value={totalSubmissions}
             max={totalPossibleSubmissions}
-            label="전체 제출 수"
             completedLabel="전체 제출 수: "
           />
         )}

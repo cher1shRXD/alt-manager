@@ -1,6 +1,6 @@
 import { ProgressBarProps } from "@/types/props/ProgressBarProps";
 
-const ProgressBar = ({ value, max, label, completedLabel }: ProgressBarProps) => {
+const ProgressBar = ({ value, max, completedLabel }: ProgressBarProps) => {
   return (
     <div className="w-full flex-1 flex flex-col">
       <div className="flex-1" />

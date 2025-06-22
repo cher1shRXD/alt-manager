@@ -10,11 +10,11 @@ const FilePreview = ({ url, name }: FilePreviewProps) => {
   const extension = name.split('.').pop()?.toLowerCase();
 
   if (IMAGE_EXT.includes(extension || "")) {
-    return <img src={url} alt={name} className="max-w-full h-[700px] m-auto outline-none" />;
+    return <img src={url} alt={name} className="max-w-full xl:h-[700px] m-auto outline-none" />;
   }
 
   if (VIDEO_EXT.includes(extension || "")) {
-    return <video controls src={url} className="max-w-full h-[700px] m-auto outline-none" />;
+    return <video controls src={url} className="max-w-full xl:h-[700px] m-auto outline-none" />;
   }
 
   if (extension === PDF_EXT) {

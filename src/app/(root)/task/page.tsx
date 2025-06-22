@@ -21,15 +21,15 @@ const Task = async ({ searchParams }: SearchParamProps) => {
   const isMentor = !!workspace.mentors?.some(m => m.id === user?.id) || workspace.admin?.id === user?.id;
 
   return (
-    <div className="w-full flex items-start gap-4 mb-16">
-      <div className="flex-1 p-2 bg-container rounded-xl border border-border flex flex-col gap-2">
+    <div className="w-full flex flex-col xl:flex-row items-start gap-4 mb-16">
+      <div className="w-full xl:w-min xl:flex-1 p-2 bg-container rounded-xl border border-border flex flex-col gap-2">
         <p className="w-full text-center">과제 목록</p>
         <div className="w-full flex flex-col gap-1">
           {
             isMentor ? allTasks.length > 0 ? allTasks.map(item => (
               <CustomLink href={`/task/${item.id}/mentors?workspace=${workspace.id}`} className="w-full bg-container border border-border rounded-lg p-2 flex flex-col gap-1" key={item.id}>
-                <p>{item.title}</p>
-                <p className="text-sm">{parseDate(item.startDate)} ~ {parseDate(item.endDate)}</p>
+                <p className="text-sm xl:text-base text-nowrap overflow-hidden whitespace-nowrap text-ellipsis">{item.title}</p>
+                <p className="text-xs xl:text-sm text-nowrap overflow-hidden whitespace-nowrap text-ellipsis">{parseDate(item.startDate)} ~ {parseDate(item.endDate)}</p>
                 <div className="w-full flex items-start flex-wrap gap-1">
                   {
                     item.mentees?.map(mentee => (
@@ -40,8 +40,8 @@ const Task = async ({ searchParams }: SearchParamProps) => {
                   }
                 </div>
                 <div className="w-full flex items-center justify-between gap-2">
-                  <p className="text-xs text-gray-500">출제자: {item.mentor?.name}</p>
-                  <p className="text-xs text-gray-500">출제일: {parseDate(item.createdAt)}</p>
+                  <p className="text-xs text-gray-500 text-nowrap">출제자: {item.mentor?.name}</p>
+                  <p className="text-xs text-gray-500 text-nowrap overflow-hidden whitespace-nowrap text-ellipsis">출제일: {parseDate(item.createdAt)}</p>
                 </div>
               </CustomLink>
             )) : <p className="text-gray-500 w-full text-center">과제가 없습니다.</p> 
@@ -58,7 +58,7 @@ const Task = async ({ searchParams }: SearchParamProps) => {
           }
         </div>
       </div>
-      <div className="w-full max-w-80 bg-container border border-border rounded-xl p-2 flex flex-col gap-4 sticky top-4">
+      <div className="w-full xl:max-w-80 bg-container border border-border rounded-xl p-2 flex flex-col gap-4 sticky top-4">
         <p className="text-lg">과제 정보</p>
         <div className="w-full flex flex-col gap-1">
           <p>{isMentor ? "총 과제 수" : "내 과제 수"}: <span className="text-primary">{isMentor ? workspace.tasks?.length : user?.menteeTask?.length}개</span></p>

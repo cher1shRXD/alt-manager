@@ -42,7 +42,7 @@ export const useSubmission = (workspaceId: string | null, taskId: number, submit
   }
 
   const submit = async () => {
-    if(!workspaceId) return;
+    if(!workspaceId || loading) return;
     if(files.length <= 0) {
       toast.warning("파일을 업로드 해주세요.");
       return;
