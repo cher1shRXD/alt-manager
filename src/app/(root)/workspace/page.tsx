@@ -17,8 +17,8 @@ const Workspace = async ({ searchParams }: SearchParamProps) => {
   const workspace = await getWorkspace(keyword.workspace as string);
 
   return (
-    <div className="w-full flex items-start gap-4 mb-16">
-      <div className="flex-1 p-2 bg-container rounded-xl border border-border">
+    <div className="w-full flex items-start flex-col xl:flex-row gap-4 mb-16">
+      <div className="w-full xl:m-min xl:flex-1 p-2 bg-container rounded-xl border border-border">
         <p className="mb-2 text-sm w-full text-center py-1">워크스페이스 멤버</p>
         <div className="w-full flex flex-col gap-2">
           {
@@ -29,7 +29,7 @@ const Workspace = async ({ searchParams }: SearchParamProps) => {
         </div>
       </div>
       
-      <div className="w-full max-w-80 bg-container border border-border rounded-xl p-2 flex flex-col gap-4 sticky top-4">
+      <div className="w-full xl:max-w-80 bg-container border border-border rounded-xl p-2 flex flex-col gap-4 sticky top-4">
         <p className="font-anton tracking-[1.6] text-3xl text-center py-2">{workspace.name}</p>
         <div className="flex flex-col gap-1">
           <p className="text-xs">워크스페이스 관리자</p>
