@@ -12,8 +12,8 @@ const DeleteTask = () => {
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <div className="min-w-80 flex flex-col items-center justify-center gap-2 bg-container border border-border p-4 rounded-lg">
-        <p className="text-3xl">{task?.title}</p>
+      <div className="lg:min-w-80 flex flex-col items-center justify-center gap-2 bg-container border border-border p-4 rounded-lg">
+        <p className="xl:text-3xl ">{task?.title}</p>
         <p className="text-lg text-semibold text-center">과제를 삭제하시겠습니까?</p>
         <p className="text-xs text-primary">이 작업은 되돌릴 수 없습니다.</p>
         <div className="w-full flex items-center gap-2 mt-2">

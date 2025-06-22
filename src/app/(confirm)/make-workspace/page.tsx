@@ -6,7 +6,7 @@ const MakeWorkspace = () => {
   const { title, handleTitle, submit, loading } = useCreateWorkspace();
 
   return (
-    <div className="w-full h-screen flex items-center justify-center px-4">
+    <div className="w-full h-screen flex items-center justify-center px-2">
       <form className="w-full max-w-120 h-56 bg-container border border-border rounded-xl flex flex-col items-center px-4" onSubmit={(e) => {e.preventDefault(); submit();}}>
         <p className="w-full py-1 pt-3 text-center">새 워크스페이스 생성</p>
         <div className="w-full flex-1 flex flex-col py-3">

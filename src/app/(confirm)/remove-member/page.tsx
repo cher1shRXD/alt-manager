@@ -13,8 +13,8 @@ const RemoveMember = () => {
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <div className="flex flex-col items-center justify-center gap-2 bg-container border border-border p-4 rounded-lg">
-        <p className="text-3xl">{username}</p>
-        <p className="text-lg text-semibold text-center">유저를 워크스페이스에서 삭제합니다.</p>
+        <p className="lg:text-3xl">{username}</p>
+        <p className="text-lg text-semibold text-center break-keep">유저를 워크스페이스에서 삭제합니다.</p>
         <p className="text-xs text-primary">이 작업은 되돌릴 수 없습니다.</p>
         <div className="w-full flex items-center gap-2 mt-2">
           <CustomLink href={`/workspace?workspace=${searchParams.get("workspace")}`} className="flex-1 text-center p-2 text-xs bg-container border border-border rounded text-red-500">취소</CustomLink>
