@@ -19,25 +19,23 @@ const Sidebar = async () => {
   }
 
   return (
-    <div className="w-[var(--sidebar-width)] fixed bottom-4 z-50 xl:top-4 xl:left-4 xl:h-[calc(100vh-32px)] bg-container border border-border rounded-xl backdrop-blur-xs p-2 flex xl:flex-col xl:gap-1">
-      <div className="xl:w-full flex xl:flex-col gap-1 text-sm">
-        <NavigationItem title="홈" href="/" icon={<Home size={20} />} />
-        <NavigationItem
-          title="과제"
-          href="/task"
-          icon={<ClipboardPenLine size={20} />}
-        />
-        <NavigationItem
-          title="성과보고"
-          href="/report"
-          icon={<Scroll size={20} />}
-        />
-        <NavigationItem
-          title="워크스페이스 정보"
-          href="/workspace"
-          icon={<UsersRound size={20} />}
-        />
-      </div>
+    <div className="w-[var(--sidebar-width)] fixed bottom-4 left-4 z-50 xl:top-4 xl:left-4 xl:h-[calc(100vh-32px)] bg-container border border-border rounded-xl backdrop-blur-xs p-2 flex xl:flex-col xl:gap-1 justify-evenly xl:justify-start">
+      <NavigationItem title="홈" href="/" icon={<Home size={20} />} />
+      <NavigationItem
+        title="과제"
+        href="/task"
+        icon={<ClipboardPenLine size={20} />}
+      />
+      <NavigationItem
+        title="성과보고"
+        href="/report"
+        icon={<Scroll size={20} />}
+      />
+      <NavigationItem
+        title="워크스페이스 정보"
+        href="/workspace"
+        icon={<UsersRound size={20} />}
+      />
       <div className="flex-1 hidden xl:block" />
       <p className="text-xs big:text-base hidden xl:block">
         현재 워크스페이스: <CurrentWorkspace />

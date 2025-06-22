@@ -27,7 +27,7 @@ body, html {
 
 @media (max-width: 1279px) {
   :root {
-    --sidebar-width: min-content;
+    --sidebar-width: calc(100vw - 32px);
   }
 }
 
