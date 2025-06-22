@@ -1,8 +1,5 @@
 import CustomLink from "@/components/common/CustomLink";
 import Logout from "@/components/common/Logout";
-import { Task } from "@/entities/Task";
-import { TaskSubmission } from "@/entities/TaskSubmission";
-import { User } from "@/entities/User";
 import { getMe } from "@/services/getMe";
 import { getTasks, getMyTasks } from "@/services/taskService";
 import { getWorkspace } from "@/services/workspaceService";
