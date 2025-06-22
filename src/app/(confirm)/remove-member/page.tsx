@@ -18,7 +18,7 @@ const RemoveMember = () => {
         <p className="text-xs text-primary">이 작업은 되돌릴 수 없습니다.</p>
         <div className="w-full flex items-center gap-2 mt-2">
           <CustomLink href={`/workspace?workspace=${searchParams.get("workspace")}`} className="flex-1 text-center p-2 text-xs bg-container border border-border rounded text-red-500">취소</CustomLink>
-          <button onClick={deleteSubmit} className="flex-1 p-2 text-xs bg-container border border-border rounded text-red-500 disabled:bg-gray-300" disabled={loading}>{loading ? "삭제 중..." : "삭제"}</button>
+          <button onClick={deleteSubmit} className="flex-1 p-2 text-xs bg-container border border-border rounded text-red-500" disabled={loading}>{loading ? "삭제 중..." : "삭제"}</button>
         </div>
       </div>
     </div>

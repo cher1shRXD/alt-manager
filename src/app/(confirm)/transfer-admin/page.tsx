@@ -18,7 +18,7 @@ const TransfreAdmin = () => {
         <p className="text-xs text-primary">이 작업은 되돌릴 수 없으며 앞으로 관리자의 역할을 잃게됩니다.</p>
         <div className="w-full flex items-center gap-2 mt-2">
           <CustomLink href={`/workspace?workspace=${searchParams.get("workspace")}`} className="flex-1 text-center p-2 text-xs bg-container border border-border rounded text-red-500">취소</CustomLink>
-          <button onClick={updateSubmit} className="flex-1 p-2 text-xs bg-container border border-border rounded text-red-500 disabled:bg-gray-300" disabled={loading}>{loading ? "관리자 변경 중..." : "확인"}</button>
+          <button onClick={updateSubmit} className="flex-1 p-2 text-xs bg-container border border-border rounded text-red-500" disabled={loading}>{loading ? "관리자 변경 중..." : "확인"}</button>
         </div>
       </div>
     </div>
