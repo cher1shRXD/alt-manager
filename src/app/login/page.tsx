@@ -8,7 +8,7 @@ const Login = () => {
   const { handleEmail, handlePw, email, password, submit, loading } = useLogin();
 
   return (
-    <div className="w-full h-screen flex items-center justify-center px-6">
+    <div className="w-full h-screen flex items-center justify-center px-2">
       <div className="w-full max-w-210 h-120 bg-container rounded-xl border border-border flex items-center justify-between p-2 gap-2">
         <Image
           src="/AuthBanner.png"
@@ -16,7 +16,7 @@ const Login = () => {
           width={2400}
           height={2400}
           priority
-          className="h-full w-116 rounded-lg"
+          className="h-full w-116 rounded-lg hidden md:block"
         />
         <form
           className="flex-1 h-full flex flex-col gap-4 items-center p-4"
