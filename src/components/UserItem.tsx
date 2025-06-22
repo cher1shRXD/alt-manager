@@ -5,7 +5,7 @@ import CustomLink from "./common/CustomLink";
 
 const UserItem = ({ data, adminId, currentUserId, workspaceId, isMentor }: UserItemProps) => {
   return (
-    <div className="w-full flex xl:items-center bg-container p-2 rounded-lg border border-border flex-col xl:flex-row gap-2 xl:gap-0">
+    <div className="w-full flex lg:items-center bg-container p-2 rounded-lg border border-border flex-col lg:flex-row gap-2 lg:gap-0">
       <div className="flex-1 flex flex-col gap-1 ">
         <p>{data.name}</p>
         <p className="text-xs text-gray-500">{data.email}</p>

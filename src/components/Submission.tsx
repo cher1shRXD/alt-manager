@@ -28,7 +28,7 @@ const Submission = ({ taskId, submissions, isInDeadline }: SubmissionProps) => {
   
 
   return (
-    <div className="w-full xl:max-w-80 bg-container border border-border rounded-xl p-2 flex flex-col gap-4 sticky top-4">
+    <div className="w-full lg:max-w-80 bg-container border border-border rounded-xl p-2 flex flex-col gap-4 sticky top-4">
       <p>과제 제출하기</p>
       <div className="w-full min-h-24 flex flex-col gap-1">
         {files.length > 0 ? (

@@ -22,8 +22,8 @@ const Report = async ({ searchParams }: SearchParamProps) => {
   return (
     <div className="w-full flex flex-col gap-4">
       <p className="text-xl">성과보고서 목록</p>
-      <div className="w-full flex items-start flex-col xl:flex-row gap-4">
-        <div className={`w-full xl:w-min xl:flex-1 flex flex-col ${user?.id === workspace.admin?.id ? "gap-8" : "gap-2"} `}>
+      <div className="w-full flex items-start flex-col lg:flex-row gap-4">
+        <div className={`w-full lg:w-min lg:flex-1 flex flex-col ${user?.id === workspace.admin?.id ? "gap-8" : "gap-2"} `}>
           {
             user?.id === workspace.admin?.id ? (
               allReports.length > 0 ? allReports.map((item) => (
@@ -52,7 +52,7 @@ const Report = async ({ searchParams }: SearchParamProps) => {
           }
         </div>
         
-        <div className="w-full xl:max-w-80 bg-container border border-border rounded-xl p-2 flex flex-col gap-1 sticky top-4">
+        <div className="w-full lg:max-w-80 bg-container border border-border rounded-xl p-2 flex flex-col gap-1 sticky top-4">
           <div className="w-full flex flex-col gap-1 items-center my-8">
             <p className="text-sm">다음 성과보고서 제출까지</p>
             <p className="text-4xl text-primary font-semibold px-4 py-2 rounded-lg bg-bg">D-{getNextMonday().daysLeft}</p>

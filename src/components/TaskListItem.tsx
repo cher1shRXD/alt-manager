@@ -24,7 +24,7 @@ const TaskListItem = ({ task, workspaceId, isMentee }: TaskListItemProps) => {
       key={task.id}
       className="border-b border-border pb-2 mb-2 last:border-0 last:mb-0"
     >
-      <p className="font-semibold text-sm xl:text-base mb-1 text-nowrap overflow-hidden whitespace-nowrap text-ellipsis">{task.title}</p>
+      <p className="font-semibold text-sm lg:text-base mb-1 text-nowrap overflow-hidden whitespace-nowrap text-ellipsis">{task.title}</p>
       <div className="w-full flex items-center justify-between">
         <p className="text-xs text-gray-500 text-nowrap overflow-hidden whitespace-nowrap text-ellipsis">
           {task.startDate?.toLocaleDateString()} ~ {task.endDate?.toLocaleDateString()}

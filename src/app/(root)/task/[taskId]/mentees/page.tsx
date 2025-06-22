@@ -15,10 +15,10 @@ const TaskMentee = async ({ params, searchParams }: { params: Promise<{ taskId: 
   const task = await getTaskDetailMentees(keyword.workspace as string, parseInt(taskId));
   
   return (
-    <div className="w-full flex items-start flex-col xl:flex-row gap-4 mb-16">
-      <div className="w-full xl:w-min xl:flex-1 p-2 bg-container rounded-xl border border-border flex flex-col gap-4 items-start">
-        <p className="p-2 w-full bg-container border border-border rounded-lg xl:text-xl">{task.title}</p>
-        <textarea value={task.description} readOnly className="w-full outline-none min-h-80 p-2 resize-none bg-container border border-border rounded-lg text-sm xl:text-base" />
+    <div className="w-full flex items-start flex-col lg:flex-row gap-4 mb-16">
+      <div className="w-full lg:w-min lg:flex-1 p-2 bg-container rounded-xl border border-border flex flex-col gap-4 items-start">
+        <p className="p-2 w-full bg-container border border-border rounded-lg lg:text-xl">{task.title}</p>
+        <textarea value={task.description} readOnly className="w-full outline-none min-h-80 p-2 resize-none bg-container border border-border rounded-lg text-sm lg:text-base" />
         <div className="w-full flex flex-col gap-1">
           <p>과제 대상</p>
           <div className="w-full flex items-start gap-1 flex-wrap">

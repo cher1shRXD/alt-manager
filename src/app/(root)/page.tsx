@@ -48,7 +48,7 @@ const Home = async ({ searchParams }: SearchParamProps) => {
 
 
   return (
-    <div className="w-full flex flex-col xl:grid xl:grid-cols-16 xl:grid-rows-[repeat(10,40px)] gap-4">
+    <div className="w-full flex flex-col lg:grid lg:grid-cols-16 lg:grid-rows-[repeat(10,40px)] gap-4">
       <div className="col-[1/8] row-[1/6] bg-container border border-border rounded-lg p-4 flex flex-col gap-2">
         <p className="font-bold mb-2 text-lg">
           {isMentee ? "내 과제 현황" : "최근 출제된 과제"}
