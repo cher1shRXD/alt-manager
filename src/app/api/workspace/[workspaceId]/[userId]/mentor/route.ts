@@ -1,4 +1,5 @@
 import { setAsMentor, unsetMentor } from "@/services/workspaceService";
+import { ErrorResponse } from "@/types/ErrorResponse";
 import { errorHandler } from "@/utilities/errorHandler";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -10,7 +11,7 @@ export const PATCH = async (req: NextRequest, { params }: { params: Promise<{ wo
 
     return NextResponse.json({ workspace }, { status: 201 });
   }catch(e){
-    return errorHandler(e as string);
+    return errorHandler((e as ErrorResponse).message);
   }
 }
 
@@ -22,6 +23,6 @@ export const DELETE = async (req: NextRequest, { params }: { params: Promise<{ w
 
     return NextResponse.json({ workspace }, { status: 201 });
   }catch(e){
-    return errorHandler(e as string);
+    return errorHandler((e as ErrorResponse).message);
   }
 }

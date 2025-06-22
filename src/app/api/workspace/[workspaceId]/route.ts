@@ -1,5 +1,6 @@
 import { deleteWorkspace, getWorkspace, updateWorkspace } from "@/services/workspaceService";
 import { WorkspaceDTO } from "@/types/dto/WorkspaceDTO";
+import { ErrorResponse } from "@/types/ErrorResponse";
 import { errorHandler } from "@/utilities/errorHandler";
 import { NextRequest, NextResponse } from "next/server"
 
@@ -10,7 +11,7 @@ export const GET = async (req: NextRequest, { params }: { params: Promise<{ work
 
     return NextResponse.json({ workspace }, { status: 200 });
   }catch(e){
-    return errorHandler(e as string);
+    return errorHandler((e as ErrorResponse).message);
   }
 }
 
@@ -22,7 +23,7 @@ export const PATCH = async (req: NextRequest, { params }: { params: Promise<{ wo
 
     return NextResponse.json({ workspace }, { status: 200 });
   }catch(e){
-    return errorHandler(e as string);
+    return errorHandler((e as ErrorResponse).message);
   }
 }
 
@@ -33,6 +34,6 @@ export const DELETE = async (req: NextRequest, { params }: { params: Promise<{ w
 
     return NextResponse.json({ workspace }, { status: 200 });
   }catch(e){
-    return errorHandler(e as string);
+    return errorHandler((e as ErrorResponse).message);
   }
 }

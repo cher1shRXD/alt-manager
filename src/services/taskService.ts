@@ -244,6 +244,8 @@ export const updateTask = async (workspaceId: string, taskId: number, content: T
   task.startDate = new Date(content.startDate!);
   task.endDate = new Date(content.endDate!);
 
+  await db.getRepository(Task).save(task);
+
   const taskMenteeRepo = db.getRepository(TaskMentee);
   await taskMenteeRepo.delete({ task: { id: taskId } });
 
@@ -254,7 +256,21 @@ export const updateTask = async (workspaceId: string, taskId: number, content: T
     await taskMenteeRepo.save(menteeEntities);
   }
 
-  return task;
+  const updatedTask = await db
+    .getRepository(Task)
+    .createQueryBuilder("task")
+    .leftJoinAndSelect("task.workspace", "workspace")
+    .leftJoinAndSelect("task.mentor", "mentor")
+    .leftJoinAndSelect("task.mentees", "taskMentees")
+    .leftJoinAndSelect("taskMentees.mentee", "menteeUser")
+    .leftJoinAndSelect("task.submissions", "submissions")
+    .leftJoinAndSelect("submissions.user", "submissionUser")
+    .leftJoinAndSelect("submissions.files", "submissionFiles")
+    .where("task.id = :taskId", { taskId })
+    .andWhere("workspace.id = :workspaceId", { workspaceId })
+    .getOne();
+
+  return updatedTask;
 };
 
 export const createTask = async (workspaceId: string, content: TaskDTO) => {
@@ -336,7 +352,7 @@ export const submitTask = async (
 
   if (!task) throw new Error(notfound);
 
-  const isMentee = task.mentees?.some((u) => u.id === user.id);
+  const isMentee = task.mentees?.some((tm: TaskMentee) => tm.mentee?.id === user.id);
   if (!isMentee) throw new Error(forbidden);
 
   const taskSubmissionRepo = db.getRepository(TaskSubmission);

@@ -1,5 +1,6 @@
 import { createTask } from "@/services/taskService";
 import { TaskDTO } from "@/types/dto/TaskDTO";
+import { ErrorResponse } from "@/types/ErrorResponse";
 import { errorHandler } from "@/utilities/errorHandler";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -12,7 +13,6 @@ export const POST = async (req: NextRequest, { params }: { params: Promise<{ wor
 
     return NextResponse.json({ task }, { status: 201 });
   }catch(e){
-    console.log(e);
-    return errorHandler(e as string)
+    return errorHandler((e as ErrorResponse).message);
   }
 }

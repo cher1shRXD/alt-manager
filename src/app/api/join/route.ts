@@ -1,4 +1,5 @@
 import { joinWorkspace } from "@/services/workspaceService";
+import { ErrorResponse } from "@/types/ErrorResponse";
 import { errorHandler } from "@/utilities/errorHandler";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -9,6 +10,6 @@ export const POST = async (req: NextRequest) => {
 
     return NextResponse.json({ workspace }, { status: 201 });
   }catch(e){
-    return errorHandler(e as string);
+    return errorHandler((e as ErrorResponse).message);
   }
 }

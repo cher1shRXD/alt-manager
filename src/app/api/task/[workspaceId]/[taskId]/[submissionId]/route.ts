@@ -1,4 +1,5 @@
 import { cancelSubmit } from "@/services/taskService";
+import { ErrorResponse } from "@/types/ErrorResponse";
 import { errorHandler } from "@/utilities/errorHandler";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -11,6 +12,6 @@ export const DELETE = async (req: NextRequest, { params }: { params: Promise<{ s
     return NextResponse.json({ taskSubmission }, { status: 201 });
   }catch(e){
     console.log(e);
-    return errorHandler(e as string);
+    return errorHandler((e as ErrorResponse).message);
   }
 }

@@ -1,4 +1,5 @@
 import { getUser } from "@/services/getUser";
+import { ErrorResponse } from "@/types/ErrorResponse";
 import { errorHandler } from "@/utilities/errorHandler";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -9,6 +10,6 @@ export const GET = async (req: NextRequest, { params }: { params: Promise<{ user
 
     return NextResponse.json({ user }, { status: 200 });
   }catch(e){
-    return errorHandler(e as string);
+    return errorHandler((e as ErrorResponse).message);
   }
 }

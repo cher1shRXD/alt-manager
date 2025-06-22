@@ -66,6 +66,7 @@ export const useSubmission = (workspaceId: string | null, taskId: number, submit
       
     }catch(e){
       toast.error((e as ErrorResponse).message)
+    }finally{
       setLoading(false);
     }
   }

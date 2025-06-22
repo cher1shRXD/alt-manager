@@ -1,5 +1,6 @@
 import { deleteTask, getIsMentee, getTaskDetailMentees, getTaskDetailMentors, submitTask, updateTask } from "@/services/taskService";
 import { TaskDTO } from "@/types/dto/TaskDTO";
+import { ErrorResponse } from "@/types/ErrorResponse";
 import { SubmittedFile } from "@/types/SubmittedFile";
 import { errorHandler } from "@/utilities/errorHandler";
 import { NextRequest, NextResponse } from "next/server";
@@ -13,7 +14,8 @@ export const POST = async (req: NextRequest, { params }: { params: Promise<{ tas
 
     return NextResponse.json({ taskSubmission }, { status: 201 });
   }catch(e){
-    return errorHandler(e as string);
+    console.log((e as ErrorResponse).message);
+    return errorHandler((e as ErrorResponse).message);
   }
 }
 
@@ -26,7 +28,7 @@ export const GET = async (req: NextRequest, { params }: { params: Promise<{ work
 
     return NextResponse.json({ task }, { status: 201 });
   }catch(e){
-    return errorHandler(e as string);
+    return errorHandler((e as ErrorResponse).message);
   }
 }
 
@@ -39,7 +41,7 @@ export const PATCH = async (req: NextRequest, { params }: { params: Promise<{ wo
 
     return NextResponse.json({ task }, { status: 201 });
   }catch(e){
-    return errorHandler(e as string);
+    return errorHandler((e as ErrorResponse).message);
   }
 }
 
@@ -51,7 +53,6 @@ export const DELETE = async (req: NextRequest, { params }: { params: Promise<{ w
 
     return NextResponse.json({ task }, { status: 201 });
   }catch(e){
-    console.log(e)
-    return errorHandler(e as string);
+    return errorHandler((e as ErrorResponse).message);
   }
 }
