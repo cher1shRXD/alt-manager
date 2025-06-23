@@ -19,7 +19,7 @@ const Sidebar = async () => {
   }
 
   return (
-    <div className="w-[var(--sidebar-width)] fixed bottom-2 left-2 z-50 xl:top-4 xl:left-4 xl:h-[calc(100vh-32px)] bg-container border border-border rounded-xl backdrop-blur-xs p-2 flex xl:flex-col xl:gap-1 justify-evenly xl:justify-start">
+    <div className="w-[var(--sidebar-width)] fixed bottom-1 left-1 z-50 xl:top-4 xl:left-4 xl:h-[calc(100vh-32px)] bg-container border border-border rounded-xl backdrop-blur-xs p-2 flex xl:flex-col xl:gap-1 justify-evenly xl:justify-start">
       <NavigationItem title="홈" href="/" icon={<Home size={20} />} />
       <NavigationItem
         title="과제"
