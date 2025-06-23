@@ -8,7 +8,7 @@ export class Report {
   @PrimaryGeneratedColumn()
   id?: number;
 
-  @Column()
+  @Column({ type: 'longtext' })
   content?: string;
 
   @CreateDateColumn()

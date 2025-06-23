@@ -13,7 +13,7 @@ export class Task {
   @Column()
   title?: string;
 
-  @Column()
+  @Column({ type: 'longtext' })
   description?: string;
 
   @ManyToOne(() => Workspace, (workspace) => workspace.tasks)
