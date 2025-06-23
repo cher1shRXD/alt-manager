@@ -3,8 +3,6 @@ import "./globals.css";
 import './tailwind.css';
 import {ReactNode} from "react";
 import localFont from "next/font/local";
-import {CookiesProvider} from "next-client-cookies/server";
-import QueryProvider from "@/components/provider/QueryProvider";
 import ToastContainer from "@/components/provider/ToastProvider";
 import LoadingProvider from "@/components/provider/LoadingProvider";
 import Dialog from "@/components/Dialog";
@@ -15,9 +13,17 @@ export const metadata: Metadata = {
 };
 
 const pretendard = localFont({
-  src: "../assets/fonts/pretendard.woff2",
+  src: '../assets/fonts/pretendard.woff2',
   variable: "--font-prendard",
   weight: "100 900",
+  display: 'swap'
+});
+
+const anton = localFont({
+  src: '../assets/fonts/anton.woff2',
+  variable: "--font-antonfont",
+  weight: "100 900",
+  display: 'swap'
 });
 
 
@@ -28,15 +34,11 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="ko">
-      <body className={pretendard.variable}>
+      <body className={`${pretendard.variable} ${anton.variable}`}>
         <ToastContainer />
         <LoadingProvider color="var(--color-primary)" />
-        <QueryProvider>
-          <CookiesProvider>
-            <div className="w-full min-h-screen bg-bg text-white">{children}</div>
-            <Dialog />
-          </CookiesProvider>
-        </QueryProvider>
+        <div className="w-full min-h-screen bg-bg text-white">{children}</div>
+        <Dialog />
       </body>
     </html>
   );

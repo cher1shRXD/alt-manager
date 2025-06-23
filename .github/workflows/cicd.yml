@@ -1,0 +1,47 @@
+name: Deploy with Docker Compose and Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # .env.production 파일 생성
+      - name: Create .env.production file
+        run: |
+          printf "%s" "${{ secrets.ENV }}" > .env.production
+
+      # 도커 빌드 후 푸시 (빌드 컨텍스트는 현재 디렉토리)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        run: |
+          docker buildx build --platform linux/amd64 \
+          -t cher1shrxd/git-task:latest \
+          --push .
+
+      # EC2에서 docker-compose pull, down, up 실행
+      - name: Deploy via SSH to EC2 (Docker Compose)
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_IP }}
+          username: ${{ secrets.REMOTE_SSH_ID }}
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          script: |
+            sudo docker compose pull
+            sudo docker compose down
+            sudo docker compose up -d

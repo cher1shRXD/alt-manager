@@ -2,7 +2,6 @@ import { CODE_EXT, IMAGE_EXT, OFFICE_EXT, PDF_EXT, VIDEO_EXT } from "@/constants
 import { FilePreviewProps } from "@/types/props/FilePreviewProps";
 import { getLanguage } from "@/utilities/getLanguage";
 import dynamic from "next/dynamic";
-import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 
 const MonacoEditor = dynamic(() => import("@monaco-editor/react"), { ssr: false });
 

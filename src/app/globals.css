@@ -39,3 +39,7 @@ button {
 input, select, textarea {
   outline: none;
 }
+
+.font-anton {
+  font-family: var(--font-antonfont), sans-serif;
+}
