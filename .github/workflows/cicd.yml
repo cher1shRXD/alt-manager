@@ -42,6 +42,7 @@ jobs:
           key: ${{ secrets.REMOTE_SSH_KEY }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
-            sudo docker compose pull
             sudo docker compose down
+            docker image prune -a -f
+            sudo docker compose pull
             sudo docker compose up -d
