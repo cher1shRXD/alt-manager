@@ -5,6 +5,7 @@ import { getReportDetail } from "@/services/reportService";
 import { SearchParamProps } from "@/types/props/SearchParamProps";
 import { ChevronUp } from "lucide-react";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 const ReportDetail = async ({ params, searchParams }: { params: Promise<{ reportId: string }> } & SearchParamProps) => {
   const { reportId } = await params;
@@ -18,8 +19,11 @@ const ReportDetail = async ({ params, searchParams }: { params: Promise<{ report
   const user = await getMe();
 
   if(user?.id === report.author?.id) return (
-    <EditReport initContent={report.content || ""} reportId={report.id || parseInt(reportId)} />
+    <Suspense>
+      <EditReport initContent={report.content || ""} reportId={report.id || parseInt(reportId)} />
+    </Suspense>
   )
+    
 
   return (
     <div className="w-full flex items-center flex-col gap-4 pb-4">

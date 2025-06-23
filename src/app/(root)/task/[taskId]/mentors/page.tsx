@@ -22,7 +22,6 @@ const TaskMentor = async ({
     parseInt(taskId)
   );
 
-  console.log(task);
 
   return (
     <div className="w-full flex flex-col gap-4 mb-16">
