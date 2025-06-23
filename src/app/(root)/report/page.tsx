@@ -31,7 +31,7 @@ const Report = async ({ searchParams }: SearchParamProps) => {
                   <p>{item.user.name}</p>
                   <div className="w-full flex flex-col gap-1">
                     {
-                      item.reports.map((report) => (
+                      item.reports.reverse().map((report) => (
                         <CustomLink href={`/report/${report.id}?workspace=${keyword.workspace}`} className="w-full p-2 bg-container border border-border rounded-lg" key={report.id}>
                           <p>{parseDate(report.createdAt)} 성과보고서</p>
                           <p className="text-xs text-gray-500">글자수: {report.content?.trim().length}자</p>
