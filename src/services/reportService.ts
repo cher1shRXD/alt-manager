@@ -144,3 +144,93 @@ export const createReport = async (data: ReportDTO, workspaceId: string) => {
 
   return savedReport;
 };
+
+export const updateReport = async (data: ReportDTO, workspaceId: string, reportId: number) => {
+  const session = await getServerSession(authOptions);
+
+  if (!session || !session.user.email) {
+    throw new Error(unauthorized);
+  }
+
+  const db = await initializeDataSource();
+  const user = await db.getRepository(User).findOneBy({ email: session.user.email });
+  const workspace = await db.getRepository(Workspace).findOne({
+    where: { id: workspaceId },
+    relations: ["users"],
+  });
+
+  if (!user) {
+    throw new Error(notfound);
+  }
+
+  if (!workspace) {
+    throw new Error(notfound);
+  }
+
+  const isMember = workspace.users?.some(u => u.id === user.id);
+
+  if (!isMember) {
+    throw new Error(forbidden);
+  }
+
+  const reportRepo = db.getRepository(Report);
+  const report = await reportRepo.findOne({ where: { id: reportId }, relations: ["author"] });
+
+  if(!report) {
+    throw new Error(notfound);
+  }
+
+  if(report.author?.id !== user.id) {
+    throw new Error(forbidden);
+  }
+
+  report.content = data.content;
+
+  const savedReport = await reportRepo.save(report);
+
+  return savedReport;
+}
+
+export const deleteReport = async (workspaceId: string, reportId: number) => {
+  const session = await getServerSession(authOptions);
+
+  if (!session || !session.user.email) {
+    throw new Error(unauthorized);
+  }
+
+  const db = await initializeDataSource();
+  const user = await db.getRepository(User).findOneBy({ email: session.user.email });
+  const workspace = await db.getRepository(Workspace).findOne({
+    where: { id: workspaceId },
+    relations: ["users"],
+  });
+
+  if (!user) {
+    throw new Error(notfound);
+  }
+
+  if (!workspace) {
+    throw new Error(notfound);
+  }
+
+  const isMember = workspace.users?.some(u => u.id === user.id);
+
+  if (!isMember) {
+    throw new Error(forbidden);
+  }
+
+  const reportRepo = db.getRepository(Report);
+  const report = await reportRepo.findOne({ where: { id: reportId }, relations: ["author"] });
+
+  if(!report) {
+    throw new Error(notfound);
+  }
+
+  if(report.author?.id !== user.id) {
+    throw new Error(forbidden);
+  }
+
+  if (!report.id) throw new Error(notfound);
+  const deleted = await reportRepo.delete(report.id);
+  return deleted;
+}

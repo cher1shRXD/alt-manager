@@ -1,4 +1,6 @@
 import CustomLink from "@/components/common/CustomLink";
+import EditReport from "@/components/EditReport";
+import { getMe } from "@/services/getMe";
 import { getReportDetail } from "@/services/reportService";
 import { SearchParamProps } from "@/types/props/SearchParamProps";
 import { ChevronUp } from "lucide-react";
@@ -13,7 +15,11 @@ const ReportDetail = async ({ params, searchParams }: { params: Promise<{ report
   }
 
   const report = await getReportDetail(parseInt(reportId), keyword.workspace as string);
+  const user = await getMe();
 
+  if(user?.id === report.author?.id) return (
+    <EditReport initContent={report.content || ""} reportId={report.id || parseInt(reportId)} />
+  )
 
   return (
     <div className="w-full flex items-center flex-col gap-4 pb-4">
